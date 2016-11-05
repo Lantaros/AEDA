@@ -11,6 +11,9 @@ public:
 
 private:
 	string title, description;
+	vector<unsigned int> usedYears;
+	unsigned int difficulty;
+	int lastTimeUsed;
 	vector<Student *> group;
 };
 
@@ -18,8 +21,8 @@ class Research: public Project
 {
 public:
 
-
 private:
+	string dataRepositoryFile;
 
 };
 
@@ -29,6 +32,7 @@ public:
 
 
 private:
+	vector<string> references;
 };
 
 class Development: public Project

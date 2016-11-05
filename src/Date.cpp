@@ -1,10 +1,6 @@
 #include "Date.h"
 
 //Constructors
-/**
- *
- *
- */
 Date::Date()
 {
 	time_t now;
@@ -129,6 +125,11 @@ void Date::checkLeap()
 
 //Operators overloading
 
+/**
+ * Operator<< overloading for class Date
+ * @param out out stream
+ * @return output stream
+ */
 ostream & Date::operator<< (ostream &out) const
 {
 	out <<day <<"/" <<month << "/" << year;

@@ -13,8 +13,8 @@ public:
 	Person();
 	Person(string name, unsigned int age, char gender);
 	virtual ~Person();
-	string getName();
-	unsigned int getAge();
+	string getName() const;
+	unsigned int getAge() const;
 
 private:
 	string name;
@@ -26,11 +26,13 @@ private:
 class Student: public Person
 {
 public:
-
+	unsigned int getCurentYear() const;
 
 private:
+	unsigned int id;
 	unsigned int currentYear;
-	vector<Project *> projects;
+	unsigned int yearClass;
+	vector<Student *> currentGroup; //Him/herslef plus colleagues
 
 };
 
