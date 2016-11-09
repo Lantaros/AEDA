@@ -2,7 +2,7 @@
 #define __Project__
 
 #include <string>
-#include "Person.h"
+#include "Person.h" 
 
 class Project
 {
