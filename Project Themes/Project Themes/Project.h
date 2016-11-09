@@ -2,7 +2,7 @@
 #define __Project__
 
 #include <string>
-#include "Person.h" 
+#include "Person.h"
 
 class Project
 {
@@ -17,7 +17,7 @@ private:
 	vector<Student *> group;
 };
 
-class Research: public Project
+class Research : public Project
 {
 public:
 
@@ -26,7 +26,7 @@ private:
 
 };
 
-class Analisys: public Project
+class Analisys : public Project
 {
 public:
 
@@ -35,7 +35,7 @@ private:
 	vector<string> references;
 };
 
-class Development: public Project
+class Development : public Project
 {
 public:
 

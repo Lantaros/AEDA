@@ -2,7 +2,6 @@
 #define __Person__
 
 #include "Libraries.h"
-#include "Project.h"
 #include "Date.h"
 
 using namespace std;
@@ -23,7 +22,7 @@ private:
 };
 
 
-class Student: public Person
+class Student : public Person
 {
 public:
 	unsigned int getCurentYear() const;
@@ -37,7 +36,7 @@ private:
 };
 
 
-class Professor: public Person
+class Professor : public Person
 {
 };
 

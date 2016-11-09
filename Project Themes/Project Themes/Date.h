@@ -26,7 +26,7 @@ public:
 	bool isLeap() const;
 
 
-//Operators
+	//Operators
 	ostream & operator<< (ostream &out) const;
 
 	//Comparison operator's overloading
