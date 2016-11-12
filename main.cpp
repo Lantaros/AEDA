@@ -1,17 +1,31 @@
-#include "Person.h"
-#include "Date.h"
-#include "Form.h"
+#include "Menu.h"
 
 //Prototypes
 void mainmenu();
 
 
-
 int main()
 {
-	vector<Person *> people;
-	vector<Form *> subjects;
-	mainmenu();
+	Menu menu;
+	bool fileError = false;
+	unsigned int nTries = 4;
+
+	do
+	{
+		try
+		{
+			menu.loadPeopleFile("Students");
+		}
+		catch (FileNotFound fileNF)
+		{
+			cerr << "File " << fileNF.name << " couldn't be opened.\n";
+			fileError = true;
+			nTries--;
+		}
+
+	} while (fileError && nTries); 
+
+	//mainmenu();
 	return 0;
 
 
@@ -19,7 +33,7 @@ int main()
 
 void mainmenu()
 {
-	int choice;
+	int choice = 0;
 
 	cout << "Hello Professor, Welcome\n\n\n\n\n\n";
 	cout << "What option would you like to choose?\n\n";
@@ -27,11 +41,10 @@ void mainmenu()
 	cout << "2: View all Projects\n";
 	cout << "3: Add Students\n";
 	cout << "4: Add Projects\n";
-	cout << "5: Edit Students\n";
-	cout << "6: Edit Projects\n";
-	cout << "7: Remove Students\n";
-	cout << "8: Remove Projects\n";
-	cout << "9: Choose the best current Project\n";
+	cout << "5: Edit Projects\n";
+	cout << "6: Remove Students\n";
+	cout << "7: Remove Projects\n";
+	cout << "8: Choose the best current Project\n";
 	cout << "0: Exit Program\n";
 
 	switch (choice)
@@ -52,10 +65,10 @@ void mainmenu()
 		break;
 	case 8:
 		break;
-	case 9:
-		break;
 	case 0:
 		return;
 
 	}
 }
+
+

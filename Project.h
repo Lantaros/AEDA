@@ -1,5 +1,5 @@
-#ifndef __Project__
-#define __Project__
+#ifndef __PROJECT__
+#define __PROJECT__
 
 #include <string>
 #include "Person.h"

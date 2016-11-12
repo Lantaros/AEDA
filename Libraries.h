@@ -1,5 +1,5 @@
-#ifndef __Libraries__
-#define __Libraries__
+#ifndef __LIBRARIES_H__
+#define __LIBRARIES_H__
 
 #include <iostream>
 #include <string>
