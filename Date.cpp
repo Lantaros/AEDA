@@ -1,6 +1,11 @@
 #include "Date.h"
 
 //Constructors
+
+/**
+ * Date default constructor,
+ * instatiates an object with current time
+ */
 Date::Date()
 {
 	time_t now;
@@ -43,7 +48,7 @@ Date::Date(string date)
 }
 
 /**
-* A date constructor from three uIntegers
+* A Date constructor from three uIntegers ( day, month, year)
 * @param day
 * @param month
 * @param year
@@ -69,17 +74,29 @@ void Date::setYear(unsigned int year)
 }
 
 /**
-*
+*Sets the month attribute to argument value, if valid
 * @param month
 */
 void Date::setMonth(unsigned int month)
 {
 	Date::month = month;
 }
+
+/**
+ * Sets the day attribute to argument value, if valid
+ * @param day
+ */
 void Date::setDay(unsigned int day)
 {
 	Date::day = day;
 }
+
+/**
+ *Sets all of the date attributes, if all of them are valid
+ * @param day
+ * @param month
+ * @param year
+ */
 void Date::setDate(unsigned int day, unsigned int month, unsigned int year)
 {
 	Date::day = day;
@@ -89,23 +106,35 @@ void Date::setDate(unsigned int day, unsigned int month, unsigned int year)
 
 /**
 *
-* @return
+* @return class's day atribute
 */
 unsigned int Date::getDay() const
 {
 	return day;
 }
 
-
+/**
+ *
+ * @return class's month atribute
+ */
 unsigned int Date::getMonth() const
 {
 	return month;
 }
+/**
+ *
+ * @return class's year atribute
+ */
 unsigned int Date::getYear() const
 {
 	return year;
 }
 
+
+/**
+ *
+ * @return all the attributes in a string (dd/mm/yyyy)
+ */
 string Date::getDate() const // returns the date in format "dd/mm/yyyy"
 {
 	ostringstream oss;
@@ -115,6 +144,9 @@ string Date::getDate() const // returns the date in format "dd/mm/yyyy"
 }
 
 
+/**
+ * Checks wether a year is a leap one
+ */
 void Date::checkLeap()
 {
 	if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
@@ -140,10 +172,10 @@ ostream & Date::operator<< (ostream &out) const
 //Comparison operator's overloading
 /**
 *
-* @param date
-* @return
+* @param date a Date object
+* @return a bool
 */
-bool Date::operator< (Date &date) const
+bool Date::operator< (const Date &date) const
 {
 	if (Date::year < date.year)
 		return true;
@@ -169,12 +201,23 @@ bool Date::operator< (Date &date) const
 	else
 		return	false;
 }
-bool Date::operator> (Date &date) const
+
+/**
+ *
+ * @param date
+ * @return ! operator<
+ */
+bool Date::operator> (const Date &date) const
 {
 	return !this->operator <(date);
 }
 
-bool Date::operator== (Date &date) const
+/**
+ *
+ * @param date
+ * @returnv
+ */
+bool Date::operator== (const Date &date) const
 {
 	if (Date::day == date.day && Date::month == date.month && Date::year == date.year)
 		return true;

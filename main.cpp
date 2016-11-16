@@ -3,7 +3,10 @@
 //Prototypes
 void mainmenu();
 
-
+/**
+ * Main function
+ * @return
+ */
 int main()
 {
 	Menu menu;

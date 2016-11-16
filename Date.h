@@ -30,9 +30,9 @@ public:
 	ostream & operator<< (ostream &out) const;
 
 	//Comparison operator's overloading
-	bool operator< (Date &date) const;
-	bool operator> (Date &date) const;
-	bool operator== (Date &date) const;
+	bool operator< (const Date &date) const;
+	bool operator> (const Date &date) const;
+	bool operator== (const Date &date) const;
 
 
 
