@@ -8,8 +8,11 @@
 *.sln.docstates
 
 *.project
+#Folders
+.idea/
 #Doxygen
 Documentation/
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
