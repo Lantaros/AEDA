@@ -9,10 +9,22 @@ void mainmenu();
  */
 int main()
 {
-	Menu menu;
+    MainMenu menu("Hello Professor, Welcome\n\n\n\n\n\n"
+                          "What option would you like to choose?\n\n"
+                          "1: View all Students\n"
+                          "2: View all Projects\n"
+                          "3: Add Students\n"
+                          "4: Add Projects\n"
+                          "5: Edit Projects\n"
+                          "6: Remove Students\n"
+                          "7: Remove Projects\n"
+                          "8: Choose the best current Project\n"
+                          "0: Exit Program\n");
 
+    menu.loadAsciiArt();
     menu.loadFiles();
-
+    cout << menu.asciiArt;
+    menu.printOptions();
 	//mainmenu();
 	return 0;
 

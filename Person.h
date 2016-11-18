@@ -1,11 +1,14 @@
 #ifndef __PERSON__
 #define __PERSON__
 
+//#include "Project.h"
 #include "Libraries.h"
 #include "Date.h"
-#include <iomanip>
+
 
 using namespace std;
+
+class Project;
 
 class Person
 {
@@ -39,6 +42,7 @@ private:
 	unsigned int currentYear;
     unsigned int yearClass; //class
 	vector<Student *> currentGroup; //Him/herself plus colleagues
+    vector<Project *> projects;
 
 };
 

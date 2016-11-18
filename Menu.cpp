@@ -3,12 +3,18 @@
 unsigned int Menu::maxNameLength = 0;
 
 Menu::Menu()
-{
-}
+{}
 
 
 Menu::~Menu()
+{}
+
+Menu::Menu(string displays)
+{ displayOptions = displays; }
+
+void Menu::printOptions() const
 {
+    cout << displayOptions;
 }
 
 unsigned int Menu::getMaxNameLength()
@@ -16,7 +22,7 @@ unsigned int Menu::getMaxNameLength()
 	return maxNameLength;
 }
 
-void Menu::loadPeopleFile(string fileName)
+void MainMenu::loadPeopleFile(string fileName)
 {
     string stringID, name, date, projects;
 	Date bDay;
@@ -61,7 +67,7 @@ void Menu::loadPeopleFile(string fileName)
 
 }
 
-void Menu::loadFiles()
+void MainMenu::loadFiles()
 {
     FileNames fileNames;
 
@@ -140,4 +146,27 @@ void Menu::loadFiles()
         cerr << "Excceded maximum number of atempts\n";
 
 
+}
+
+MainMenu::MainMenu(string displays) : Menu(displays)
+{}
+
+void MainMenu::loadAsciiArt()
+{
+    ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\AsciiArt.txt");
+
+    if (!file.is_open())
+        throw FileNotFound("AsciiArt");
+
+    else
+    {
+        string line, art;
+        asciiArt = "";
+        while (getline(file, line))
+        {
+            asciiArt += line;
+        }
+    }
+
+    file.close();
 }

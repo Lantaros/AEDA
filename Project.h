@@ -1,8 +1,9 @@
 #ifndef __PROJECT__
 #define __PROJECT__
 
-#include <string>
 #include "Person.h"
+#include <string>
+
 
 class Project {
 public:
