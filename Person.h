@@ -46,6 +46,7 @@ private:
 class Professor : public Person
 {
 public:
+	Professor();
 	virtual void print() const;
 	ostream& operator<<(ostream& out);
 private:

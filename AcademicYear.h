@@ -4,7 +4,7 @@
 #include "Project.h"
 #include "Person.h"
 
-class Form
+class AcademicYear
 {
 public:
 	unsigned int getYear() const;

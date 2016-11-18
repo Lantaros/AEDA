@@ -22,9 +22,13 @@ void Menu::loadPeopleFile(string fileName)
 	Date bDay;
 	unsigned int id;
 
-	ifstream file(fileName + ".txt");
+	ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ fileName + ".txt");//fileName + ".txt");
+    //ifstream file(fileName + ".txt");
 	if (!file.is_open())
 		throw FileNotFound(fileName);
+
+    //Ignore 1st line - Structure
+    getline(file,name);
 
 	while (file.good())
 	{

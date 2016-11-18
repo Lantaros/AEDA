@@ -3,7 +3,7 @@
 
 #include "Person.h"
 #include "Date.h"
-#include "Form.h"
+#include "AcademicYear.h"
 #include <fstream>
 
 
@@ -16,7 +16,8 @@ public:
 	void loadPeopleFile(string fileName);
 
 	vector<Person *> people;
-	vector<Form *> subjects;
+	vector<Project *> projects;
+    AcademicYear aYears;
 	static unsigned int maxNameLength;
 };
 

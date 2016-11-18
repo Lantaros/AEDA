@@ -4,39 +4,36 @@
 #include <string>
 #include "Person.h"
 
-class Project
-{
+class Project {
+public:
+    string getTitle() const;
+
+
+private:
+    string title, description;
+    vector<unsigned int> usedYears;
+    unsigned int difficulty;
+    Date lastTimeUsed;
+    vector<Student *> group;
+};
+
+class Research : public Project {
+public:
+
+private:
+    string dataRepositoryFile;
+
+};
+
+class Analisys : public Project {
 public:
 
 
 private:
-	string title, description;
-	vector<unsigned int> usedYears;
-	unsigned int difficulty;
-	int lastTimeUsed;
-	vector<Student *> group;
+    vector<string> references;
 };
 
-class Research : public Project
-{
-public:
-
-private:
-	string dataRepositoryFile;
-
-};
-
-class Analisys : public Project
-{
-public:
-
-
-private:
-	vector<string> references;
-};
-
-class Development : public Project
-{
+class Development : public Project {
 public:
 
 

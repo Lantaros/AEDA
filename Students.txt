@@ -1,0 +1,3 @@
+Name;dateOfBirth;id;currentYear;class;<projects' index>
+Rui Andre Rebolo Fernandes Leixo;31/03/1997;201504818;2;5;<projects' index>
+Artur Zeferino;12/03/1997;201505671;<projects' index>

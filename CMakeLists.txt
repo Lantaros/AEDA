@@ -3,5 +3,5 @@ project(themes)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES Date.cpp Date.h Form.cpp Form.h Libraries.h main.cpp Menu.cpp Menu.h Person.cpp Person.h Project.cpp Project.h)
+set(SOURCE_FILES Date.cpp Date.h AcademicYear.cpp AcademicYear.h Libraries.h main.cpp Menu.cpp Menu.h Person.cpp Person.h Project.cpp Project.h)
 add_executable(untitled ${SOURCE_FILES})
