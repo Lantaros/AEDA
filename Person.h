@@ -37,7 +37,7 @@ public:
 private:
 	const unsigned int id;
 	unsigned int currentYear;
-	unsigned int yearClass; //turma
+    unsigned int yearClass; //class
 	vector<Student *> currentGroup; //Him/herself plus colleagues
 
 };

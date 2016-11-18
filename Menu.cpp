@@ -18,9 +18,10 @@ unsigned int Menu::getMaxNameLength()
 
 void Menu::loadPeopleFile(string fileName)
 {
-	string stringID, name, date;
+    string stringID, name, date, projects;
 	Date bDay;
-	unsigned int id;
+    unsigned int id, currentYear, yearClass;
+    istringstream iss;
 
 	ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ fileName + ".txt");//fileName + ".txt");
     //ifstream file(fileName + ".txt");
@@ -33,17 +34,110 @@ void Menu::loadPeopleFile(string fileName)
 	while (file.good())
 	{
 		getline(file, name, ';');
-		file.ignore(); //ignores the blank space after the ';'
+        //file.ignore(); //ignores the blank space after the ';'
 		getline(file, date, ';');
-		file.ignore();
+        //file.ignore();
 		getline(file, stringID);
+
+        file >> currentYear;
+        file >> yearClass;
+
+        //Projects
+        getline(file, projects, '\n');
+        iss.str(projects);
+
+/*        while(!iss.eof())
+        {
+
+        }*/
 
 		bDay = Date(date);
 		id = stoi(stringID);
 
-		Person * p = new Student(name, bDay, id);
+        Person *p = new Student(name, bDay, id, currentYear, yearClass);
 
 		people.push_back(p);
 	}
+
+}
+
+void Menu::loadFiles()
+{
+    FileNames fileNames;
+
+    bool fileError;
+    unsigned int nTries = NTRIES;
+
+
+    //People File
+    do
+    {
+        fileError = false; //Resets the error flag
+        getline(cin, fileNames.peopleFile); // Reads the file name
+        try
+        {
+            loadPeopleFile(fileNames.peopleFile);
+        }
+        catch (FileNotFound fileNF)
+        {
+            cerr << "File " << fileNF.name << " couldn't be opened.\n";
+            fileError = true;
+            nTries--;
+        }
+
+    } while (fileError && nTries);
+
+    if (!nTries)
+        cerr << "Excceded maximum number of atempts\n";
+
+
+
+    //Projects File
+    nTries = NTRIES;
+
+    do
+    {
+        fileError = false; //Resets the error flag
+        getline(cin, fileNames.projectsFile); // Reads the file name
+        try
+        {
+            loadPeopleFile(fileNames.projectsFile);
+        }
+        catch (FileNotFound fileNF)
+        {
+            cerr << "File " << fileNF.name << " couldn't be opened.\n";
+            fileError = true;
+            nTries--;
+        }
+
+    } while (fileError && nTries);
+
+    if (!nTries)
+        cerr << "Excceded maximum number of atempts\n";
+
+
+    //ProjectsIndexer
+    nTries = NTRIES;
+
+    do
+    {
+        fileError = false; //Resets the error flag
+        getline(cin, fileNames.themeIndexFile); // Reads the file name
+        try
+        {
+            loadPeopleFile(fileNames.themeIndexFile);
+        }
+        catch (FileNotFound fileNF)
+        {
+            cerr << "File " << fileNF.name << " couldn't be opened.\n";
+            fileError = true;
+            nTries--;
+        }
+
+    } while (fileError && nTries);
+
+    if (!nTries)
+        cerr << "Excceded maximum number of atempts\n";
+
 
 }

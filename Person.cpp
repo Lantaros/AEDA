@@ -11,6 +11,13 @@
 Person::Person(const string &name, const Date &birthDate): name(name), birthDate(birthDate)
 { }
 
+
+/**
+ * hgygyugyuggyyugyug
+ * @param name person's name
+ * @param birthDate 78yh
+ * @return jinui
+ */
 Person::Person(string &name, Date &birthDate) : name(name), birthDate(birthDate)
 { }
 

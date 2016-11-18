@@ -6,6 +6,7 @@
 #include "AcademicYear.h"
 #include <fstream>
 
+#define NTRIES 4
 
 class Menu
 {
@@ -14,6 +15,8 @@ public:
 	virtual ~Menu();
 	unsigned int getMaxNameLength();
 	void loadPeopleFile(string fileName);
+
+	void loadFiles();
 
 	vector<Person *> people;
 	vector<Project *> projects;
@@ -33,6 +36,9 @@ public:
 	string name;
 };
 
-
+struct FileNames
+{
+	string peopleFile, projectsFile, themeIndexFile;
+};
 
 #endif

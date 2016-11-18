@@ -10,23 +10,8 @@ void mainmenu();
 int main()
 {
 	Menu menu;
-	bool fileError = false;
-	unsigned int nTries = 4;
 
-	do
-	{
-		try
-		{
-			menu.loadPeopleFile("Students");
-		}
-		catch (FileNotFound fileNF)
-		{
-			cerr << "File " << fileNF.name << " couldn't be opened.\n";
-			fileError = true;
-			nTries--;
-		}
-
-	} while (fileError && nTries); 
+    menu.loadFiles();
 
 	//mainmenu();
 	return 0;
