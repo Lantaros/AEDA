@@ -6,8 +6,8 @@
 using namespace std;
 
 
-template <class T>
-unsigned int numberDigits (T number)
+template<class T>
+unsigned int numberDigits(T number)
 {
     unsigned int counter = 0;
     while (number)
@@ -20,5 +20,19 @@ unsigned int numberDigits (T number)
 
 void normalizeName(string &name); //removes the blank spaces before, between names and after a full name/title
 
+//InvalidID EXCEPTION
+class InvalidID
+{
+public:
+    InvalidID(unsigned int id)
+    { number = id; }
 
-#endif //UTILITIES_H
+    unsigned int getNumber() const
+    { return number; }
+
+    unsigned int number;
+
+};
+
+
+#endif //THEMES_UTILITIES_H

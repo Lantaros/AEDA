@@ -60,6 +60,12 @@ ostream & Student::operator<<(ostream & out)
 
 }
 
+void Student::print() const
+{
+    cout << left << setw(Menu::maxNameLength) << name << birthDate.getDate() << "   " << id << "          "
+         << currentYear;
+}
+
 
 
 //Professor

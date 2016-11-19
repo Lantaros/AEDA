@@ -1,7 +1,6 @@
 #ifndef __PERSON__
 #define __PERSON__
 
-//#include "Project.h"
 #include <string>
 #include <iomanip>
 #include <vector>
@@ -9,7 +8,7 @@
 
 using namespace std;
 
-class Project;
+class Project;//Forward Declaration
 
 class Person
 {

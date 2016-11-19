@@ -9,13 +9,13 @@ class Project {
 public:
     string getTitle() const;
 
-private:
+protected:
     string title, description;
     vector<unsigned int> usedYears;
     unsigned int difficulty;
     unsigned int score;
     Date lastTimeUsed;
-    vector<Student *> group
+    vector<Student *> group;
 
 };
 
