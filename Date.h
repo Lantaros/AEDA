@@ -25,7 +25,7 @@ public:
 	string getDate() const; // returns the date in format "dd/mm/yyyy"
 	void show() const; // shows the date on the screen in format "dd/mm/yyyy"
 	bool isLeap() const;
-
+    bool isValid() const;
 
 	//Operators
 	ostream & operator<< (ostream &out) const;
@@ -37,13 +37,20 @@ public:
 
 
 
-protected:
-	void checkLeap();
-
 private:
 	unsigned int day, month, year;
 	bool leap;
+    void checkLeap();
+    unsigned int nDays() const;
 };
 
+
+class InvalidDate
+{
+public:
+    InvalidDate(string date){this->date = date;}
+    string date;
+    string getDate() const;
+};
 
 #endif

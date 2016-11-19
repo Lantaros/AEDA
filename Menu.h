@@ -22,7 +22,7 @@ public:
     void printOptions() const; //prints the displayOptions
 
     static unsigned int maxNameLength; //max size name of all persons
-
+    static unsigned int maxTitleLength; //max size of all projects title
 
 protected:
     string displayOptions;
@@ -49,8 +49,9 @@ public:
     string asciiArt;
 
     //choice funtions
-    void viewStudents () const;
-
+    void viewStudents() const; //show all students on the people vector
+    void viewProjects() const; //show all projects on the projects vector
+    void addStudent(); //add a student to the people vector
 
 };
 

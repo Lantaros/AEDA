@@ -30,10 +30,13 @@ int main()
     switch (choice)
     {
         case 1:
+            menu.viewStudents();
             break;
         case 2:
+            menu.viewProjects();
             break;
         case 3:
+            menu.addStudent();
             break;
         case 4:
             break;
