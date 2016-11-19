@@ -34,29 +34,62 @@ class MainMenu : public Menu
 public:
     MainMenu(string displays);
 
+    //Loads
     void loadPeopleFile(string fileName);
+	void loadThemesFile(string fileName);
 
-    void loadAsciiArt();
-    //void printAsciiArt() const;
-
-
+	void loadAsciiArt();
     void loadFiles();
 
-    vector<Person *> people;
-    vector<Project *> projects;
-    AcademicYear aYears;
+	//Subs Menus
+	//TIER 0
+	void introMenu(); // show @ start
+	void chooseYear();
+	void shutDown();
+	//ALL YEARS
+		//TIER 1
+		void displayAllProjects() const;
+		void displayAllStudents() const;
 
+
+	//SPECIFIC AYEAR
+		//TIER 1
+		void addOrRemoveMenu();
+			//TIER 2
+			void addStudent(); //add a student to the people vector
+			void addProject(); //add a complete project to the projects vector
+		void displayStudentsYear() const;
+			//TIER 2
+			void displaySpecificStudentYear() const;
+	        	//TIER3
+				void displayStudentProjects() const;
+			void displayAllStudentsYear() const;
+		void displayProjectsYear() const;
+		void themesOptions();
+			//TIER 2
+			void displayThemes() const;
+			void addTheme();
+			void removeTheme();
+		void checkCompatibility();
+			//TIER 2
+			void top5Results();
+			void allResults();
+
+	//Prints
+    void printAsciiArt() const;
+    void viewStudents() const; //show all students on the people vector
+    void viewProjects() const; //show all projects on the projects vector
+
+
+
+
+	vector<Person *> people;
+    vector<Project *> projects;
+	vector<string> themes;
+    AcademicYear aYears;
 
     string asciiArt;
 
-    //choice funtions
-    void viewStudents() const; //show all students on the people vector
-    void viewProjects() const; //show all projects on the projects vector
-    void addStudent(); //add a student to the people vector
-    void addProject(); //add a project to the projects vector
-    void editProject(); //gives the user the chance to edit all the aspects of a project except the score
-    void removeStudent(); //removes a student from the people vector and the file
-    void removeProject(); //removes a project from the projects vector and from the file
 
 };
 

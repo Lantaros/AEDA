@@ -25,8 +25,8 @@ void MainMenu::loadPeopleFile(string fileName)
     unsigned int id, currentYear, yearClass;
     istringstream iss;
 
-    //ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ fileName + ".txt");//fileName + ".txt");
-    ifstream file("Students.txt");
+    ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ fileName + ".txt");//fileName + ".txt");
+    //ifstream file("Students.txt");
 	if (!file.is_open())
 		throw FileNotFound(fileName);
 
@@ -61,6 +61,105 @@ void MainMenu::loadPeopleFile(string fileName)
 		people.push_back(p);
 	}
 
+}
+
+void MainMenu::loadThemesFile(string fileName)
+{
+    string type, score, title, difficulty, description;
+
+
+    ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ fileName + ".txt");//fileName + ".txt");
+
+    if (!file.is_open())
+        throw FileNotFound(fileName);
+
+    //Ignore 1st line - Structure
+    getline(file,name);
+
+    Theme *t;
+
+    while(file.good())
+    {
+        getline(file, type, ';'); //Type
+        getline(file,score, ';');
+        getline(file, title, ';');
+        getline(file, difficulty, ';');
+        getline(file, description, ';');
+
+
+        Theme t(type, stoi(score), title, stoi(difficulty));
+
+        themes.push_back(t);
+        /*if(type == "R")
+        {
+            t =
+        }
+        else
+            if(type == "A")
+            {
+
+            }
+        else
+            if(type == "D")
+            {
+
+            }*/
+
+    }
+
+
+}
+
+void MainMenu::loadProjects(string fileNames)
+{
+    string projectFileName, trash, line = "a";
+    string  type, year, title, body;
+    ifstream filesName("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ fileNames + ".txt");//fileName + ".txt");
+    if (!filesName.is_open())
+        throw FileNotFound(fileNames);
+
+    ifstream project;
+
+
+    while(getline(filesName,projectFileName))
+    {
+        project.open("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ projectFileName + ".txt");
+        if (!project.is_open())
+            throw FileNotFound(projectFileName);
+
+        getline(project, type);
+        getline(project, trash); //Ignore file Information
+        getline(project, year);
+        getline(project, trash);
+        getline(project, title);
+
+
+        while(getline(project, line) && line !="")
+          body += line + "\n";
+
+
+
+        if(type == "RESEARCH")
+        {
+
+        }
+        else
+            if(type == "ANALYSIS")
+            {
+
+            }
+            else
+                if(type == "DEVELOPMENT")
+                {
+
+                }
+
+        //Ready next iteration (Reset variables)
+        body = "";
+        line = "check";
+
+
+    }
 }
 
 void MainMenu::loadFiles()

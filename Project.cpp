@@ -3,7 +3,10 @@
 
 //Project
 
-
+bool Project::operator==(const Project &pRHS) const
+{
+    return title == pRHS.title;
+}
 
 //Research
 
@@ -35,3 +38,5 @@ ostream & Development::operator<<(ostream & out)
     return out;
 
 }
+
+

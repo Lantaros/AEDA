@@ -1,5 +1,9 @@
 #include "utilities.h"
 
+/**
+ * fdsfdsfsd
+ * @param name
+ */
 void normalizeName(string &name)
 {
 
@@ -21,5 +25,15 @@ void normalizeName(string &name)
             i++; //Only increase the cycle counter if it doesn't erase a space
     }
     //------------------------------------------------------------------
+
+
+    //Change 1st letter in every word to upper case
+    name[0] = toupper(name[0]); //1st word
+
+    for (unsigned i = 1; i < name.size(); i++)
+    {
+        if(name[i] -1 == ' ')
+            name[i] = toupper(name[i]);
+    }
 
 }

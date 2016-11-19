@@ -8,6 +8,7 @@
 class Project {
 public:
     string getTitle() const;
+    bool operator==(const Project &pRHS) const;
 
 protected:
     string title, description;
