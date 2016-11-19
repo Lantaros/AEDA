@@ -29,8 +29,8 @@ void MainMenu::loadPeopleFile(string fileName)
     unsigned int id, currentYear, yearClass;
     istringstream iss;
 
-	ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ fileName + ".txt");//fileName + ".txt");
-    //ifstream file(fileName + ".txt");
+    //ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ fileName + ".txt");//fileName + ".txt");
+    ifstream file("Students.txt");
 	if (!file.is_open())
 		throw FileNotFound(fileName);
 
@@ -40,9 +40,7 @@ void MainMenu::loadPeopleFile(string fileName)
 	while (file.good())
 	{
 		getline(file, name, ';');
-        //file.ignore(); //ignores the blank space after the ';'
 		getline(file, date, ';');
-        //file.ignore();
 		getline(file, stringID);
 
         file >> currentYear;
@@ -59,6 +57,8 @@ void MainMenu::loadPeopleFile(string fileName)
 
 		bDay = Date(date);
 		id = stoi(stringID);
+        if (name.size() > MainMenu::maxNameLength)
+            MainMenu::maxNameLength = name.size();
 
         Person *p = new Student(name, bDay, id, currentYear, yearClass);
 
