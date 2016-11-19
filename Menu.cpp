@@ -170,3 +170,8 @@ void MainMenu::loadAsciiArt()
 
     file.close();
 }
+
+void MainMenu::viewStudents() const
+{
+
+}
