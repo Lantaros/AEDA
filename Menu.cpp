@@ -17,11 +17,6 @@ void Menu::printOptions() const
     cout << displayOptions;
 }
 
-unsigned int Menu::getMaxNameLength()
-{
-	return maxNameLength;
-}
-
 void MainMenu::loadPeopleFile(string fileName)
 {
     string stringID, name, date, projects;
@@ -79,6 +74,7 @@ void MainMenu::loadFiles()
     do
     {
         fileError = false; //Resets the error flag
+        cout << "Type the people's file name (extention is not needed)\n";
         getline(cin, fileNames.peopleFile); // Reads the file name
         try
         {
@@ -128,6 +124,7 @@ void MainMenu::loadFiles()
     do
     {
         fileError = false; //Resets the error flag
+        cout << "Type the people's file name (extention is not needed)\n";
         getline(cin, fileNames.themeIndexFile); // Reads the file name
         try
         {
