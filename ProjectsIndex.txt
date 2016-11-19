@@ -1,1 +1,4 @@
-ProjectName;
+Formating:R,A,D;title;description;scores. All projects need to have their type, year, content, title, specific type addons and done by all in caps.
+R;History of China;All documented story facts about the Eastern Country China
+A;Lifespan of Mosquitos;Write an essay about how much time mosquitos live using proper cientific evidences
+D;C++ Market;Make a C++ program that makes products transactions using real costumers

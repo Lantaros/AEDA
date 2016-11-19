@@ -19,11 +19,11 @@ public:
     Menu(string displays);
 	virtual ~Menu();
 
-    void printOptions() const;
+    void printOptions() const; //prints the displayOptions
 
-    static unsigned int maxNameLength;
+    static unsigned int maxNameLength; //max size name of all persons
 
-    unsigned int getMaxNameLength();
+    unsigned int getMaxNameLength(); //gets the max size
 
 protected:
     string displayOptions;
@@ -48,6 +48,9 @@ public:
 
 
     string asciiArt;
+
+    //choice funtions
+    void viewStudents () const;
 
 
 };
