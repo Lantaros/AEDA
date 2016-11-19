@@ -56,9 +56,9 @@ void MainMenu::loadPeopleFile(string fileName)
         }*/
 
 		bDay = Date(date);
-		id = stoi(stringID);
+        id = static_cast<unsigned int> (stoi(stringID));
         if (name.size() > MainMenu::maxNameLength)
-            MainMenu::maxNameLength = name.size();
+            MainMenu::maxNameLength = (unsigned int) name.size();
 
         Person *p = new Student(name, bDay, id, currentYear, yearClass);
 
