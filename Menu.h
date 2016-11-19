@@ -6,6 +6,7 @@
 #include "Project.h"
 #include "Date.h"
 #include "AcademicYear.h"
+#include "utilities.h"
 #include <iomanip>
 #include <fstream>
 

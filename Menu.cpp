@@ -181,7 +181,8 @@ void MainMenu::viewStudents() const
 
 void MainMenu::viewProjects() const
 {
-    cout <<"TYPE          " << "SCORE    " << "DIFFICULTY    " << left << setw(Menu::maxTitleLength) << "TITLE" << "DESCRIPTION/n"
+    cout << "TYPE          " << "SCORE    " << "DIFFICULTY    " << left << setw(Menu::maxTitleLength) << "TITLE"
+         << "DESCRIPTION/n";
     for (unsigned int i = 0; i < projects.size(); ++i)
     {
         cout << projects[i];
@@ -217,7 +218,12 @@ void MainMenu::addStudent()
     cin >> id;
         try
         {
-
+            if (numberDigits<unsigned int>(id) != 8)
+                throw InvalidID(id);
+        }
+        catch (InvalidID &invID)
+        {
+            cerr << "The Student ID, must be a 8 digits number";
         }
     } while(errorFlag);
     cout << "Insert Current Year: ";
