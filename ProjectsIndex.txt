@@ -1,4 +1,4 @@
-Formating:R,A,D;scores;difficulty;title;description. All projects need to have their type, year, content, title, specific type addons and done by all in caps.
-R;;21;History of China;All documented story facts about the Eastern Country China
-A;;10;Lifespan of Mosquitos;Write an essay about how much time mosquitos live using proper cientific evidences
-D;;54;C++ Market;Make a C++ program that makes products transactions using real costumers
+Formating:R,A,D;scores;title;difficulty;description. All projects need to have their type, year, content, title, specific type addons and done by all in caps.
+R;;History of China;21;All documented story facts about the Eastern Country China
+A;;Lifespan of Mosquitos;10;Write an essay about how much time mosquitos live using proper cientific evidences
+D;;C++ Market;54;Make a C++ program that makes products transactions using real costumers

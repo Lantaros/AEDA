@@ -6,6 +6,7 @@
 #include "Project.h"
 #include "Date.h"
 #include "AcademicYear.h"
+#include "utilities.h"
 #include <iomanip>
 #include <fstream>
 
@@ -52,6 +53,10 @@ public:
     void viewStudents() const; //show all students on the people vector
     void viewProjects() const; //show all projects on the projects vector
     void addStudent(); //add a student to the people vector
+    void addProject(); //add a project to the projects vector
+    void editProject(); //gives the user the chance to edit all the aspects of a project except the score
+    void removeStudent(); //removes a student from the people vector and the file
+    void removeProject(); //removes a project from the projects vector and from the file
 
 };
 

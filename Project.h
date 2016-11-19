@@ -23,7 +23,7 @@ class Research : public Project {
 public:
     ostream& operator<<(ostream& out);
 private:
-    string dataRepositoryFile;
+    vector<string> references;
 
 };
 
@@ -31,13 +31,14 @@ class Analysis : public Project {
 public:
     ostream& operator<<(ostream& out);
 private:
-    vector<string> references;
+
 };
 
 class Development : public Project {
 public:
     ostream& operator<<(ostream& out);
 private:
+    string dataRepositoryFile;
 };
 
 #endif

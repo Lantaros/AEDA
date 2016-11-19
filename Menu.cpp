@@ -20,29 +20,29 @@ void Menu::printOptions() const
 
 unsigned int Menu::getMaxNameLength()
 {
-	return maxNameLength;
+    return maxNameLength;
 }
 
 void MainMenu::loadPeopleFile(string fileName)
 {
     string stringID, name, date, projects;
-	Date bDay;
+    Date bDay;
     unsigned int id, currentYear, yearClass;
     istringstream iss;
 
     //ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ fileName + ".txt");//fileName + ".txt");
     ifstream file("Students.txt");
-	if (!file.is_open())
-		throw FileNotFound(fileName);
+    if (!file.is_open())
+        throw FileNotFound(fileName);
 
     //Ignore 1st line - Structure
-    getline(file,name);
+    getline(file, name);
 
-	while (file.good())
-	{
-		getline(file, name, ';');
-		getline(file, date, ';');
-		getline(file, stringID);
+    while (file.good())
+    {
+        getline(file, name, ';');
+        getline(file, date, ';');
+        getline(file, stringID);
 
         file >> currentYear;
         file >> yearClass;
@@ -56,15 +56,15 @@ void MainMenu::loadPeopleFile(string fileName)
 
         }*/
 
-		bDay = Date(date);
+        bDay = Date(date);
         id = static_cast<unsigned int> (stoi(stringID));
         if (name.size() > MainMenu::maxNameLength)
             MainMenu::maxNameLength = (unsigned int) name.size();
 
         Person *p = new Student(name, bDay, id, currentYear, yearClass);
 
-		people.push_back(p);
-	}
+        people.push_back(p);
+    }
 
 }
 
@@ -184,7 +184,8 @@ void MainMenu::viewStudents() const
 
 void MainMenu::viewProjects() const
 {
-    cout <<"TYPE          " << "SCORE    " << "DIFFICULTY    " << left << setw(Menu::maxTitleLength) << "TITLE" << "DESCRIPTION/n"
+    cout << "TYPE          " << "SCORE    " << "DIFFICULTY    " << left << setw(Menu::maxTitleLength) << "TITLE"
+         << "DESCRIPTION/n";
     for (unsigned int i = 0; i < projects.size(); ++i)
     {
         cout << projects[i];
@@ -213,22 +214,67 @@ void MainMenu::addStudent()
         {
             cerr << "Invalid date " << invDate.date << endl;
         }
-    } while(errorFlag);
+    } while (errorFlag);
     do
     {
-    cout << "Insert ID: ";
-    cin >> id;
+        cout << "Insert ID: ";
+        cin >> id;
+        //try if id number digits is smaller different than 8 and if the id already exists
         try
         {
 
         }
-    } while(errorFlag);
+        catch ()
+        {
+
+        }
+    } while (errorFlag);
     cout << "Insert Current Year: ";
     cin >> currentYear;
     cout << "Insert Class: ";
     cin >> yearClass;
 
+    normalizeName(name);
 
-        Person *p = new Student(name, date, id, currentYear, yearClass);
+    Person *p = new Student(name, date, id, currentYear, yearClass);
     people.push_back(p);
+}
+
+void MainMenu::addProject()
+{
+    string title;
+    unsigned int difficulty;
+    string description;
+
+    cout << "What Type is the Project: ";
+
+    cout << "Insert Title: ";
+    cin >> title;
+    normalizeName(title);
+    //try if existing title already
+    cout << "How difficult is this Theme? ";
+    cin >> difficulty;
+    cout << "Insert brief Description: ";
+    getline(cin, description);
+
+    Project *p = new Project();
+    projects.push_back(p);
+}
+
+void MainMenu::editProject()
+{
+    //idea: display all projects and make the user choose
+    cout << "Which Project would you like to edit?/n";
+    viewProjects();
+
+}
+
+void MainMenu::removeStudent()
+{
+    //use destructor?
+}
+
+void MainMenu::removeProject()
+{
+    //use destructor?
 }

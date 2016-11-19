@@ -1,9 +1,10 @@
-//
-// Created by ruile on 19/11/2016.
-//
+#ifndef UTILITIES_H
+#define UTILITIES_H
 
-#ifndef THEMES_UTILITIES_H
-#define THEMES_UTILITIES_H
+#include <string>
+
+using namespace std;
+
 
 template <class T>
 unsigned int numberDigits (T number)
@@ -17,4 +18,7 @@ unsigned int numberDigits (T number)
     return counter;
 }
 
-#endif //THEMES_UTILITIES_H
+void normalizeName(string &name); //removes the blank spaces before, between names and after a full name/title
+
+
+#endif //UTILITIES_H

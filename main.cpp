@@ -39,12 +39,16 @@ int main()
             menu.addStudent();
             break;
         case 4:
+            menu.addProject();
             break;
         case 5:
+            menu.editProject();
             break;
         case 6:
+            menu.removeStudent();
             break;
         case 7:
+            menu.removeProject();
             break;
         case 8:
             break;
