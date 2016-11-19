@@ -173,5 +173,10 @@ void MainMenu::loadAsciiArt()
 
 void MainMenu::viewStudents() const
 {
-
+    for (unsigned int i = 0; i < people.size(); ++i)
+    {
+        cout << left << setw(Menu::maxNameLength) << "NAME" << "DATA DE NASCIMENTO" << "       ID"
+             << "          CURRENT YEAR";
+        cout << people[i];
+    }
 }

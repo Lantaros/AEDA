@@ -1,5 +1,5 @@
 #include "Person.h"
-
+#include "Menu.h"
 
 
 //Person
@@ -12,12 +12,7 @@ Person::Person(const string &name, const Date &birthDate): name(name), birthDate
 { }
 
 
-/**
- * hgygyugyuggyyugyug
- * @param name person's name
- * @param birthDate 78yh
- * @return jinui
- */
+
 Person::Person(string &name, Date &birthDate) : name(name), birthDate(birthDate)
 { }
 
@@ -56,14 +51,11 @@ unsigned int Student::getCurentYear() const
 	return currentYear;
 }
 
-void Student::print() const
-{
-	cout << name << birthDate.getDate() << id;
-}
 
 ostream & Student::operator<<(ostream & out)
 {
-	out << name << birthDate.getDate() << id;
+    out << left << setw(Menu::maxNameLength) << name << birthDate.getDate() << "   " << id << "          "
+        << currentYear;
 		
 	return out;
 

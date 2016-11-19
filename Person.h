@@ -2,9 +2,10 @@
 #define __PERSON__
 
 //#include "Project.h"
-#include "Libraries.h"
+#include <string>
+#include <iomanip>
+#include <vector>
 #include "Date.h"
-
 
 using namespace std;
 

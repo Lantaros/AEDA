@@ -1,10 +1,11 @@
 #ifndef __DATE_H__
 #define __DATE_H__
 
-#include "Libraries.h"
 #include <sstream>
 #include <iostream>
 #include <ctime>
+
+using namespace std;
 
 class Date
 {

@@ -23,7 +23,6 @@ public:
 
     static unsigned int maxNameLength; //max size name of all persons
 
-    unsigned int getMaxNameLength(); //gets the max size
 
 protected:
     string displayOptions;
