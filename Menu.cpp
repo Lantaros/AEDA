@@ -1,6 +1,7 @@
 #include "Menu.h"
 
 unsigned int Menu::maxNameLength = 0;
+unsigned int Menu::maxTitleLength = 0;
 
 Menu::Menu()
 {}
@@ -170,10 +171,61 @@ void MainMenu::loadAsciiArt()
 
 void MainMenu::viewStudents() const
 {
+    cout << left << setw(Menu::maxNameLength) << "NAME" << "DATA DE NASCIMENTO" << "       ID/n"
+         << "          CURRENT YEAR";
     for (unsigned int i = 0; i < people.size(); ++i)
     {
-        cout << left << setw(Menu::maxNameLength) << "NAME" << "DATA DE NASCIMENTO" << "       ID"
-             << "          CURRENT YEAR";
         cout << people[i];
     }
+}
+
+void MainMenu::viewProjects() const
+{
+    cout <<"TYPE          " << "SCORE    " << "DIFFICULTY    " << left << setw(Menu::maxTitleLength) << "TITLE" << "DESCRIPTION/n"
+    for (unsigned int i = 0; i < projects.size(); ++i)
+    {
+        cout << projects[i];
+    }
+}
+
+void MainMenu::addStudent()
+{
+    string name, bDay;
+    unsigned int id, currentYear, yearClass;
+    Date date;
+    bool errorFlag;
+
+    cout << "Insert Name: ";
+    getline(cin, name);
+    do
+    {
+        errorFlag = false;
+        cout << "Insert Birthday (dd/mm/yyyy): ";
+        cin >> bDay;
+        try
+        {
+            date = Date(bDay);
+        }
+        catch (InvalidDate &invDate)
+        {
+            cerr << "Invalid date " << invDate.date << endl;
+        }
+    } while(errorFlag);
+    do
+    {
+    cout << "Insert ID: ";
+    cin >> id;
+        try
+        {
+
+        }
+    } while(errorFlag);
+    cout << "Insert Current Year: ";
+    cin >> currentYear;
+    cout << "Insert Class: ";
+    cin >> yearClass;
+
+
+        Person *p = new Student(name, date, id, currentYear, yearClass);
+    people.push_back(p);
 }

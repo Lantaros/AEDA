@@ -45,6 +45,9 @@ Date::Date(string date)
 	//Check if it's a leap year
 	this->checkLeap();
 
+    if(!this->isValid())
+        throw InvalidDate(date);
+
 }
 
 /**
@@ -155,6 +158,42 @@ void Date::checkLeap()
 		leap = false;
 }
 
+
+bool Date::isValid() const
+{
+    if (month >= 1 && month <= 12)
+    {
+        if (day >= 1 && day <= nDays())
+            return true;
+        else
+            return false;
+    }
+    else
+        return false;
+}
+
+unsigned int Date::nDays() const
+{
+    if (month == 4 || month == 6 || month == 9 || month == 11)
+        return 30;
+    else
+    if (month == 2)
+    {
+        if (leap)
+            return 29;
+        else
+            return 28;
+    }
+    else
+        return 31;
+}
+
+string InvalidDate::getDate() const
+{
+    return std::__cxx11::string();
+}
+
+
 //Operators overloading
 
 /**
@@ -224,5 +263,3 @@ bool Date::operator== (const Date &date) const
 	else
 		return false;
 }
-
-

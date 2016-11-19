@@ -9,35 +9,34 @@ class Project {
 public:
     string getTitle() const;
 
-
 private:
     string title, description;
     vector<unsigned int> usedYears;
     unsigned int difficulty;
+    unsigned int score;
     Date lastTimeUsed;
-    vector<Student *> group;
+    vector<Student *> group
+
 };
 
 class Research : public Project {
 public:
-
+    ostream& operator<<(ostream& out);
 private:
     string dataRepositoryFile;
 
 };
 
-class Analisys : public Project {
+class Analysis : public Project {
 public:
-
-
+    ostream& operator<<(ostream& out);
 private:
     vector<string> references;
 };
 
 class Development : public Project {
 public:
-
-
+    ostream& operator<<(ostream& out);
 private:
 };
 
