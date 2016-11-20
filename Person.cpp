@@ -65,7 +65,7 @@ unsigned int Student::getCurentYear() const
 
 ostream &Student::operator<<(ostream &out)
 {
-    out << left << setw(Menu::maxNameLength) << name << birthDate.getDate() << "   " << id << "          "
+    out << left << setw(MainMenu::maxNameLength) << name << birthDate.getDate() << "   " << id << "          "
         << currentYear;
 
     return out;
@@ -74,7 +74,7 @@ ostream &Student::operator<<(ostream &out)
 
 void Student::print() const
 {
-    cout << left << setw(Menu::maxNameLength) << name << birthDate.getDate() << "   " << id << "          "
+    cout << left << setw(MainMenu::maxNameLength) << name << birthDate.getDate() << "   " << id << "          "
          << currentYear;
 }
 

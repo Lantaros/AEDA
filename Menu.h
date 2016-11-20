@@ -19,24 +19,13 @@ class Menu
 public:
 	Menu();
 
-    Menu(string displays);
-	virtual ~Menu();
 
-    void printOptions() const; //prints the displayOptions
-
-    static unsigned int maxNameLength; //max size name of all persons
-    static unsigned int maxTitleLength; //max size of all projects title
-
-protected:
-    string displayOptions;
 };
 
 
-class MainMenu : public Menu
+class MainMenu
 {
 public:
-    MainMenu(string displays);
-
     //Loads
     void loadPeopleFile(string fileName);
 
@@ -65,7 +54,6 @@ public:
 			//TIER 2
 			void addStudent(); //add a student to the people vector
 			void addProject(); //add a complete project to the projects vector
-		void displayStudentsYear() const;
 			//TIER 2
 			void displaySpecificStudentYear() const;
 	        	//TIER3
@@ -96,6 +84,10 @@ public:
     AcademicYear aYears;
 
     string asciiArt;
+
+    //Name Lengths
+    static unsigned int maxNameLength; //max size name of all persons
+    static unsigned int maxTitleLength; //max size of all projects title
 
 
 };

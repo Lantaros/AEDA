@@ -1,22 +1,8 @@
 #include "Menu.h"
 
-unsigned int Menu::maxNameLength = 0;
-unsigned int Menu::maxTitleLength = 0;
+unsigned int MainMenu::maxNameLength = 0;
+unsigned int MainMenu::maxTitleLength = 0;
 
-Menu::Menu()
-{}
-
-
-Menu::~Menu()
-{}
-
-Menu::Menu(string displays)
-{ displayOptions = displays; }
-
-void Menu::printOptions() const
-{
-    cout << displayOptions;
-}
 
 void MainMenu::loadPeopleFile(string fileName)
 {
@@ -78,8 +64,8 @@ void MainMenu::loadThemesFile(string fileName)
         getline(file, description, '\n');
 
 
-        if (title.size() > Menu::maxTitleLength)
-            Menu::maxTitleLength = static_cast<unsigned int> (title.size());
+        if (title.size() > MainMenu::maxTitleLength)
+            MainMenu::maxTitleLength = static_cast<unsigned int> (title.size());
 
         Theme t(type, title, description, stoi(score), stoi(difficulty));
 
@@ -121,8 +107,6 @@ void MainMenu::loadProjects(string fileNames)
         throw FileNotFound(fileNames);
 
 
-
-
     while (getline(filesName, projectFileName))
     {
         ifstream projectFstream;
@@ -143,7 +127,9 @@ void MainMenu::loadProjects(string fileNames)
 
         getline(projectFstream, trash);
         normalizeType(type);
-        cout << type << endl;
+
+        cout << type << " " << type.size() << endl;
+
         if (type == "RESEARCH")
         {
             while (getline(projectFstream, line) && line != "DONE BY")
@@ -151,23 +137,19 @@ void MainMenu::loadProjects(string fileNames)
 
             project = new Research(title, stoi(year), body, references);
         }
+        else if (type == "ANALYSIS")
+        {
+
+            while (getline(projectFstream, line) && line != "DONE BY")
+                data += line + "\n";
+
+            project = new Analysis(title, stoi(year), body, data);
+        }
         else
         {
-            if (type == "ANALYSIS")
-            {
-                while (getline(projectFstream, line) && line != "DONE BY")
-                    data += line + "\n";
-
-                project = new Analysis(title, stoi(year), body, data);
-            }
-            else
-            {
-                project = new Development(title, stoi(year),
-                                          body); //A year is always posiive, we won't be loosing information
-                //getline(projectFstream, trash); //Gets rid of "DONE BY"
-            }
+            project = new Development(title, stoi(year),
+                                      body); //A year is always posiive, we won't be loosing information
         }
-
 
         //Loads up group of Students
         while (getline(projectFstream, name))
@@ -211,7 +193,7 @@ void MainMenu::loadFiles()
     }
     catch (InexistingStudent &inexStudent)
     {
-        cout << inexStudent.name;
+        cout << " The Student '" << inexStudent.name << "' does not exist:";
     }
 }
 
@@ -309,9 +291,6 @@ Person *MainMenu::findPersonName(const string &name)//Alterar
 }
 
 
-MainMenu::MainMenu(string displays) : Menu(displays)
-{}
-
 void MainMenu::loadAsciiArt()
 {
     ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\AsciiArt.txt");
@@ -334,7 +313,7 @@ void MainMenu::loadAsciiArt()
 
 void MainMenu::viewStudents() const
 {
-    cout << left << setw(Menu::maxNameLength) << "NAME" << "DATA DE NASCIMENTO" << "       ID/n"
+    cout << left << setw(MainMenu::maxNameLength) << "NAME" << "DATA DE NASCIMENTO" << "       ID/n"
          << "          CURRENT YEAR";
     for (unsigned int i = 0; i < people.size(); ++i)
     {
@@ -344,7 +323,7 @@ void MainMenu::viewStudents() const
 
 void MainMenu::viewProjects() const
 {
-    cout << "TYPE          " << "SCORE    " << "DIFFICULTY    " << left << setw(Menu::maxTitleLength) << "TITLE"
+    cout << "TYPE          " << "SCORE    " << "DIFFICULTY    " << left << setw(MainMenu::maxTitleLength) << "TITLE"
          << "DESCRIPTION/n";
     for (unsigned int i = 0; i < projects.size(); ++i)
     {
