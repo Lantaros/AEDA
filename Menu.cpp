@@ -21,46 +21,39 @@ void Menu::printOptions() const
 void MainMenu::loadPeopleFile(string fileName)
 {
     string stringID, name, date, projects;
-	Date bDay;
+    Date bDay;
     unsigned int id, currentYear, yearClass;
-    istringstream iss;
 
-    ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ fileName + ".txt");//fileName + ".txt");
+    ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\" + fileName + ".txt");//fileName + ".txt");
     //ifstream file("Students.txt");
-	if (!file.is_open())
-		throw FileNotFound(fileName);
+    if (!file.is_open())
+        throw FileNotFound(fileName);
 
     //Ignore 1st line - Structure
-    getline(file,name);
+    getline(file, name);
 
-	while (file.good())
-	{
-		getline(file, name, ';');
-		getline(file, date, ';');
-		getline(file, stringID);
+    while (file.good())
+    {
+        getline(file, name, ';');
+        getline(file, date, ';');
+        getline(file, stringID, ';');
 
         file >> currentYear;
+        file.ignore(); //Ignores delimiter ';'
         file >> yearClass;
+        file.ignore(); //Ignores the newline '\n'
 
-        //Projects
-        getline(file, projects, '\n');
-        iss.str(projects);
-
-/*        while(!iss.eof())
-        {
-
-        }*/
-
-		bDay = Date(date);
+        bDay = Date(date);
         id = static_cast<unsigned int> (stoi(stringID));
         if (name.size() > MainMenu::maxNameLength)
             MainMenu::maxNameLength = (unsigned int) name.size();
 
         Person *p = new Student(name, bDay, id, currentYear, yearClass);
 
-		people.push_back(p);
-	}
+        people.push_back(p);
+    }
 
+    file.close();
 }
 
 void MainMenu::loadThemesFile(string fileName)
@@ -68,26 +61,29 @@ void MainMenu::loadThemesFile(string fileName)
     string type, score, title, difficulty, description;
 
 
-    ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ fileName + ".txt");//fileName + ".txt");
+    ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\" + fileName + ".txt");//fileName + ".txt");
 
     if (!file.is_open())
         throw FileNotFound(fileName);
 
     //Ignore 1st line - Structure
-    getline(file,name);
+    getline(file, type);
 
     Theme *t;
 
-    while(file.good())
+    while (file.good())
     {
         getline(file, type, ';'); //Type
-        getline(file,score, ';');
+        getline(file, score, ';');
         getline(file, title, ';');
         getline(file, difficulty, ';');
         getline(file, description, ';');
 
 
-        Theme t(type, stoi(score), title, stoi(difficulty));
+        if (title.size() > Menu::maxTitleLength)
+            Menu::maxTitleLength = static_cast<unsigned int> (title.size());
+
+        Theme t(type, title, description, stoi(score), stoi(difficulty));
 
         themes.push_back(t);
         /*if(type == "R")
@@ -107,63 +103,108 @@ void MainMenu::loadThemesFile(string fileName)
 
     }
 
-
+    file.close();
 }
 
 void MainMenu::loadProjects(string fileNames)
 {
-    string projectFileName, trash, line = "a";
-    string  type, year, title, body;
-    ifstream filesName("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ fileNames + ".txt");//fileName + ".txt");
+    Project *project;
+    string projectFileName, trash, line = "non-empty", name;
+    //All Projects
+    string type, year, title, body;
+    //Research
+    string references;
+    //Analysis
+    string data;
+
+
+    ifstream filesName("C:\\Users\\ruile\\Desktop\\aedaP1\\" + fileNames + ".txt");//fileName + ".txt");
     if (!filesName.is_open())
         throw FileNotFound(fileNames);
 
-    ifstream project;
+    ifstream projectFstream;
 
 
-    while(getline(filesName,projectFileName))
+    while (getline(filesName, projectFileName))
     {
-        project.open("C:\\Users\\ruile\\Desktop\\aedaP1\\"+ projectFileName + ".txt");
-        if (!project.is_open())
+        projectFstream.open("C:\\Users\\ruile\\Desktop\\aedaP1\\" + projectFileName + ".txt");
+        if (!projectFstream.is_open())
             throw FileNotFound(projectFileName);
 
-        getline(project, type);
-        getline(project, trash); //Ignore file Information
-        getline(project, year);
-        getline(project, trash);
-        getline(project, title);
+        getline(projectFstream, type);
+        getline(projectFstream, trash); //Ignore file Information
+        getline(projectFstream, year);
+        getline(projectFstream, trash);
+        getline(projectFstream, title);
 
 
-        while(getline(project, line) && line !="")
-          body += line + "\n";
+        while (getline(projectFstream, line) && line != "")
+            body += line + "\n";
 
+        getline(projectFstream, trash);
 
-
-        if(type == "RESEARCH")
+        if (type == "RESEARCH")
         {
+            while (getline(projectFstream, line) && line != "DONE BY")
+                references += line + "\n";
 
+            project = new Research(title, stoi(year), body, references);
+        }
+        else if (type == "ANALYSIS")
+        {
+            while (getline(projectFstream, line) && line != "DONE BY")
+                data += line + "\n";
+
+            project = new Analysis(title, stoi(year), body, data);
         }
         else
-            if(type == "ANALYSIS")
-            {
-
-            }
+            project = new Development(title, stoi(year), body); //A year is always posiive,
+        // we won't be loosing information
+        while (getline(projectFstream, name))
+        {
+            normalizeName(name);
+            Person *student = findPersonName(name);
+            if (student == nullptr)
+                throw InexistingStudent(name);
             else
-                if(type == "DEVELOPMENT")
-                {
+                project->addStudent(student);//Adds a student to the group
+        }
 
-                }
 
         //Ready next iteration (Reset variables)
         body = "";
-        line = "check";
+        line = "non-empty";
+        references = "";
+        data = "";
 
+        MainMenu::projects.push_back(project);
 
+        projectFstream.close();
     }
+    filesName.close();
 }
 
 void MainMenu::loadFiles()
 {
+    FileNames fileNames = {"Students", "ProjectFileNames", "ProjectThemes"};
+
+    try
+    {
+        loadPeopleFile(fileNames.peopleFile);
+        loadProjects(fileNames.projectsFile);
+        loadThemesFile(fileNames.themeIndexFile);
+    }
+    catch (FileNotFound &fileNFound)
+    {
+        cout << fileNFound.name;
+    }
+    catch (InexistingStudent &inexStudent)
+    {
+        cout << inexStudent.name;
+    }
+}
+
+/*{
     FileNames fileNames;
 
     bool fileError;
@@ -243,7 +284,19 @@ void MainMenu::loadFiles()
         cerr << "Excceded maximum number of atempts\n";
 
 
+}*/
+
+Person *MainMenu::findPersonName(const string &name)//Alterar
+{
+    for (unsigned int i = 0; i < people.size(); i++)
+    {
+        if (people[i]->getName() == name)
+            return people[i];
+    }
+
+    return nullptr;
 }
+
 
 MainMenu::MainMenu(string displays) : Menu(displays)
 {}
@@ -310,7 +363,7 @@ void MainMenu::addStudent()
         {
             cerr << "Invalid date " << invDate.date << endl;
         }
-    } while(errorFlag);
+    } while (errorFlag);
     do
     {
         cout << "Insert ID: ";
@@ -325,13 +378,15 @@ void MainMenu::addStudent()
         {
             cerr << "The Student ID, must be a 8 digits number";
         }
-    } while(errorFlag);
+    } while (errorFlag);
     cout << "Insert Current Year: ";
     cin >> currentYear;
     cout << "Insert Class: ";
     cin >> yearClass;
 
 
-        Person *p = new Student(name, date, id, currentYear, yearClass);
+    Person *p = new Student(name, date, id, currentYear, yearClass);
     people.push_back(p);
 }
+
+

@@ -188,11 +188,6 @@ unsigned int Date::nDays() const
         return 31;
 }
 
-string InvalidDate::getDate() const
-{
-    return std::__cxx11::string();
-}
-
 
 //Operators overloading
 
@@ -251,11 +246,7 @@ bool Date::operator> (const Date &date) const
 	return !this->operator <(date);
 }
 
-/**
- *
- * @param date
- * @returnv
- */
+
 bool Date::operator== (const Date &date) const
 {
 	if (Date::day == date.day && Date::month == date.month && Date::year == date.year)

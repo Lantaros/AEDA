@@ -6,6 +6,8 @@
 #include "Project.h"
 #include "Date.h"
 #include "AcademicYear.h"
+#include "Theme.h"
+#include "Exceptions.h"
 #include "utilities.h"
 #include <iomanip>
 #include <fstream>
@@ -29,6 +31,7 @@ protected:
     string displayOptions;
 };
 
+
 class MainMenu : public Menu
 {
 public:
@@ -36,10 +39,14 @@ public:
 
     //Loads
     void loadPeopleFile(string fileName);
+
+    void loadProjects(string fileNames);
 	void loadThemesFile(string fileName);
 
 	void loadAsciiArt();
     void loadFiles();
+
+    Person *findPersonName(const string &name);
 
 	//Subs Menus
 	//TIER 0
@@ -85,29 +92,12 @@ public:
 
 	vector<Person *> people;
     vector<Project *> projects;
-	vector<string> themes;
+    vector<Theme> themes;
     AcademicYear aYears;
 
     string asciiArt;
 
 
-};
-
-//Exceptions
-class FileNotFound
-{
-public:
-	FileNotFound(string fileName)
-	{
-		name = fileName;
-	}
-
-	string name;
-};
-
-struct FileNames
-{
-	string peopleFile, projectsFile, themeIndexFile;
 };
 
 #endif

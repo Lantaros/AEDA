@@ -2,28 +2,31 @@
 
 //Prototypes
 
+
+static MainMenu mainMenu("Hello Professor, Welcome\n\n\n\n\n\n"
+                                 "What option would you like to choose?\n\n"
+                                 "1: View all Students\n"
+                                 "2: View all Projects\n"
+                                 "3: Add Students\n"
+                                 "4: Add Projects\n"
+                                 "5: Edit Projects\n"
+                                 "6: Remove Students\n"
+                                 "7: Remove Projects\n"
+                                 "8: Choose the best current Project\n"
+                                 "0: Exit Program\n");
+
+
 /**
  * Main function
  * @return
  */
 int main()
 {
-    unsigned int choice;
-    static MainMenu mainMenu("Hello Professor, Welcome\n\n\n\n\n\n"
-                                     "What option would you like to choose?\n\n"
-                                     "1: View all Students\n"
-                                     "2: View all Projects\n"
-                                     "3: Add Students\n"
-                                     "4: Add Projects\n"
-                                     "5: Edit Projects\n"
-                                     "6: Remove Students\n"
-                                     "7: Remove Projects\n"
-                                     "8: Choose the best current Project\n"
-                                     "0: Exit Program\n");
+    unsigned int choice = 0;
 
     mainMenu.loadAsciiArt();
-    //mainMenu.loadFiles();
-    cout << mainMenu.asciiArt;
+    mainMenu.loadFiles();
+    //cout << mainMenu.asciiArt;
     /*mainMenu.printOptions();*/
 
 

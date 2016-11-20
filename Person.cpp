@@ -8,16 +8,22 @@
 *
 *
 */
-Person::Person(const string &name, const Date &birthDate) : name(name), birthDate(birthDate)
+Person::Person(const string &name, const Date &birthDate, const unsigned int &id) : name(name), birthDate(birthDate),
+                                                                                    id(id)
 {}
 
 
-Person::Person(string &name, Date &birthDate) : name(name), birthDate(birthDate)
+Person::Person(string &name, Date &birthDate, unsigned int &id) : name(name), birthDate(birthDate), id(id)
 {}
 
 string Person::getName() const
 {
     return name;
+}
+
+unsigned int Person::getId() const
+{
+    return id;
 }
 
 unsigned int Person::getAge() const
@@ -26,19 +32,24 @@ unsigned int Person::getAge() const
     return birthDate.getYear() - today.getYear();
 }
 
+bool Person::operator==(const Person &pRHS) const
+{
+    return id == pRHS.id;
+}
+
 
 
 
 //Student
 
 Student::Student(const string &name, const Date &birthDate, const unsigned int &id, const unsigned int &currentYear,
-                 const unsigned int &yearClass) : Person(name, birthDate), id(id)
+                 const unsigned int &yearClass) : Person(name, birthDate, id)
 {
     this->currentYear = currentYear;
     this->yearClass = yearClass;
 }
 
-Student::Student(string &name, Date &birthDate, unsigned int &id) : Person(name, birthDate), id(0)
+Student::Student(string &name, Date &birthDate, unsigned int &id) : Person(name, birthDate, id)
 {}
 
 

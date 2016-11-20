@@ -5,6 +5,8 @@
 #include <iostream>
 #include <ctime>
 
+#include "Exceptions.h"
+
 using namespace std;
 
 class Date
@@ -43,14 +45,4 @@ private:
     void checkLeap();
     unsigned int nDays() const;
 };
-
-
-class InvalidDate
-{
-public:
-    InvalidDate(string date){this->date = date;}
-    string date;
-    string getDate() const;
-};
-
 #endif
