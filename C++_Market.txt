@@ -1,0 +1,16 @@
+DEVELOPMENT
+YEAR
+2013
+TITLE
+C++ Market
+CODE
+int main()
+{
+	cout << "Hello World\n";
+	return 0;
+}
+
+DONE BY
+Luis Martins
+Carlos Freitas
+Rafael Damasceno

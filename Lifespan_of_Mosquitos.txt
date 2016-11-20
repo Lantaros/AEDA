@@ -1,0 +1,27 @@
+﻿ANALYSIS
+YEAR
+2014
+TITLE
+Lifespan of Mosquitos
+CONTENT
+Like all flies, mosquitoes go through four stages in their lifecycles: egg, larva, pupa, and adult or imago. In most species, adult females lay their eggs in stagnant water; some lay eggs near the water's edge; others attach their eggs to aquatic plants. Each species selects the situation of the water into which it lays its eggs and does so according to its own ecological adaptations. Some are generalists and are not very fussy. Some breed in lakes, some in temporary puddles. Some breed in marshes, some in salt-marshes. Among those that breed in salt water, some are equally at home in fresh and salt water up to about one-third the concentration of seawater, whereas others must acclimatize themselves to the salinity.[25] Such differences are important because certain ecological preferences keep mosquitoes away from most humans, whereas other preferences bring them right into houses at night.
+Some species of mosquitoes prefer to breed in phytotelmata (natural reservoirs on plants), such as rainwater accumulated in holes in tree trunks, or in the leaf-axils of bromeliads. Some specialize in the liquid in pitchers of particular species of pitcher plants, their larvae feeding on decaying insects that had drowned there or on the associated bacteria; the genus Wyeomyia provides such examples � the harmless Wyeomyia smithii breeds only in the pitchers of Sarracenia purpurea.
+However, some of the species of mosquitoes that are adapted to breeding in phytotelmata are dangerous disease vectors. 
+In nature, they might occupy anything from a hollow tree trunk to a cupped leaf. Such species typically take readily to breeding in artificial water containers. 
+Such casual puddles are important breeding places for some of the most serious disease vectors, such as species of Aedes that transmit dengue and yellow fever. 
+Some with such breeding habits are disproportionately important vectors because they are well-placed to pick up pathogens from humans and pass them on. 
+In contrast, no matter how voracious, mosquitoes that breed and feed mainly in remote wetlands and salt marshes may well remain uninfected, and if they do happen to become infected with a relevant pathogen, might seldom encounter humans to infect, in turn.
+The first three stages�egg, larva, and pupa�are largely aquatic. These stages typically last 5 to 14 days, depending on the species and the ambient temperature, but there are important exceptions. 
+Mosquitoes living in regions where some seasons are freezing or waterless spend part of the year in diapause; they delay their development, typically for months, and carry on with life only when there is enough water or warmth for their needs. 
+For instance, Wyeomyia larvae typically get frozen into solid lumps of ice during winter and only complete their development in spring. The eggs of some species of Aedes remain unharmed in diapause if they dry out, and hatch later when they are covered by water.
+Eggs hatch to become larvae, which grow until they are able to change into pupae. The adult mosquito emerges from the mature pupa as it floats at the water surface. Bloodsucking mosquitoes, depending on species, sex, and weather conditions, have potential adult lifespans ranging from as short as a week to as long as several months.
+Some species can overwinter as adults in diapause.
+
+DATA
+Boiled mosquito to 70C, dead in 2sec
+Freezed mosquito to -20C, dead in 1min and 45 sec
+Put mosquito under water, dead in 45sec
+DONE BY
+Hugo Neves
+Bernardo Ramos
+Francisco Silva

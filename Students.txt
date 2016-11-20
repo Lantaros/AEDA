@@ -1,0 +1,10 @@
+Name;dateOfBirth;id;currentYear;class
+Rui Andre Rebolo Fernandes Leixo;31/03/1997;201504818;2;5
+Artur Zeferino;12/03/1997;201505671;2;7
+Diogo Almeida;08/05/1997;201505318;2;2
+Luis Martins;12/5/1997;200891541;2;1
+Carlos Freitas;16/07/1994;201350619;2;4
+Rafael Damasceno;08/10/1996;201103363;2;5
+Hugo Neves;17/12/1996;200577853;3;6
+Bernardo Ramos;14/08/1996;201512876;2;3
+Francisco Silva;14/08/1997;201031082;2;6
