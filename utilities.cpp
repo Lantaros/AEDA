@@ -37,3 +37,9 @@ void normalizeName(string &name)
     }
 
 }
+
+void normalizeType(string &type)
+{
+    while ((type[0] < 65 && type[0] > 90) || (type[0] < 97 && type[0] > 122))
+        type.erase(type.begin());
+}

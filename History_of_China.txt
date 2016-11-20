@@ -1,4 +1,4 @@
-RESEARCH
+﻿RESEARCH
 YEAR
 2015
 TITLE
@@ -12,6 +12,7 @@ This is one of multiple periods of failed statehood in Chinese history, the most
 Much of Chinese culture, literature and philosophy further developed during the Zhou dynasty (1046 256 BC).
 The Zhou dynasty began to bow to external and internal pressures in the 8th century BC, and the kingdom eventually broke apart into smaller states, beginning in the Spring and Autumn period and reaching full expression in the Warring States period. 
 This is one of multiple periods of failed statehood in Chinese history, the most recent being the Chinese Civil War that started in 1927.
+
 REFERENCES
 https://en.wikipedia.org/wiki/History_of_China
 DONE BY

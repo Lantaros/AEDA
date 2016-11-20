@@ -69,15 +69,13 @@ void MainMenu::loadThemesFile(string fileName)
     //Ignore 1st line - Structure
     getline(file, type);
 
-    Theme *t;
-
     while (file.good())
     {
         getline(file, type, ';'); //Type
         getline(file, score, ';');
         getline(file, title, ';');
         getline(file, difficulty, ';');
-        getline(file, description, ';');
+        getline(file, description, '\n');
 
 
         if (title.size() > Menu::maxTitleLength)
@@ -122,11 +120,12 @@ void MainMenu::loadProjects(string fileNames)
     if (!filesName.is_open())
         throw FileNotFound(fileNames);
 
-    ifstream projectFstream;
+
 
 
     while (getline(filesName, projectFileName))
     {
+        ifstream projectFstream;
         projectFstream.open("C:\\Users\\ruile\\Desktop\\aedaP1\\" + projectFileName + ".txt");
         if (!projectFstream.is_open())
             throw FileNotFound(projectFileName);
@@ -136,13 +135,15 @@ void MainMenu::loadProjects(string fileNames)
         getline(projectFstream, year);
         getline(projectFstream, trash);
         getline(projectFstream, title);
+        getline(projectFstream, trash); //Body tag
 
 
         while (getline(projectFstream, line) && line != "")
             body += line + "\n";
 
         getline(projectFstream, trash);
-
+        normalizeType(type);
+        cout << type << endl;
         if (type == "RESEARCH")
         {
             while (getline(projectFstream, line) && line != "DONE BY")
@@ -150,16 +151,25 @@ void MainMenu::loadProjects(string fileNames)
 
             project = new Research(title, stoi(year), body, references);
         }
-        else if (type == "ANALYSIS")
-        {
-            while (getline(projectFstream, line) && line != "DONE BY")
-                data += line + "\n";
-
-            project = new Analysis(title, stoi(year), body, data);
-        }
         else
-            project = new Development(title, stoi(year), body); //A year is always posiive,
-        // we won't be loosing information
+        {
+            if (type == "ANALYSIS")
+            {
+                while (getline(projectFstream, line) && line != "DONE BY")
+                    data += line + "\n";
+
+                project = new Analysis(title, stoi(year), body, data);
+            }
+            else
+            {
+                project = new Development(title, stoi(year),
+                                          body); //A year is always posiive, we won't be loosing information
+                //getline(projectFstream, trash); //Gets rid of "DONE BY"
+            }
+        }
+
+
+        //Loads up group of Students
         while (getline(projectFstream, name))
         {
             normalizeName(name);
@@ -172,6 +182,7 @@ void MainMenu::loadProjects(string fileNames)
 
 
         //Ready next iteration (Reset variables)
+        type = "";
         body = "";
         line = "non-empty";
         references = "";

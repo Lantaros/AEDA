@@ -158,7 +158,10 @@ void Date::checkLeap()
 		leap = false;
 }
 
-
+/**
+ *
+ * @return  True if date object is valid
+ */
 bool Date::isValid() const
 {
     if (month >= 1 && month <= 12)

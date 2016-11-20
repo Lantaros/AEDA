@@ -1,4 +1,4 @@
-ANALYSIS
+﻿ANALYSIS
 YEAR
 2014
 TITLE
@@ -16,6 +16,7 @@ Mosquitoes living in regions where some seasons are freezing or waterless spend 
 For instance, Wyeomyia larvae typically get frozen into solid lumps of ice during winter and only complete their development in spring. The eggs of some species of Aedes remain unharmed in diapause if they dry out, and hatch later when they are covered by water.
 Eggs hatch to become larvae, which grow until they are able to change into pupae. The adult mosquito emerges from the mature pupa as it floats at the water surface. Bloodsucking mosquitoes, depending on species, sex, and weather conditions, have potential adult lifespans ranging from as short as a week to as long as several months.
 Some species can overwinter as adults in diapause.
+
 DATA
 Boiled mosquito to 70C, dead in 2sec
 Freezed mosquito to -20C, dead in 1min and 45 sec

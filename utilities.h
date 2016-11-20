@@ -19,6 +19,6 @@ unsigned int numberDigits(T number)
 }
 
 void normalizeName(string &name); //removes the blank spaces before, between names and after a full name/title
-
+void normalizeType(string &type); //Removes strange characters
 
 #endif //THEMES_UTILITIES_H
