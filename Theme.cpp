@@ -25,4 +25,11 @@ string Theme::getDescription() const
     return description;
 }
 
+/*ostream &operator<<(ostream& out, const Theme  &t)
+{
+    out <<t.type <<" " <<t.title <<" " << t.score <<" " <<t.difficulty   <<"\n\nDescription\n\n" <<t.description;
+
+    return out;
+}*/
+
 

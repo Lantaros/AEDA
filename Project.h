@@ -7,10 +7,13 @@
 
 class Project
 {
+    friend class MainMenu; //Workaround
 public:
     Project(string &title, unsigned int year, string &body);
 
     string getTitle() const;
+
+    unsigned int getYear() const;
 
     //Add Members
     void addStudent(Person *s);

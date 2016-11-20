@@ -2,6 +2,7 @@
 #define UTILITIES_H
 
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -20,5 +21,8 @@ unsigned int numberDigits(T number)
 
 void normalizeName(string &name); //removes the blank spaces before, between names and after a full name/title
 void normalizeType(string &type); //Removes strange characters
+void waitInput();
+
+void readOpt(unsigned int &n);
 
 #endif //THEMES_UTILITIES_H

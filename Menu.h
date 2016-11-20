@@ -14,14 +14,6 @@
 
 #define NTRIES 4
 
-class Menu
-{
-public:
-	Menu();
-
-
-};
-
 
 class MainMenu
 {
@@ -30,66 +22,97 @@ public:
     void loadPeopleFile(string fileName);
 
     void loadProjects(string fileNames);
-	void loadThemesFile(string fileName);
 
-	void loadAsciiArt();
+    void loadThemesFile(string fileName);
+
+    void loadAsciiArt();
+
     void loadFiles();
+
+    void setUpAYears();
 
     Person *findPersonName(const string &name);
 
-	//Subs Menus
-	//TIER 0
-	void introMenu(); // show @ start
-	void chooseYear();
-	void shutDown();
-	//ALL YEARS
-		//TIER 1
-		void displayAllProjects() const;
-		void displayAllStudents() const;
+    //Displays
 
+    //Subs Menus
+    //TIER 0
+    void menu(); // show @ start
+    void shutDown();
 
-	//SPECIFIC AYEAR
-		//TIER 1
-		void addOrRemoveMenu();
-			//TIER 2
-			void addStudent(); //add a student to the people vector
-			void addProject(); //add a complete project to the projects vector
-			//TIER 2
-			void displaySpecificStudentYear() const;
-	        	//TIER3
-				void displayStudentProjects() const;
-			void displayAllStudentsYear() const;
-		void displayProjectsYear() const;
-		void themesOptions();
-			//TIER 2
-			void displayThemes() const;
-			void addTheme();
-			void removeTheme();
-		void checkCompatibility();
-			//TIER 2
-			void top5Results();
-			void allResults();
+    //ALL YEARS
+    void allYears();
 
-	//Prints
+    //TIER 1
+    void generalDisplays();
+
+    void displayAllProjects() const;
+
+    void displayAllStudents() const;
+
+    void displayThemes() const;
+
+    void manageThemes();
+
+    void addTheme();
+
+    void removeTheme();
+
+    void addStudent();
+
+    void compactabilityAlgorithm();
+
+    //SPECIFIC AYEAR
+    void specificYear();
+    //TIER 1
+    //TIER 2
+
+    //TIER3
+    void displayStudentProjects() const;
+
+    void displayProjectsYear() const;
+
+    void themesOptions();
+    //TIER 2
+
+    void checkCompatibility();
+
+    //TIER 2
+    void top5Results();
+
+    void allResults();
+
+    //Prints
     void printAsciiArt() const;
+
     void viewStudents() const; //show all students on the people vector
     void viewProjects() const; //show all projects on the projects vector
 
 
+    //Compactability
+    int allPercentage(const vector<Person *> &group);
 
+    int PointsRun(Theme &theme, const vector<Person *> &group);
 
-	vector<Person *> people;
-    vector<Project *> projects;
-    vector<Theme> themes;
-    AcademicYear aYears;
+    int PointsToPercentage(int points);
 
-    string asciiArt;
+    vector<Person *> projPreviousStudents(Theme &t);
 
+    //Utilities
     //Name Lengths
     static unsigned int maxNameLength; //max size name of all persons
     static unsigned int maxTitleLength; //max size of all projects title
+    bool aYearExists(unsigned int &year);
+
+    void checkIfMostRecent(const string &title, const unsigned int year);
 
 
+    vector<Person *> people;
+    vector<Project *> projects;
+    vector<Theme> themes;
+    vector<AcademicYear> aYears;
+
+    string asciiArt;
 };
 
 #endif

@@ -116,9 +116,11 @@ void MainMenu::loadProjects(string fileNames)
 
         getline(projectFstream, type);
         getline(projectFstream, trash); //Ignore file Information
+
         getline(projectFstream, year);
         getline(projectFstream, trash);
         getline(projectFstream, title);
+        checkIfMostRecent(title, stoi(year));
         getline(projectFstream, trash); //Body tag
 
 
@@ -279,15 +281,27 @@ void MainMenu::loadFiles()
 
 }*/
 
-Person *MainMenu::findPersonName(const string &name)//Alterar
+void MainMenu::setUpAYears()
 {
-    for (unsigned int i = 0; i < people.size(); i++)
+    bool addedFlag;
+    for (unsigned int p = 0; p < projects.size(); p++)
     {
-        if (people[i]->getName() == name)
-            return people[i];
-    }
+        addedFlag = false;
+        for (unsigned int a = 0; a < aYears.size(); a++)
+        {
+            if (projects[p]->getYear() == aYears[a].getYear())
+            {
+                aYears[a].addProject(projects[p]);
+                addedFlag = true;
+            }
+        }
 
-    return nullptr;
+        if (!addedFlag)//If Academic year when project was done, does't exist
+        {
+            aYears.push_back(AcademicYear(projects[p]->getYear()));//Create a new Academic Year
+            aYears[aYears.size() - 1].addProject(projects[p]);
+        }
+    }
 }
 
 
@@ -311,25 +325,194 @@ void MainMenu::loadAsciiArt()
     file.close();
 }
 
-void MainMenu::viewStudents() const
+//MainMenu
+void MainMenu::menu()
+{
+
+    unsigned int choice;
+    bool exitFlag = false;
+    do
+    {
+        system("CLS");
+        cout << "Choose an Academic Year\n\n";
+        cout << "1. All Years\n";
+        cout << "2. Specific Year\n";
+        cout << "\n\n0. Exit\n";
+
+        cout << "Your choice: ";
+
+        readOpt(choice);
+
+        switch (choice)
+        {
+            case 1:
+                allYears();
+                break;
+            case 2:
+                try
+                {
+                    specificYear();
+                }
+                catch (InexistingAYear &y)
+                {
+                    cout << "\n\nThe academic year (" << y.year << "), does't exist\n\n";
+                }
+                break;
+            case 0:
+                exitFlag = true;
+                break;
+            default:
+                cout << "The option you typed isn't avaiable";
+        }
+    } while (!exitFlag);
+}
+
+//All Years
+void MainMenu::allYears()
+{
+
+    unsigned int choice;
+    bool exitFlag = false;
+    do
+    {
+        system("CLS");
+        cout << "All Years\n\n";
+        cout << "1. Displays\n";
+        cout << "2. Manage Themes\n";
+        cout << "3. Add Student\n";
+        cout << "4. Compactability Algorithm\n";
+        cout << "\n\n0. Go Back\n";
+
+        cout << "Your choice: ";
+        readOpt(choice);
+
+        switch (choice)
+        {
+            case 1:
+                generalDisplays();
+                break;
+            case 2:
+                //manageThemes();
+                break;
+            case 3:
+                addStudent();
+                break;
+            case 4:
+                compactabilityAlgorithm();
+                waitInput();
+                break;
+            case 0:
+                exitFlag = true;
+                break;
+            default:
+                cout << "The option you typed isn't avaiable";
+        }
+    } while (!exitFlag);
+}
+
+
+//Displays
+void MainMenu::generalDisplays()
+{
+    unsigned int choice;
+    bool exitFlag = false;
+
+    do
+    {
+        system("CLS");
+        cout << "Displays\n\n";
+        cout << "1. Display all Students\n";
+        cout << "2. Display all Projects\n";
+        cout << "3. Display all Themes\n";
+
+        cout << "\n\n0. Go Back\n";
+
+        cout << "Your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                displayAllStudents();
+                waitInput();
+                break;
+            case 2:
+                displayAllProjects();
+                cin.get();
+                break;
+            case 3:
+                displayThemes();
+                cin.get();
+                break;
+            case 0:
+                exitFlag = true;
+                break;
+            default:
+                cout << "The option you typed isn't avaiable";
+        }
+    } while (!exitFlag);
+}
+
+void MainMenu::displayAllStudents() const
 {
     cout << left << setw(MainMenu::maxNameLength) << "NAME" << "DATA DE NASCIMENTO" << "       ID/n"
          << "          CURRENT YEAR";
     for (unsigned int i = 0; i < people.size(); ++i)
     {
-        cout << people[i];
+        people[i]->print();
     }
 }
 
-void MainMenu::viewProjects() const
+void MainMenu::displayAllProjects() const
 {
-    cout << "TYPE          " << "SCORE    " << "DIFFICULTY    " << left << setw(MainMenu::maxTitleLength) << "TITLE"
-         << "DESCRIPTION/n";
+
     for (unsigned int i = 0; i < projects.size(); ++i)
     {
         cout << projects[i];
     }
 }
+
+
+//Specific Year
+void MainMenu::specificYear()
+{
+    unsigned int choice, year;
+    bool exitFlag = false;
+
+    system("CLS");
+    cout << "Specific Year\n\n";
+    cout << "Type the year you want to consult\n";
+    cin >> year;
+
+    if (!aYearExists(year))
+        throw InexistingAYear(year);
+
+    do
+    {
+        system("CLS");
+        cout << "2. Display all Projects form" << year << "\n";
+        cout << "\n\n0. Go Back\n";
+
+        cout << "Your choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                displayAllStudents();
+                break;
+            case 2:
+                displayAllProjects();
+                break;
+            case 0:
+                exitFlag = true;
+                break;
+            default:
+                cout << "The option you typed isn't avaiable";
+        }
+    } while (!exitFlag);
+}
+
 
 void MainMenu::addStudent()
 {
@@ -380,3 +563,274 @@ void MainMenu::addStudent()
 }
 
 
+//AUX
+Person *MainMenu::findPersonName(const string &name)//Alterar
+{
+    for (unsigned int i = 0; i < people.size(); i++)
+    {
+        if (people[i]->getName() == name)
+            return people[i];
+    }
+
+    return nullptr;
+}
+
+bool MainMenu::aYearExists(unsigned int &year)
+{
+    for (int i = 0; i < aYears.size(); i++)
+    {
+        if (aYears.at(i).getYear() == year)
+            return true;
+    }
+
+    return false;
+}
+
+void MainMenu::displayThemes() const
+{
+    cout << "TYPE   TITLE   SCORE   DIFFICULTY\n";
+
+    for (int i = 0; i < themes.size(); i++)
+    {
+        // cout << themes[i];
+    }
+}
+
+vector<Person *> MainMenu::projPreviousStudents(Theme &t)
+{
+    vector<Person *> prevStud;
+
+    for (unsigned int i = 0; i < projects.size(); i++)
+    {
+        if (projects[i]->getTitle() == t.getTitle())
+        {
+            for (int j = 0; j < projects[i]->group.size(); ++j)
+                prevStud.push_back(projects[i]->group[j]);
+
+        }
+    }
+
+    return prevStud;
+}
+
+
+//Compactability Algorithm
+int MainMenu::allPercentage(const vector<Person *> &group) //PROTOTYPE
+{
+
+    int compatability;
+    for (size_t i = 0; i < themes.size(); i++)
+    {
+        compatability = PointsRun(themes[i], group); // returns a percentage (0-100) without the '%'
+        cout << "\n" << "Project " << themes[i].getTitle() << " has " << compatability
+             << "% compatability with selected group";
+    }
+}
+
+int MainMenu::PointsRun(Theme &theme, const vector<Person *> &group)
+{
+    // dificulty --
+    // years since last use ++
+    // individual student has done it before (bool) ++
+
+    float points = 0;
+
+    int dificulty = theme.difficulty;
+    int lastTimeUsed = theme.lastYearUsed;
+
+    // DIFICULTY ADDER
+
+    if (dificulty == 1 || dificulty == 2)
+    {
+        points += 15;
+    }
+    else
+    {
+        if (dificulty == 3 || dificulty == 4)
+        {
+            points += 8;
+        }
+        else
+        {
+            if (dificulty == 5 || dificulty == 6)
+            {
+                points += 0;
+            }
+            else
+            {
+                if (dificulty == 7 || dificulty == 8)
+                {
+                    points -= 8;
+                }
+                else
+                {
+                    if (dificulty == 9)
+                    {
+                        points -= 15;
+                    }
+                    else
+                    {
+                        if (dificulty == 10)
+                        {
+                            points -= 20;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // LAST TIME USED ADDER
+
+    int yearSub = lastTimeUsed;
+
+    switch (yearSub)
+    {
+        case 1:
+            points += 30;
+            break;
+        case 2:
+            points += 15;
+            break;
+        case 3:
+            points += 5;
+            break;
+        case 4:
+            points -= 5;
+            break;
+        case 5:
+            points -= 10;
+            break;
+        default:
+            if (yearSub > 5)
+            {
+                points -= 15;
+            }
+    }
+
+    // INDIVIDUAL STUDENT ADDER
+
+    vector<Person *> prevStudents = projPreviousStudents(theme);
+    for (size_t i = 0; i < prevStudents.size(); i++) // error on class?
+    {
+        unsigned int focusStudent = prevStudents[i]->getId();
+        for (size_t i = 0; i < group.size(); i++)
+        {
+            if (group[i]->getId() == focusStudent) // have to overload == for students class if not doing with .getId
+            {
+                points += 30;
+            }
+            else
+            {
+                points += 0;
+            }
+
+        }
+    }
+
+    return PointsToPercentage(points);
+}
+
+
+int MainMenu::PointsToPercentage(int points)
+{
+    //takes os pontos e devolve uma percentagem;
+    /*
+
+    1 an 30
+    2 an 15
+    3 an 5
+    4 an -5
+    5 an -10
+    >6 an -15
+
+    dif
+    1-2  15
+    3-4  8
+    5-6  0
+    7-8  -8
+    9    -15
+    10   -20
+
+    aluno rep 30
+
+    examples:
+
+    SUPER BAD
+    1 year ago, 1 dif, 2 aluno rep
+    30+15+60 105
+
+    BAD
+    2 years ago, 3 dif, 1 aluno rep
+    15+8+30 53
+
+    MEH
+    3 years ago, 5 dif, 1 aluno rep
+    5+0+30 35
+
+    OKAY
+    3 years ago, 5 dif, 0 aluno rep
+    5+0+0 5
+
+    GOOD
+    4 years ago, 5 dif, 0 aluno rep
+    -5
+
+    */
+
+    int n;
+
+    if (points >= 100)
+    {
+        return 0;
+    }
+    else if (points <= 0)
+    {
+        return 100;
+    }
+    else
+    {
+        n = 100 - points;
+        return n;
+
+    }
+
+
+    return 0;
+}
+
+void MainMenu::checkIfMostRecent(const string &title, const unsigned int year)
+{
+    for (int i = 0; i < themes.size(); ++i)
+    {
+        if (themes[i].getTitle() == title)
+        {
+            if (year > themes[i].lastYearUsed)
+                themes[i].lastYearUsed = year;
+        }
+    }
+}
+
+void MainMenu::compactabilityAlgorithm()
+{
+    vector<Person *> group;
+    string name;
+    cout << "Type 5 Student's names\n";
+    for (int i = 0; i < 5; ++i)
+    {
+        cout << "Student: " << i + 1 << endl;
+        getline(cin, name);
+        normalizeName(name);
+        group.push_back(findPersonName(name));
+    }
+
+    allPercentage(group);
+}
+
+/* INTERFACE PLANS
+
+- START MENU
+    - SELECT USER
+        - CHECK COMPATABILITY FOR GROUP
+            -
+        - CHECK COMPATABILITY FOR CLASS (ALL GROUPS)*/

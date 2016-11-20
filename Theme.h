@@ -17,10 +17,15 @@ public:
 
     string getDescription() const;
 
+    // friend ostream &operator<<(ostream& out, const Theme  &t);
+    friend class MainMenu;
+
 private:
     string type, title, description;
-    unsigned int score, difficulty;
+    unsigned int score, difficulty, lastYearUsed;
 };
+
+//ostream &operator<<(ostream& out, const Theme  &t);
 
 
 #endif

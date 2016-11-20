@@ -16,6 +16,11 @@ string Project::getTitle() const
     return title;
 }
 
+unsigned int Project::getYear() const
+{
+    return year;
+}
+
 
 
 bool Project::operator==(const Project &pRHS) const

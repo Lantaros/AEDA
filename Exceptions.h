@@ -46,6 +46,16 @@ public:
     { return date; }
 };
 
+//Academic Year
+class InexistingAYear
+{
+public:
+    InexistingAYear(unsigned int year)
+    { this->year = year; }
+
+    unsigned int year;
+};
+
 //Misc
 class InvalidID
 {
