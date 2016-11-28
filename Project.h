@@ -12,8 +12,8 @@ public:
     Project(string &title, unsigned int year, string &body);
 
     string getTitle() const;
-
     unsigned int getYear() const;
+   virtual void print()const = 0;
 
     //Add Members
     void addStudent(Person *s);
@@ -32,8 +32,7 @@ class Research : public Project
 {
 public:
     Research(string &title, unsigned int year, string &body, string &references);
-
-    ostream &operator<<(ostream &out);
+    virtual void print()const;
 
 private:
     string references;
@@ -44,8 +43,7 @@ class Analysis : public Project
 {
 public:
     Analysis(string &title, unsigned int year, string &body, string &dataRepositoryFile);
-
-    ostream &operator<<(ostream &out);
+    virtual void print()const;
 
 private:
     string dataRepositoryFile;
@@ -55,8 +53,7 @@ class Development : public Project
 {
 public:
     Development(string &title, unsigned int year, string &body);
-
-    ostream &operator<<(ostream &out);
+    virtual void print()const;
 
 private:
     string body;

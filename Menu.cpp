@@ -130,7 +130,7 @@ void MainMenu::loadProjects(string fileNames)
         getline(projectFstream, trash);
         normalizeType(type);
 
-        cout << type << " " << type.size() << endl;
+        //cout << type << " " << type.size() << endl; Test type length
 
         if (type == "RESEARCH")
         {
@@ -328,11 +328,12 @@ void MainMenu::loadAsciiArt()
 //MainMenu
 void MainMenu::menu()
 {
-
-    unsigned int choice;
+    int choice;
     bool exitFlag = false;
     do
     {
+        choice = -1;
+
         system("CLS");
         cout << "Choose an Academic Year\n\n";
         cout << "1. All Years\n";
@@ -341,7 +342,8 @@ void MainMenu::menu()
 
         cout << "Your choice: ";
 
-        readOpt(choice);
+       readOpt(choice);
+
 
         switch (choice)
         {
@@ -355,14 +357,16 @@ void MainMenu::menu()
                 }
                 catch (InexistingAYear &y)
                 {
-                    cout << "\n\nThe academic year (" << y.year << "), does't exist\n\n";
+                    cout << "\n\nThe academic year " << y.year << ", does't exist\n\n";
+                    waitInput();
                 }
                 break;
             case 0:
                 exitFlag = true;
                 break;
             default:
-                cout << "The option you typed isn't avaiable";
+                cout << "The option you typed isn't avaiable\n";
+                waitInput();
         }
     } while (!exitFlag);
 }
@@ -398,7 +402,15 @@ void MainMenu::allYears()
                 addStudent();
                 break;
             case 4:
-                compactabilityAlgorithm();
+                try
+                {
+                    compactabilityAlgorithm();
+
+                }
+                catch (InexistingStudent &invStud)
+                {
+                    cerr << "\nThe student " <<invStud.name <<" doesn't exist!\n\n";
+                }
                 waitInput();
                 break;
             case 0:
@@ -428,7 +440,7 @@ void MainMenu::generalDisplays()
         cout << "\n\n0. Go Back\n";
 
         cout << "Your choice: ";
-        cin >> choice;
+        readOpt(choice);
 
         switch (choice)
         {
@@ -438,7 +450,6 @@ void MainMenu::generalDisplays()
                 break;
             case 2:
                 displayAllProjects();
-                cin.get();
                 break;
             case 3:
                 displayThemes();
@@ -455,8 +466,8 @@ void MainMenu::generalDisplays()
 
 void MainMenu::displayAllStudents() const
 {
-    cout << left << setw(MainMenu::maxNameLength) << "NAME" << "DATA DE NASCIMENTO" << "       ID/n"
-         << "          CURRENT YEAR";
+    cout << left << setw(MainMenu::maxNameLength) << "NAME" << "DATA DE NASCIMENTO" << "       ID"
+         << "          CURRENT YEAR\n\n";
     for (unsigned int i = 0; i < people.size(); ++i)
     {
         people[i]->print();
@@ -468,7 +479,8 @@ void MainMenu::displayAllProjects() const
 
     for (unsigned int i = 0; i < projects.size(); ++i)
     {
-        cout << projects[i];
+        projects[i]->print();
+        waitInput();
     }
 }
 
@@ -535,6 +547,7 @@ void MainMenu::addStudent()
         catch (InvalidDate &invDate)
         {
             cerr << "Invalid date " << invDate.date << endl;
+
         }
     } while (errorFlag);
     do
@@ -592,7 +605,7 @@ void MainMenu::displayThemes() const
 
     for (int i = 0; i < themes.size(); i++)
     {
-        // cout << themes[i];
+         cout << themes[i];
     }
 }
 
@@ -622,7 +635,7 @@ int MainMenu::allPercentage(const vector<Person *> &group) //PROTOTYPE
     for (size_t i = 0; i < themes.size(); i++)
     {
         compatability = PointsRun(themes[i], group); // returns a percentage (0-100) without the '%'
-        cout << "\n" << "Project " << themes[i].getTitle() << " has " << compatability
+        cout << "\n\n" << "Project " << themes[i].getTitle() << " has " << compatability
              << "% compatability with selected group";
     }
 }
@@ -814,6 +827,7 @@ void MainMenu::checkIfMostRecent(const string &title, const unsigned int year)
 void MainMenu::compactabilityAlgorithm()
 {
     vector<Person *> group;
+    Person * personPtr;
     string name;
     cout << "Type 5 Student's names\n";
     for (int i = 0; i < 5; ++i)
@@ -821,7 +835,10 @@ void MainMenu::compactabilityAlgorithm()
         cout << "Student: " << i + 1 << endl;
         getline(cin, name);
         normalizeName(name);
-        group.push_back(findPersonName(name));
+        personPtr =  findPersonName(name);
+        if(personPtr == NULL)
+            throw InexistingStudent(name);
+        group.push_back(personPtr);
     }
 
     allPercentage(group);

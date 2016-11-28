@@ -141,7 +141,17 @@ unsigned int Date::getYear() const
 string Date::getDate() const // returns the date in format "dd/mm/yyyy"
 {
 	ostringstream oss;
-	oss << day << "/" << month << "/" << year;
+	if(day <10)
+		oss << "0" <<day <<"/";
+	else
+		oss << day <<"/";
+
+	if(month <10)
+		oss <<"0" <<month;
+	else
+		oss <<month;
+
+	oss << "/" << year;
 
 	return  oss.str();
 }

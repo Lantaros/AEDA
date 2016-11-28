@@ -46,6 +46,14 @@ void Project::addStudent(Person *s)
 Research::Research(string &title, unsigned int year, string &body, string &references) : Project(title, year, body)
 { this->references = references; }
 
+void Research::print() const
+{
+    cout <<this->getTitle() <<"\n" <<year <<"\n" <<this->body <<"\n\nReferences\n\n" <<references <<"\n\n Done By\n";
+    for (unsigned int i = 0; i < group.size(); i++)
+    {
+        cout <<"\n" << *group[i];
+    }
+}
 /*ostream & Research::operator<<(ostream & out)
 {
     out << "Research        " << score << "    " << difficulty << "    " << left << setw(Menu::maxTitleLength) << title << description;
@@ -67,6 +75,15 @@ Analysis::Analysis(string &title, unsigned int year, string &body, string &dataR
 
 }*/
 
+void Analysis::print() const
+{
+    cout <<this->getTitle() <<"\n" <<year <<"\n" <<this->body <<"\n\nData Repository\n\n" <<dataRepositoryFile <<"\n\n Done By\n";
+    for (unsigned int i = 0; i < group.size(); i++)
+    {
+        cout <<"\n" <<*group[i];
+    }
+}
+
 
 //Development
 Development::Development(string &title, unsigned int year, string &body) : Project(title, year, body)
@@ -79,6 +96,15 @@ Development::Development(string &title, unsigned int year, string &body) : Proje
     return out;
 
 }*/
+
+void Development::print() const
+{
+    cout <<this->getTitle() <<"\n" <<year <<"\n\nCode\n\n"<<this->body <<"\n\n Done By\n";
+    for (unsigned int i = 0; i < group.size(); i++)
+    {
+        cout <<"\n" <<*group[i];
+    }
+}
 
 
 

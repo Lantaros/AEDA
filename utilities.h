@@ -23,6 +23,20 @@ void normalizeName(string &name); //removes the blank spaces before, between nam
 void normalizeType(string &type); //Removes strange characters
 void waitInput();
 
-void readOpt(unsigned int &n);
+template<class T>
+void readOpt(T &n)
+{
+    T tmp = n;
+    cin >> n;
+    if(cin.fail())
+    {
+        cin.clear();
+        cin.ignore(INT64_MAX, '\n');
+        n = tmp;
+    }
+    else
+    cin.ignore();//Ignores the \n left in the buffer
+}
+
 
 #endif //THEMES_UTILITIES_H

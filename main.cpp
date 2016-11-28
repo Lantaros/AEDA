@@ -18,6 +18,10 @@ int main()
     mainMenu.loadFiles();
     mainMenu.setUpAYears();
 
+   /* string name = " rui    leixo     ";
+    normalizeName(name);
+    cout <<name << " " << name.size();
+    waitInput();*/
     mainMenu.menu();
 
 

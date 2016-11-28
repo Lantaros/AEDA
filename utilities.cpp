@@ -34,7 +34,7 @@ void normalizeName(string &name)
 
         for (unsigned i = 1; i < name.size(); i++)
         {
-            if (name[i] - 1 == ' ')
+            if (name[i - 1]  == ' ')
                 name[i] = toupper(name[i]);
         }
     }
@@ -49,14 +49,8 @@ void normalizeType(string &type)
 
 void waitInput()
 {
-    if (!cin.eof())
-        cin.ignore(INT_MAX, '\n');
+    /*if (!cin.eof())
+        cin.ignore(INT_MAX, '\n');*/
     cout << "Press any key to continue...\n";
     cin.get();
-}
-
-void readOpt(unsigned int &n)
-{
-    cin >> n;
-    cin.ignore();
 }

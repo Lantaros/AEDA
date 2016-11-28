@@ -10,6 +10,8 @@ using namespace std;
 
 class Project;//Forward Declaration
 
+
+
 class Person
 {
 public:
@@ -24,6 +26,7 @@ public:
 
     //Operators
     bool operator==(const Person &pRHS) const;
+
 
 protected:
 	const string name;
@@ -42,7 +45,7 @@ public:
 	~Student();
 	unsigned int getCurentYear() const;
 	virtual void print() const;
-	ostream& operator<<(ostream& out);
+	//ostream& operator<<(ostream& out);
     void addProject(const Project* project);
 
 private:
@@ -61,6 +64,8 @@ public:
 	virtual void print() const;
 	ostream& operator<<(ostream& out);
 };
+
+ostream& operator<<(ostream& out,const Person &p);
 
 
 #endif

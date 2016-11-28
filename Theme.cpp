@@ -25,11 +25,30 @@ string Theme::getDescription() const
     return description;
 }
 
-/*ostream &operator<<(ostream& out, const Theme  &t)
+unsigned int Theme::getScore() const
 {
-    out <<t.type <<" " <<t.title <<" " << t.score <<" " <<t.difficulty   <<"\n\nDescription\n\n" <<t.description;
+    return score;
+}
+
+unsigned int Theme::getDifficulty() const
+{
+    return difficulty;
+}
+
+
+unsigned int Theme::getLastYearUsed() const
+{
+    return lastYearUsed;
+}
+
+ostream &operator<<(ostream& out, const Theme& t)
+{
+   out <<t.getType() <<" " <<t.getTitle() <<" ";
+    out <<t.getScore();
 
     return out;
-}*/
+}
+
+
 
 
