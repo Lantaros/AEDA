@@ -74,9 +74,9 @@ unsigned int Student::getCurentYear() const
     out << left << setw(MainMenu::maxNameLength) << name <<" " << birthDate.getDate() << "   " << id << "          "
         << currentYear <<endl;
 
-    return out;*/
+    return out;
 
-}
+}*/
 
 void Student::print() const
 {

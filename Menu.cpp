@@ -605,7 +605,7 @@ void MainMenu::displayThemes() const
 
     for (int i = 0; i < themes.size(); i++)
     {
-         cout << themes[i];
+        cout << themes[i] << endl;
     }
 }
 

@@ -2,6 +2,7 @@
 #define _THEME_H
 
 #include <string>
+#include <iostream>
 
 using namespace std;
 
