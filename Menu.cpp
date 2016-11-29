@@ -70,21 +70,6 @@ void MainMenu::loadThemesFile(string fileName)
         Theme t(type, title, description, stoi(score), stoi(difficulty));
 
         themes.push_back(t);
-        /*if(type == "R")
-        {
-            t =
-        }
-        else
-            if(type == "A")
-            {
-
-            }
-        else
-            if(type == "D")
-            {
-
-            }*/
-
     }
 
     file.close();
@@ -464,8 +449,14 @@ void MainMenu::generalDisplays()
     } while (!exitFlag);
 }
 
-void MainMenu::displayAllStudents() const
+bool MainMenu::comparePersonPtrAlpha(const Person *pLHS, const Person *pRHS)
 {
+    return pLHS->getName() < pRHS->getName();
+}
+
+void MainMenu::displayAllStudents()
+{
+    sort(people.begin(), people.end(), comparePersonPtrAlpha); //Sorts people alphabetically
     cout << left << setw(MainMenu::maxNameLength) << "NAME" << "DATA DE NASCIMENTO" << "       ID"
          << "          CURRENT YEAR\n\n";
     for (unsigned int i = 0; i < people.size(); ++i)

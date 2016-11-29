@@ -27,6 +27,8 @@ public:
     //Operators
     bool operator==(const Person &pRHS) const;
 
+	bool operator<(const Person &pRHS) const;
+
 
 protected:
 	const string name;
@@ -45,9 +47,10 @@ public:
 	~Student();
 	unsigned int getCurentYear() const;
 	virtual void print() const;
-	//ostream& operator<<(ostream& out);
     void addProject(const Project* project);
 
+
+	bool operator<(const Student &sRHS) const;//DELETE
 private:
 	unsigned int currentYear;
     unsigned int yearClass; //class

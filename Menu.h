@@ -1,6 +1,9 @@
 #ifndef __MENU__
 #define __MENU__
 
+#include <iomanip>
+#include <fstream>
+#include <algorithm>
 
 #include "Person.h"
 #include "Project.h"
@@ -9,8 +12,7 @@
 #include "Theme.h"
 #include "Exceptions.h"
 #include "utilities.h"
-#include <iomanip>
-#include <fstream>
+
 
 #define NTRIES 4
 
@@ -48,7 +50,9 @@ public:
 
     void displayAllProjects() const;
 
-    void displayAllStudents() const;
+    void displayAllStudents();
+
+    bool comparePersonPtrAlpha(const Person *pLHS, const Person *pRHS);
 
     void displayThemes() const;
 

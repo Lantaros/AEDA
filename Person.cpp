@@ -37,6 +37,11 @@ bool Person::operator==(const Person &pRHS) const
     return id == pRHS.id;
 }
 
+bool Person::operator<(const Person &pRHS) const
+{
+    return name < pRHS.name;
+}
+
 ostream &operator<<(ostream &out, const Person &p)
 {
     out <<p.getName() <<"  " <<p.getId();
@@ -68,16 +73,6 @@ unsigned int Student::getCurentYear() const
     return currentYear;
 }
 
-
-/*ostream &Student::operator<<(ostream &out)
-{
-    out << left << setw(MainMenu::maxNameLength) << name <<" " << birthDate.getDate() << "   " << id << "          "
-        << currentYear <<endl;
-
-    return out;
-
-}*/
-
 void Student::print() const
 {
     cout << left << setw(MainMenu::maxNameLength) << name <<"  " << birthDate.getDate() << "            " << id << "          "
@@ -96,6 +91,11 @@ void Student::addProject(const Project *project)
         projects.push_back(project);
 
     }
+}
+
+bool Student::operator<(const Student &sRHS) const
+{
+    return name < sRHS.name;
 }
 
 
