@@ -70,6 +70,7 @@ public:
 
 ostream& operator<<(ostream& out,const Person &p);
 
+Person *BinarySearch(const vector<Person *> &vec, unsigned int x);
 
 #endif
 

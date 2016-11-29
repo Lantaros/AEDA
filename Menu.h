@@ -11,6 +11,7 @@
 #include "AcademicYear.h"
 #include "Theme.h"
 #include "Exceptions.h"
+#include "sortNSearch.h"
 #include "utilities.h"
 
 
@@ -34,6 +35,7 @@ public:
     void setUpAYears();
 
     Person *findPersonName(const string &name);
+
 
     //Displays
 

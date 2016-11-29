@@ -33,14 +33,20 @@ Date::Date(string date)
 	istringstream iss(date);
 	string extract;
 
-	getline(iss, extract, '/');
-	day = stoi(extract);
+    try
+    {
+        getline(iss, extract, '/');
+        day = stoi(extract);
 
-	getline(iss, extract, '/');
-	month = stoi(extract);
+        getline(iss, extract, '/');
+        month = stoi(extract);
 
-	getline(iss, extract, '/');
-	year = stoi(extract);
+        getline(iss, extract);
+        year = stoi(extract);
+    } catch (invalid_argument &iArg) //Invalid Arguments
+    {
+        throw InvalidDate(date);
+    }
 
 	//Check if it's a leap year
 	this->checkLeap();

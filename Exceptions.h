@@ -70,6 +70,19 @@ public:
 
 };
 
+class UsedID
+{
+public:
+    UsedID(unsigned int id)
+    { number = id; }
+
+    unsigned int getNumber() const
+    { return number; }
+
+    unsigned int number;
+
+};
+
 //Exceptions
 class FileNotFound
 {

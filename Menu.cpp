@@ -551,6 +551,7 @@ void MainMenu::addStudent()
 
     cout << "Insert Name: ";
     getline(cin, name);
+    normalizeName(name);
     do
     {
         errorFlag = false;
@@ -559,30 +560,49 @@ void MainMenu::addStudent()
         try
         {
             date = Date(bDay);
+
         }
         catch (InvalidDate &invDate)
         {
+            errorFlag = true;
             cerr << "Invalid date " << invDate.date << endl;
 
         }
     } while (errorFlag);
     do
     {
+        errorFlag = false;
         cout << "Insert ID: ";
         cin >> id;
         //try if id number digits is smaller different than 8 and if the id already exists
         try
         {
-            if (numberDigits<unsigned int>(id) != 8)
+            if (numberDigits<unsigned int>(id) != 9)
                 throw InvalidID(id);
+
+            if (BinarySearch(people, id) == nullptr)
+                throw UsedID(id);
+
         }
         catch (InvalidID &invID)
         {
-            cerr << "The Student ID, must be a 8 digits number";
+            cerr << "The Student ID, must be a 9 digits number\n";
+            errorFlag = true;
+        }
+        catch (UsedID &uID)
+        {
+            cerr << "There is already a student that possesses that id\n";
+            errorFlag = true;
         }
     } while (errorFlag);
-    cout << "Insert Current Year: ";
-    cin >> currentYear;
+
+
+    do
+    {
+        cout << "Insert Current Year: ";
+        cin >> currentYear;
+    } while (currentYear <= 0 || currentYear > 5);
+
     cout << "Insert Class: ";
     cin >> yearClass;
 

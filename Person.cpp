@@ -113,3 +113,23 @@ bool Student::operator<(const Student &sRHS) const
 
         return out;
     }
+
+
+Person *BinarySearch(const vector<Person *> &vec, unsigned int x)
+{
+    int left = 0, right = vec.size() - 1;
+    while (left <= right)
+    {
+        int middle = (left + right) / 2;
+        if (vec[middle]->getId() < x)
+            left = middle + 1;
+        else if (x < vec[middle]->getId())
+        {
+            right = middle - 1;
+        }
+        else
+            return vec[middle]; // encontrou
+    }
+    return nullptr; // não encontrou
+}
+
