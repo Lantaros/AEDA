@@ -53,27 +53,15 @@ void Research::print() const
     {
         cout <<"\n" << *group[i];
     }
+    cout << endl;
 }
-/*ostream & Research::operator<<(ostream & out)
-{
-    out << "Research        " << score << "    " << difficulty << "    " << left << setw(Menu::maxTitleLength) << title << description;
-
-    return out;
-
-}*/
 
 
 //Analysis
 Analysis::Analysis(string &title, unsigned int year, string &body, string &dataRepositoryFile) : Project(title, year,
                                                                                                          body)
 { this->dataRepositoryFile = dataRepositoryFile; }
-/*ostream & Analysis::operator<<(ostream & out)
-{
-    out << "Analysis       " << score << "    " << difficulty << "    " << left << setw(Menu::maxTitleLength) << title << description;
 
-    return out;
-
-}*/
 
 void Analysis::print() const
 {
@@ -82,20 +70,13 @@ void Analysis::print() const
     {
         cout <<"\n" <<*group[i];
     }
+    cout << "\n";
 }
 
 
 //Development
 Development::Development(string &title, unsigned int year, string &body) : Project(title, year, body)
 { this->body = body; }
-
-/*ostream & Development::operator<<(ostream & out)
-{
-    out << "Development    " << score << "    " << difficulty << "    " << left << setw(Menu::maxTitleLength) << title << description;
-
-    return out;
-
-}*/
 
 void Development::print() const
 {
@@ -104,6 +85,7 @@ void Development::print() const
     {
         cout <<"\n" <<*group[i];
     }
+    cout << "\n";
 }
 
 

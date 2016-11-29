@@ -1,8 +1,10 @@
 #include "utilities.h"
 
 /**
- * fdsfdsfsd
- * @param name
+ * Erases all the blank spaces at the beggining of the name
+ * Erases double spaces ("  ") at the middle
+ * and "upper cases" every 1st letter of a name
+ * @param A person's name
  */
 void normalizeName(string &name)
 {
@@ -29,7 +31,7 @@ void normalizeName(string &name)
         //------------------------------------------------------------------
 
 
-        //Change 1st letter in every word to upper case
+        //Change 1st letter in every name to upper case
         name[0] = toupper(name[0]); //1st word
 
         for (unsigned i = 1; i < name.size(); i++)
@@ -49,8 +51,6 @@ void normalizeType(string &type)
 
 void waitInput()
 {
-    /*if (!cin.eof())
-        cin.ignore(INT_MAX, '\n');*/
     cout << "Press any key to continue...\n";
     cin.get();
 }

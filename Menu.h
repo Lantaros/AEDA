@@ -52,7 +52,7 @@ public:
 
     void displayAllStudents();
 
-    bool comparePersonPtrAlpha(const Person *pLHS, const Person *pRHS);
+
 
     void displayThemes() const;
 
@@ -74,7 +74,7 @@ public:
     //TIER3
     void displayStudentProjects() const;
 
-    void displayProjectsYear() const;
+    void displayProjectsYear(const unsigned int year) const;
 
     void themesOptions();
     //TIER 2
@@ -118,5 +118,8 @@ public:
 
     string asciiArt;
 };
+
+bool comparePersonPtrAlpha(const Person *pLHS, const Person *pRHS);
+
 
 #endif

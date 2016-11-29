@@ -360,10 +360,11 @@ void MainMenu::menu()
 void MainMenu::allYears()
 {
 
-    unsigned int choice;
+    int choice;
     bool exitFlag = false;
     do
     {
+        choice = -1;
         system("CLS");
         cout << "All Years\n\n";
         cout << "1. Displays\n";
@@ -402,7 +403,8 @@ void MainMenu::allYears()
                 exitFlag = true;
                 break;
             default:
-                cout << "The option you typed isn't avaiable";
+                cout << "The option you typed isn't available\n";
+                waitInput();
         }
     } while (!exitFlag);
 }
@@ -411,11 +413,12 @@ void MainMenu::allYears()
 //Displays
 void MainMenu::generalDisplays()
 {
-    unsigned int choice;
+    int choice;
     bool exitFlag = false;
 
     do
     {
+        choice = -1;
         system("CLS");
         cout << "Displays\n\n";
         cout << "1. Display all Students\n";
@@ -444,12 +447,13 @@ void MainMenu::generalDisplays()
                 exitFlag = true;
                 break;
             default:
-                cout << "The option you typed isn't avaiable";
+                cout << "The option you typed isn't available\n";
+                waitInput();
         }
     } while (!exitFlag);
 }
 
-bool MainMenu::comparePersonPtrAlpha(const Person *pLHS, const Person *pRHS)
+bool comparePersonPtrAlpha(const Person *pLHS, const Person *pRHS)
 {
     return pLHS->getName() < pRHS->getName();
 }
@@ -457,7 +461,7 @@ bool MainMenu::comparePersonPtrAlpha(const Person *pLHS, const Person *pRHS)
 void MainMenu::displayAllStudents()
 {
     sort(people.begin(), people.end(), comparePersonPtrAlpha); //Sorts people alphabetically
-    cout << left << setw(MainMenu::maxNameLength) << "NAME" << "DATA DE NASCIMENTO" << "       ID"
+    cout << left << setw(MainMenu::maxNameLength) << "NAME" << "DATA DE NASCIMENTO" << "     ID"
          << "          CURRENT YEAR\n\n";
     for (unsigned int i = 0; i < people.size(); ++i)
     {
@@ -467,9 +471,9 @@ void MainMenu::displayAllStudents()
 
 void MainMenu::displayAllProjects() const
 {
-
     for (unsigned int i = 0; i < projects.size(); ++i)
     {
+        system("CLS");
         projects[i]->print();
         waitInput();
     }
@@ -479,25 +483,28 @@ void MainMenu::displayAllProjects() const
 //Specific Year
 void MainMenu::specificYear()
 {
-    unsigned int choice, year;
+    int choice;
+    unsigned int year;
     bool exitFlag = false;
 
     system("CLS");
     cout << "Specific Year\n\n";
     cout << "Type the year you want to consult\n";
-    cin >> year;
+    readOpt(year);
 
     if (!aYearExists(year))
         throw InexistingAYear(year);
 
     do
     {
+        choice = -1;
         system("CLS");
-        cout << "2. Display all Projects form" << year << "\n";
+        cout << "Specific Year\n\n";
+        cout << "2. Display all Projects from " << year << "\n";
         cout << "\n\n0. Go Back\n";
 
         cout << "Your choice: ";
-        cin >> choice;
+        readOpt(choice);
 
         switch (choice)
         {
@@ -505,7 +512,7 @@ void MainMenu::specificYear()
                 displayAllStudents();
                 break;
             case 2:
-                displayAllProjects();
+                displayProjectsYear(year);
                 break;
             case 0:
                 exitFlag = true;
@@ -516,6 +523,24 @@ void MainMenu::specificYear()
     } while (!exitFlag);
 }
 
+
+void MainMenu::displayProjectsYear(const unsigned int year) const
+{
+    bool foundOne = false;
+    for (unsigned int i = 0; i < projects.size(); ++i)
+    {
+        system("CLS");
+        if (projects[i]->getYear() == year)
+        {
+            foundOne = true;
+            projects[i]->print();
+            waitInput();
+        }
+    }
+
+    if (!foundOne)
+        cout << "There are no Projects from " << year;
+}
 
 void MainMenu::addStudent()
 {
@@ -530,7 +555,7 @@ void MainMenu::addStudent()
     {
         errorFlag = false;
         cout << "Insert Birthday (dd/mm/yyyy): ";
-        cin >> bDay;
+        getline(cin, bDay);
         try
         {
             date = Date(bDay);
@@ -627,7 +652,7 @@ int MainMenu::allPercentage(const vector<Person *> &group) //PROTOTYPE
     {
         compatability = PointsRun(themes[i], group); // returns a percentage (0-100) without the '%'
         cout << "\n\n" << "Project " << themes[i].getTitle() << " has " << compatability
-             << "% compatability with selected group";
+             << "% compatability with selected group\n";
     }
 }
 
@@ -834,6 +859,8 @@ void MainMenu::compactabilityAlgorithm()
 
     allPercentage(group);
 }
+
+
 
 /* INTERFACE PLANS
 
