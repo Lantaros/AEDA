@@ -43,8 +43,8 @@ unsigned int Theme::getLastYearUsed() const
 
 ostream &operator<<(ostream &out, const Theme &t)
 {
-   out <<t.getType() <<" " <<t.getTitle() <<" ";
-    out <<t.getScore();
+    out << t.getType() << " " << t.getTitle() << setw(12);
+    out << t.getDifficulty();
 
     return out;
 }

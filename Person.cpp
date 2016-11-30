@@ -42,6 +42,11 @@ bool Person::operator<(const Person &pRHS) const
     return name < pRHS.name;
 }
 
+string Person::getDateBirth() const
+{
+    return birthDate.getDate();
+}
+
 ostream &operator<<(ostream &out, const Person &p)
 {
     out <<p.getName() <<"  " <<p.getId();
@@ -68,7 +73,7 @@ Student::~Student()
 {
 }
 
-unsigned int Student::getCurentYear() const
+unsigned int Student::getCurrentYear() const
 {
     return currentYear;
 }
@@ -96,6 +101,11 @@ void Student::addProject(const Project *project)
 bool Student::operator<(const Student &sRHS) const
 {
     return name < sRHS.name;
+}
+
+unsigned int Student::getClass() const
+{
+    return this->yearClass;
 }
 
 

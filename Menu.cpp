@@ -42,6 +42,27 @@ void MainMenu::loadPeopleFile(string fileName)
     file.close();
 }
 
+void MainMenu::savePeopleFile(const string fileName) const
+{
+    ofstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\" + fileName + ".txt");//fileName + ".txt");
+    //ifstream file("Students.txt");
+    if (!file.is_open())
+        throw FileNotFound(fileName);
+
+    //Leave 1st line blank - Structure
+    file << "\n";
+
+    vector<Person *>::const_iterator ite;
+    for (ite = people.begin(); ite != people.end(); ite++)
+    {
+        file << (*ite)->getName() << ";" << (*ite)->getDateBirth() << ";"
+             << (*ite)->getId() << ";" << (*ite)->getCurrentYear() << ";"
+             << (*ite)->getClass() << "\n";
+    }
+
+    file.close();
+}
+
 void MainMenu::loadThemesFile(string fileName)
 {
     string type, score, title, difficulty, description;
@@ -135,7 +156,7 @@ void MainMenu::loadProjects(string fileNames)
         else
         {
             project = new Development(title, stoi(year),
-                                      body); //A year is always posiive, we won't be loosing information
+                                      body); //A year is always positive, we won't be loosing information
         }
 
         //Loads up group of Students
@@ -165,12 +186,13 @@ void MainMenu::loadProjects(string fileNames)
 }
 
 void MainMenu::loadFiles()
-{
-    FileNames fileNames = {"Students", "ProjectFileNames", "ProjectThemes"};
+/*{
+    fileNames = {"Students", "ProjectFileNames", "ProjectThemes"};
 
     try
     {
         loadPeopleFile(fileNames.peopleFile);
+        changedPeople = false;
         loadProjects(fileNames.projectsFile);
         loadThemesFile(fileNames.themeIndexFile);
     }
@@ -182,16 +204,15 @@ void MainMenu::loadFiles()
     {
         cout << " The Student '" << inexStudent.name << "' does not exist:";
     }
-}
+}*/
 
-/*{
-    FileNames fileNames;
-
+{
     bool fileError;
     unsigned int nTries = NTRIES;
 
 
     //People File
+    changedPeople = false;
     do
     {
         fileError = false; //Resets the error flag
@@ -211,7 +232,7 @@ void MainMenu::loadFiles()
     } while (fileError && nTries);
 
     if (!nTries)
-        cerr << "Excceded maximum number of atempts\n";
+        cerr << "Exceeded maximum number of attempts\n";
 
 
 
@@ -221,10 +242,11 @@ void MainMenu::loadFiles()
     do
     {
         fileError = false; //Resets the error flag
+        cout << "Type the projects' file name (extension is not needed)\n";
         getline(cin, fileNames.projectsFile); // Reads the file name
         try
         {
-            loadPeopleFile(fileNames.projectsFile);
+            loadProjects(fileNames.projectsFile);
         }
         catch (FileNotFound fileNF)
         {
@@ -236,7 +258,7 @@ void MainMenu::loadFiles()
     } while (fileError && nTries);
 
     if (!nTries)
-        cerr << "Excceded maximum number of atempts\n";
+        cerr << "Exceeded maximum number of attempts\n";
 
 
     //ProjectsIndexer
@@ -245,11 +267,11 @@ void MainMenu::loadFiles()
     do
     {
         fileError = false; //Resets the error flag
-        cout << "Type the people's file name (extention is not needed)\n";
+        cout << "Type the themes' file name (extension is not needed)\n";
         getline(cin, fileNames.themeIndexFile); // Reads the file name
         try
         {
-            loadPeopleFile(fileNames.themeIndexFile);
+            loadThemesFile(fileNames.themeIndexFile);
         }
         catch (FileNotFound fileNF)
         {
@@ -261,10 +283,10 @@ void MainMenu::loadFiles()
     } while (fileError && nTries);
 
     if (!nTries)
-        cerr << "Excceded maximum number of atempts\n";
+        cerr << "Exceeded maximum number of attempts\n";
 
 
-}*/
+}
 
 void MainMenu::setUpAYears()
 {
@@ -500,7 +522,7 @@ void MainMenu::specificYear()
         choice = -1;
         system("CLS");
         cout << "Specific Year\n\n";
-        cout << "2. Display all Projects from " << year << "\n";
+        cout << "1. Display all Projects from " << year << "\n";
         cout << "\n\n0. Go Back\n";
 
         cout << "Your choice: ";
@@ -509,9 +531,6 @@ void MainMenu::specificYear()
         switch (choice)
         {
             case 1:
-                displayAllStudents();
-                break;
-            case 2:
                 displayProjectsYear(year);
                 break;
             case 0:
@@ -580,7 +599,7 @@ void MainMenu::addStudent()
             if (numberDigits<unsigned int>(id) != 9)
                 throw InvalidID(id);
 
-            if (BinarySearch(people, id) == nullptr)
+            if (BinarySearch(people, id) != nullptr)
                 throw UsedID(id);
 
         }
@@ -607,6 +626,7 @@ void MainMenu::addStudent()
     cin >> yearClass;
 
 
+    changedPeople = true;
     Person *p = new Student(name, date, id, currentYear, yearClass);
     people.push_back(p);
 }
@@ -879,6 +899,14 @@ void MainMenu::compactabilityAlgorithm()
 
     allPercentage(group);
 }
+
+void MainMenu::shutDown()
+{
+    if (changedPeople)
+        savePeopleFile(fileNames.peopleFile);
+}
+
+
 
 
 

@@ -11,7 +11,6 @@
 #include "AcademicYear.h"
 #include "Theme.h"
 #include "Exceptions.h"
-#include "sortNSearch.h"
 #include "utilities.h"
 
 
@@ -36,6 +35,8 @@ public:
 
     Person *findPersonName(const string &name);
 
+    //Save files
+    void savePeopleFile(const string fileName) const;
 
     //Displays
 
@@ -119,6 +120,8 @@ public:
     vector<AcademicYear> aYears;
 
     string asciiArt;
+    bool changedPeople;
+    FileNames fileNames;
 };
 
 bool comparePersonPtrAlpha(const Person *pLHS, const Person *pRHS);

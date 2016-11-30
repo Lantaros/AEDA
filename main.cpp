@@ -24,8 +24,8 @@ int main()
     waitInput();*/
     mainMenu.menu();
 
-
-
+    //Save if needed
+    mainMenu.shutDown();
     return 0;
 }
 

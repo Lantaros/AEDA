@@ -22,6 +22,15 @@ public:
 
     unsigned int getId() const;
 	unsigned int getAge() const;
+
+	virtual unsigned int getCurrentYear() const
+	{};
+
+	string getDateBirth() const;
+
+	virtual unsigned int getClass() const
+	{};
+
 	virtual void print() const = 0;
 
     //Operators
@@ -45,7 +54,10 @@ public:
 	Student(string &name, Date &birthDate, unsigned int &id);
 
 	~Student();
-	unsigned int getCurentYear() const;
+
+	unsigned int getCurrentYear() const;
+
+	unsigned int getClass() const;
 	virtual void print() const;
     void addProject(const Project* project);
 
