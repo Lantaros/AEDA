@@ -1,6 +1,7 @@
 #ifndef __MENU__
 #define __MENU__
 
+#include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <algorithm>
@@ -12,6 +13,9 @@
 #include "Theme.h"
 #include "Exceptions.h"
 #include "utilities.h"
+
+/*PART 2*/
+#include "BST.h"
 
 
 #define NTRIES 4
@@ -113,11 +117,13 @@ public:
 
     void checkIfMostRecent(const string &title, const unsigned int year);
 
+    explicit MainMenu();
 
     vector<Person *> people;
     vector<Project *> projects;
     vector<Theme> themes;
     vector<AcademicYear> aYears;
+    BST<Project*> recentProjects;
 
     string asciiArt;
     bool changedPeople;
