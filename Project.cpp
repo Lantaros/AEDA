@@ -22,13 +22,12 @@ unsigned int Project::getYear() const
 }
 
 
-
 bool Project::operator==(const Project &pRHS) const
 {
     return title == pRHS.title;
 }
 
-void Project::addStudent(Person *s)
+void Project::addStudent(Person* s)
 {
     for (unsigned int i = 0; i < group.size(); i++)
     {
@@ -40,53 +39,69 @@ void Project::addStudent(Person *s)
 }
 
 
-
-
 //Research
-Research::Research(string &title, unsigned int year, string &body, string &references) : Project(title, year, body)
+Research::Research(string &title, unsigned int year, string &body, string &references): Project(title, year, body)
 { this->references = references; }
 
 void Research::print() const
 {
-    cout <<this->getTitle() <<"\n" <<year <<"\n" <<this->body <<"\n\nReferences\n\n" <<references <<"\n\n Done By\n";
+    cout << this->getTitle() << "\n" << year << "\n" << this->body << "\n\nReferences\n\n" << references
+         << "\n\n Done By\n";
     for (unsigned int i = 0; i < group.size(); i++)
     {
-        cout <<"\n" << *group[i];
+        cout << "\n" << *group[i];
     }
     cout << endl;
 }
 
 
 //Analysis
-Analysis::Analysis(string &title, unsigned int year, string &body, string &dataRepositoryFile) : Project(title, year,
-                                                                                                         body)
+Analysis::Analysis(string &title, unsigned int year, string &body, string &dataRepositoryFile): Project(title, year,
+                                                                                                        body)
 { this->dataRepositoryFile = dataRepositoryFile; }
 
 
 void Analysis::print() const
 {
-    cout <<this->getTitle() <<"\n" <<year <<"\n" <<this->body <<"\n\nData Repository\n\n" <<dataRepositoryFile <<"\n\n Done By\n";
+    cout << this->getTitle() << "\n" << year << "\n" << this->body << "\n\nData Repository\n\n" << dataRepositoryFile
+         << "\n\n Done By\n";
     for (unsigned int i = 0; i < group.size(); i++)
     {
-        cout <<"\n" <<*group[i];
+        cout << "\n" << *group[i];
     }
     cout << "\n";
 }
 
 
 //Development
-Development::Development(string &title, unsigned int year, string &body) : Project(title, year, body)
+Development::Development(string &title, unsigned int year, string &body): Project(title, year, body)
 { this->body = body; }
 
 void Development::print() const
 {
-    cout <<this->getTitle() <<"\n" <<year <<"\n\nCode\n\n"<<this->body <<"\n\n Done By\n";
+    cout << this->getTitle() << "\n" << year << "\n\nCode\n\n" << this->body << "\n\n Done By\n";
     for (unsigned int i = 0; i < group.size(); i++)
     {
-        cout <<"\n" <<*group[i];
+        cout << "\n" << *group[i];
     }
     cout << "\n";
 }
 
+/*-------------------BST-----------------------------*/
+RecentProject::RecentProject(Project* pointer): projectPtr(pointer)
+{}
 
+Project* RecentProject::getPointer()
+{
+    return projectPtr;
+}
 
+void RecentProject::setPointer(Project* pointer)
+{
+    projectPtr = pointer;
+}
+
+bool RecentProject::operator<(const RecentProject &rRHS)
+{
+    return true;
+}

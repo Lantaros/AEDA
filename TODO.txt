@@ -1,0 +1,18 @@
+	TODO
+
+->1st Project bad practices
+ -Mudar friend classes, implementar get's  e set's para essas
+ -Organizar o código
+ -Adicionar atributo grade aos projetos (de algum modo)
+ -...
+
+->BST
+ -Implementar (alterar) o oveloading do operator<
+ - Preenche-la com proj's recentes
+ -...
+
+->Hash Table
+ - All
+
+->Priority Queue
+ -All

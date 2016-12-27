@@ -123,7 +123,7 @@ public:
     vector<Project *> projects;
     vector<Theme> themes;
     vector<AcademicYear> aYears;
-    BST<Project*> recentProjects;
+    BST<RecentProject> recentProjects;
 
     string asciiArt;
     bool changedPeople;

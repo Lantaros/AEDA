@@ -4,7 +4,8 @@ unsigned int MainMenu::maxNameLength = 0;
 unsigned int MainMenu::maxTitleLength = 0;
 
 
-MainMenu::MainMenu():recentProjects(nullptr) {}
+MainMenu::MainMenu(): recentProjects(RecentProject(nullptr))
+{}
 
 void MainMenu::loadPeopleFile(string fileName)
 {
