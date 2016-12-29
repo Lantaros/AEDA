@@ -180,6 +180,12 @@ void MainMenu::loadProjects(string fileNames)
         references = "";
         data = "";
 
+        if (Date().getYear() - project->getYear() <=
+            BSTMAXTIME) //If this project is a recent one (completed at max BSTMAXTIME years), insert it in recentProjects (BST)
+            MainMenu::recentProjects.insert(RecentProject(project));
+        else
+            MainMenu::oldProjects.insert(project);
+
         MainMenu::projects.push_back(project);
 
         projectFstream.close();
@@ -188,7 +194,7 @@ void MainMenu::loadProjects(string fileNames)
 }
 
 void MainMenu::loadFiles()
-/*{
+{
     fileNames = {"Students", "ProjectFileNames", "ProjectThemes"};
 
     try
@@ -206,9 +212,9 @@ void MainMenu::loadFiles()
     {
         cout << " The Student '" << inexStudent.name << "' does not exist:";
     }
-}*/
+}
 
-{
+/*{
     bool fileError;
     unsigned int nTries = NTRIES;
 
@@ -288,7 +294,7 @@ void MainMenu::loadFiles()
         cerr << "Exceeded maximum number of attempts\n";
 
 
-}
+}*/
 
 void MainMenu::setUpAYears()
 {
@@ -675,8 +681,8 @@ vector<Person *> MainMenu::projPreviousStudents(Theme &t)
     {
         if (projects[i]->getTitle() == t.getTitle())
         {
-            for (int j = 0; j < projects[i]->group.size(); ++j)
-                prevStud.push_back(projects[i]->group[j]);
+            for (int j = 0; j < projects[i]->getGroup().size(); ++j)
+                prevStud.push_back(projects[i]->getGroup()[j]);
 
         }
     }

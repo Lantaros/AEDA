@@ -4,16 +4,25 @@
 #include "Person.h"
 #include <string>
 
+enum ProjectType
+{
+    RESEARCH, ANALYSIS, DEVELOPMENT
+};//Only need for BST (recentProject) operator<
+
 class Project
 {
-    friend class MainMenu; //Workaround
+    //friend class MainMenu; //Workaround
 public:
-    Project(string &title, unsigned int year, string &body);
+    Project(string &title, unsigned int year, string &body, ProjectType type);
 
     string getTitle() const;
 
+    string getBody() const;
     unsigned int getYear() const;
 
+    ProjectType getType() const;
+
+    vector<Person*> &getGroup();
     virtual void print() const = 0;
 
     //Add Members
@@ -22,6 +31,7 @@ public:
     bool operator==(const Project &pRHS) const;
 
 protected:
+    ProjectType type;
     string title, body;
     unsigned int year;
     //Notas - 1 por pessoa
@@ -73,7 +83,9 @@ public:
 
     Project* getPointer();
 
-    bool operator<(const RecentProject &rRHS);
+    bool operator<(const RecentProject &rRHS) const;
+
+    bool operator==(const RecentProject &rRHS) const;
 
 private:
     Project* projectPtr;

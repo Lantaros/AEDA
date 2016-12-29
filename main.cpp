@@ -8,7 +8,8 @@ static MainMenu mainMenu;
 
 /**
  * Main function
- * @return
+ * @return An Integer is returned, evaluating error that can occur,
+ * on a working state return 0
  */
 int main()
 {
@@ -18,10 +19,7 @@ int main()
     mainMenu.loadFiles();
     mainMenu.setUpAYears();
 
-   /* string name = " rui    leixo     ";
-    normalizeName(name);
-    cout <<name << " " << name.size();
-    waitInput();*/
+
     mainMenu.menu();
 
     //Save if needed

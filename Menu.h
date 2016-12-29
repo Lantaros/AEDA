@@ -16,10 +16,11 @@
 
 /*PART 2*/
 #include "BST.h"
+#include <unordered_set>
 
 
 #define NTRIES 4
-
+#define BSTMAXTIME 5
 
 class MainMenu
 {
@@ -37,7 +38,7 @@ public:
 
     void setUpAYears();
 
-    Person *findPersonName(const string &name);
+    Person* findPersonName(const string &name);
 
     //Save files
     void savePeopleFile(const string fileName) const;
@@ -123,11 +124,14 @@ public:
     vector<Project *> projects;
     vector<Theme> themes;
     vector<AcademicYear> aYears;
-    BST<RecentProject> recentProjects;
+
 
     string asciiArt;
     bool changedPeople;
     FileNames fileNames;
+    //Part2
+    BST<RecentProject> recentProjects;
+    unordered_set<Project*> oldProjects;
 };
 
 bool comparePersonPtrAlpha(const Person *pLHS, const Person *pRHS);

@@ -3,17 +3,25 @@
 
 //Project
 
-Project::Project(string &title, unsigned int year, string &body)
+Project::Project(string &title, unsigned int year, string &body, ProjectType type)
 {
     Project::title = title;
     Project::year = year;
     Project::body = body;
+    Project::type = type;
 }
 
+//Get's
 
 string Project::getTitle() const
 {
     return title;
+}
+
+
+string Project::getBody() const
+{
+    return body;
 }
 
 unsigned int Project::getYear() const
@@ -21,12 +29,17 @@ unsigned int Project::getYear() const
     return year;
 }
 
-
-bool Project::operator==(const Project &pRHS) const
+ProjectType Project::getType() const
 {
-    return title == pRHS.title;
+    return type;
 }
 
+vector<Person*> &Project::getGroup()
+{
+    return group;
+}
+
+//Other methods
 void Project::addStudent(Person* s)
 {
     for (unsigned int i = 0; i < group.size(); i++)
@@ -38,9 +51,15 @@ void Project::addStudent(Person* s)
     group.push_back(s);
 }
 
+bool Project::operator==(const Project &pRHS) const
+{
+    return title == pRHS.title;
+}
 
-//Research
-Research::Research(string &title, unsigned int year, string &body, string &references): Project(title, year, body)
+
+/*-------------Research-------------------*/
+Research::Research(string &title, unsigned int year, string &body, string &references): Project(title, year, body,
+                                                                                                ProjectType::RESEARCH)
 { this->references = references; }
 
 void Research::print() const
@@ -57,7 +76,8 @@ void Research::print() const
 
 //Analysis
 Analysis::Analysis(string &title, unsigned int year, string &body, string &dataRepositoryFile): Project(title, year,
-                                                                                                        body)
+                                                                                                        body,
+                                                                                                        ProjectType::ANALYSIS)
 { this->dataRepositoryFile = dataRepositoryFile; }
 
 
@@ -74,7 +94,8 @@ void Analysis::print() const
 
 
 //Development
-Development::Development(string &title, unsigned int year, string &body): Project(title, year, body)
+Development::Development(string &title, unsigned int year, string &body): Project(title, year, body,
+                                                                                  ProjectType::DEVELOPMENT)
 { this->body = body; }
 
 void Development::print() const
@@ -101,7 +122,22 @@ void RecentProject::setPointer(Project* pointer)
     projectPtr = pointer;
 }
 
-bool RecentProject::operator<(const RecentProject &rRHS)
+bool RecentProject::operator<(const RecentProject &rRHS) const
 {
-    return true;
+    if (projectPtr->getYear() == rRHS.projectPtr->getYear())
+    {
+        if (projectPtr->getType() == rRHS.projectPtr->getType())
+        {
+            return projectPtr->getTitle() < rRHS.projectPtr->getTitle();
+        } else
+            return projectPtr->getType() < rRHS.projectPtr->getType();
+    } else
+        return projectPtr->getYear() < rRHS.projectPtr->getYear();
+}
+
+bool RecentProject::operator==(const RecentProject &rRHS) const
+{
+    return this->projectPtr->getTitle() == rRHS.projectPtr->getTitle() &&
+           this->projectPtr->getType() == rRHS.projectPtr->getType()
+           && this->projectPtr->getYear() == rRHS.projectPtr->getYear();
 }
