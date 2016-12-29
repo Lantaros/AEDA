@@ -1,6 +1,6 @@
 DEVELOPMENT
 YEAR
-2013
+05/08/2013
 TITLE
 C++ Market
 CODE
@@ -11,6 +11,6 @@ int main()
 }
 
 DONE BY
-Luis Martins
-Carlos Freitas
-Rafael Damasceno
+Luis Martins;18
+Carlos Freitas;13
+Rafael Damasceno;14

@@ -1,6 +1,6 @@
 ﻿RESEARCH
 YEAR
-2015
+08/05/2015
 TITLE
 History of China
 CONTENT
@@ -16,5 +16,5 @@ This is one of multiple periods of failed statehood in Chinese history, the most
 REFERENCES
 https://en.wikipedia.org/wiki/History_of_China
 DONE BY
-Rui Leixo
-Diogo Almeida
+Rui Leixo;16
+Diogo Almeida;12

@@ -16,6 +16,7 @@
 
 /*PART 2*/
 #include "BST.h"
+#include <queue>
 #include <unordered_set>
 
 
@@ -56,12 +57,11 @@ public:
     //TIER 1
     void generalDisplays();
 
-    void displayAllProjects() const;
-
     void displayAllStudents();
 
+    void displayAllProjects() const;
 
-
+    //
     void displayThemes() const;
 
     void manageThemes();
@@ -102,26 +102,28 @@ public:
 
 
     //Compactability
-    int allPercentage(const vector<Person *> &group);
+    int allPercentage(const vector<Person*> &group);
 
-    int PointsRun(Theme &theme, const vector<Person *> &group);
+    int PointsRun(Theme &theme, const vector<Person*> &group);
 
     int PointsToPercentage(int points);
 
-    vector<Person *> projPreviousStudents(Theme &t);
+    vector<Person*> projPreviousStudents(Theme &t);
 
     //Utilities
     //Name Lengths
     static unsigned int maxNameLength; //max size name of all persons
     static unsigned int maxTitleLength; //max size of all projects title
+
+    //-----------------------------------
     bool aYearExists(unsigned int &year);
 
     void checkIfMostRecent(const string &title, const unsigned int year);
 
     explicit MainMenu();
 
-    vector<Person *> people;
-    vector<Project *> projects;
+    vector<Person*> people;
+    vector<Project*> projects;
     vector<Theme> themes;
     vector<AcademicYear> aYears;
 
@@ -131,10 +133,11 @@ public:
     FileNames fileNames;
     //Part2
     BST<RecentProject> recentProjects;
-    unordered_set<Project*> oldProjects;
+    //priority_queue<NonGradedProject> nonGradedProjects;
+    //unordered_set<Project*, ProjectHash, ProjectHash, ProjectHash> oldProjects;
 };
 
-bool comparePersonPtrAlpha(const Person *pLHS, const Person *pRHS);
+bool comparePersonPtrAlpha(const Person* pLHS, const Person* pRHS);
 
 
 #endif

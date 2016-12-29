@@ -3,10 +3,10 @@
 
 //Project
 
-Project::Project(string &title, unsigned int year, string &body, ProjectType type)
+Project::Project(string &title, string &date, string &body, ProjectType type)
 {
     Project::title = title;
-    Project::year = year;
+    Project::date = Date(date);
     Project::body = body;
     Project::type = type;
 }
@@ -26,7 +26,12 @@ string Project::getBody() const
 
 unsigned int Project::getYear() const
 {
-    return year;
+    return date.getYear();
+}
+
+Date Project::getDate() const
+{
+    return date;
 }
 
 ProjectType Project::getType() const
@@ -35,6 +40,11 @@ ProjectType Project::getType() const
 }
 
 vector<Person*> &Project::getGroup()
+{
+    return group;
+}
+
+vector<Person*> Project::getGroupConst() const
 {
     return group;
 }
@@ -51,6 +61,11 @@ void Project::addStudent(Person* s)
     group.push_back(s);
 }
 
+void Project::addGrade(unsigned int grade)
+{
+    grades.push_back(grade);
+}
+
 bool Project::operator==(const Project &pRHS) const
 {
     return title == pRHS.title;
@@ -58,13 +73,13 @@ bool Project::operator==(const Project &pRHS) const
 
 
 /*-------------Research-------------------*/
-Research::Research(string &title, unsigned int year, string &body, string &references): Project(title, year, body,
-                                                                                                ProjectType::RESEARCH)
+Research::Research(string &title, string &date, string &body, string &references): Project(title, date, body,
+                                                                                           ProjectType::RESEARCH)
 { this->references = references; }
 
 void Research::print() const
 {
-    cout << this->getTitle() << "\n" << year << "\n" << this->body << "\n\nReferences\n\n" << references
+    cout << this->getTitle() << "\n" << date.getDate() << "\n" << this->body << "\n\nReferences\n\n" << references
          << "\n\n Done By\n";
     for (unsigned int i = 0; i < group.size(); i++)
     {
@@ -75,15 +90,15 @@ void Research::print() const
 
 
 //Analysis
-Analysis::Analysis(string &title, unsigned int year, string &body, string &dataRepositoryFile): Project(title, year,
-                                                                                                        body,
-                                                                                                        ProjectType::ANALYSIS)
+Analysis::Analysis(string &title, string &date, string &body, string &dataRepositoryFile): Project(title, date,
+                                                                                                   body,
+                                                                                                   ProjectType::ANALYSIS)
 { this->dataRepositoryFile = dataRepositoryFile; }
 
 
 void Analysis::print() const
 {
-    cout << this->getTitle() << "\n" << year << "\n" << this->body << "\n\nData Repository\n\n" << dataRepositoryFile
+    cout << this->getTitle() << "\n" << date.getDate() << "\n" << this->body << "\n\nData Repository\n\n" << dataRepositoryFile
          << "\n\n Done By\n";
     for (unsigned int i = 0; i < group.size(); i++)
     {
@@ -94,13 +109,13 @@ void Analysis::print() const
 
 
 //Development
-Development::Development(string &title, unsigned int year, string &body): Project(title, year, body,
-                                                                                  ProjectType::DEVELOPMENT)
+Development::Development(string &title, string &date, string &body): Project(title, date, body,
+                                                                             ProjectType::DEVELOPMENT)
 { this->body = body; }
 
 void Development::print() const
 {
-    cout << this->getTitle() << "\n" << year << "\n\nCode\n\n" << this->body << "\n\n Done By\n";
+    cout << this->getTitle() << "\n" << date.getDate() << "\n\nCode\n\n" << this->body << "\n\n Done By\n";
     for (unsigned int i = 0; i < group.size(); i++)
     {
         cout << "\n" << *group[i];
@@ -124,7 +139,7 @@ void RecentProject::setPointer(Project* pointer)
 
 bool RecentProject::operator<(const RecentProject &rRHS) const
 {
-    if (projectPtr->getYear() == rRHS.projectPtr->getYear())
+    if (projectPtr->getDate() == rRHS.projectPtr->getDate())
     {
         if (projectPtr->getType() == rRHS.projectPtr->getType())
         {
@@ -132,12 +147,12 @@ bool RecentProject::operator<(const RecentProject &rRHS) const
         } else
             return projectPtr->getType() < rRHS.projectPtr->getType();
     } else
-        return projectPtr->getYear() < rRHS.projectPtr->getYear();
+        return projectPtr->getDate() < rRHS.projectPtr->getDate();
 }
 
 bool RecentProject::operator==(const RecentProject &rRHS) const
 {
     return this->projectPtr->getTitle() == rRHS.projectPtr->getTitle() &&
            this->projectPtr->getType() == rRHS.projectPtr->getType()
-           && this->projectPtr->getYear() == rRHS.projectPtr->getYear();
+           && this->projectPtr->getDate() == rRHS.projectPtr->getDate();
 }

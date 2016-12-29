@@ -1,11 +1,10 @@
 #include "Theme.h"
 
-Theme::Theme(string type, string title, string description, unsigned int score, unsigned int diff)
+Theme::Theme(string type, string title, string description, unsigned int diff)
 {
     this->type = type;
     this->title = title;
     this->description = description;
-    this->score = score;
     this->difficulty = diff;
 }
 
@@ -23,11 +22,6 @@ string Theme::getTitle() const
 string Theme::getDescription() const
 {
     return description;
-}
-
-unsigned int Theme::getScore() const
-{
-    return score;
 }
 
 unsigned int Theme::getDifficulty() const

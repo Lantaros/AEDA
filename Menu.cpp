@@ -37,7 +37,7 @@ void MainMenu::loadPeopleFile(string fileName)
         if (name.size() > MainMenu::maxNameLength)
             MainMenu::maxNameLength = (unsigned int) name.size();
 
-        Person *p = new Student(name, bDay, id, currentYear, yearClass);
+        Person* p = new Student(name, bDay, id, currentYear, yearClass);
 
         people.push_back(p);
     }
@@ -54,7 +54,7 @@ void MainMenu::savePeopleFile(const string fileName) const
 
     //Leave 1st line blank - Structure
 
-    vector<Person *>::const_iterator ite;
+    vector<Person*>::const_iterator ite;
     for (ite = people.begin(); ite != people.end(); ite++)
     {
         file << "\n" << (*ite)->getName() << ";" << (*ite)->getDateBirth() << ";"
@@ -81,7 +81,6 @@ void MainMenu::loadThemesFile(string fileName)
     while (file.good())
     {
         getline(file, type, ';'); //Type
-        getline(file, score, ';');
         getline(file, title, ';');
         getline(file, difficulty, ';');
         getline(file, description, '\n');
@@ -90,7 +89,7 @@ void MainMenu::loadThemesFile(string fileName)
         if (title.size() > MainMenu::maxTitleLength)
             MainMenu::maxTitleLength = static_cast<unsigned int> (title.size());
 
-        Theme t(type, title, description, stoi(score), stoi(difficulty));
+        Theme t(type, title, description, stoi(difficulty));
 
         themes.push_back(t);
     }
@@ -100,10 +99,10 @@ void MainMenu::loadThemesFile(string fileName)
 
 void MainMenu::loadProjects(string fileNames)
 {
-    Project *project;
+    Project* project;
     string projectFileName, trash, line = "non-empty", name;
     //All Projects
-    string type, year, title, body;
+    string type, dateString, title, body;
     //Research
     string references;
     //Analysis
@@ -125,12 +124,13 @@ void MainMenu::loadProjects(string fileNames)
         getline(projectFstream, type);
         getline(projectFstream, trash); //Ignore file Information
 
-        getline(projectFstream, year);
+        getline(projectFstream, dateString);
         getline(projectFstream, trash);
         getline(projectFstream, title);
-        checkIfMostRecent(title, stoi(year));
         getline(projectFstream, trash); //Body tag
 
+        Date date(dateString);
+        checkIfMostRecent(title, date.getYear());
 
         while (getline(projectFstream, line) && line != "")
             body += line + "\n";
@@ -145,31 +145,33 @@ void MainMenu::loadProjects(string fileNames)
             while (getline(projectFstream, line) && line != "DONE BY")
                 references += line + "\n";
 
-            project = new Research(title, stoi(year), body, references);
-        }
-        else if (type == "ANALYSIS")
+            project = new Research(title, dateString, body, references);
+        } else if (type == "ANALYSIS")
         {
 
             while (getline(projectFstream, line) && line != "DONE BY")
                 data += line + "\n";
 
-            project = new Analysis(title, stoi(year), body, data);
-        }
-        else
+            project = new Analysis(title, dateString, body, data);
+        } else
         {
-            project = new Development(title, stoi(year),
-                                      body); //A year is always positive, we won't be loosing information
+            project = new Development(title, dateString, body); //A year is always positive, we won't be loosing information
         }
 
         //Loads up group of Students
-        while (getline(projectFstream, name))
+        while (getline(projectFstream, name, ';'))
         {
             normalizeName(name);
-            Person *student = findPersonName(name);
+            Person* student = findPersonName(name);
             if (student == nullptr)
                 throw InexistingStudent(name);
             else
+            {
+                string grade;
                 project->addStudent(student);//Adds a student to the group
+                getline(projectFstream, grade);
+                project->addGrade((unsigned int) stoi(grade));
+            }
         }
 
 
@@ -180,11 +182,10 @@ void MainMenu::loadProjects(string fileNames)
         references = "";
         data = "";
 
-        if (Date().getYear() - project->getYear() <=
-            BSTMAXTIME) //If this project is a recent one (completed at max BSTMAXTIME years), insert it in recentProjects (BST)
+        if (Date().getYear() - project->getYear() <= BSTMAXTIME) //If this project is a recent one (completed at max BSTMAXTIME years), insert it in recentProjects (BST)
             MainMenu::recentProjects.insert(RecentProject(project));
-        else
-            MainMenu::oldProjects.insert(project);
+        //else
+        //MainMenu::oldProjects.insert(project);
 
         MainMenu::projects.push_back(project);
 
@@ -207,10 +208,12 @@ void MainMenu::loadFiles()
     catch (FileNotFound &fileNFound)
     {
         cout << fileNFound.name;
+        waitInput();
     }
     catch (InexistingStudent &inexStudent)
     {
         cout << " The Student '" << inexStudent.name << "' does not exist:";
+        waitInput();
     }
 }
 
@@ -357,7 +360,7 @@ void MainMenu::menu()
 
         cout << "Your choice: ";
 
-       readOpt(choice);
+        readOpt(choice);
 
 
         switch (choice)
@@ -425,7 +428,7 @@ void MainMenu::allYears()
                 }
                 catch (InexistingStudent &invStud)
                 {
-                    cerr << "\nThe student " <<invStud.name <<" doesn't exist!\n\n";
+                    cerr << "\nThe student " << invStud.name << " doesn't exist!\n\n";
                 }
                 waitInput();
                 break;
@@ -454,6 +457,7 @@ void MainMenu::generalDisplays()
         cout << "1. Display all Students\n";
         cout << "2. Display all Projects\n";
         cout << "3. Display all Themes\n";
+        cout << "4. Display recent projects of a specific theme";
 
         cout << "\n\n0. Go Back\n";
 
@@ -471,19 +475,25 @@ void MainMenu::generalDisplays()
                 break;
             case 3:
                 displayThemes();
-                cin.get();
+                waitInput();
+                break;
+            case 4:
+                //displayRecentProjectTheme();
+                waitInput();
                 break;
             case 0:
                 exitFlag = true;
+                waitInput();
                 break;
             default:
                 cout << "The option you typed isn't available\n";
                 waitInput();
+                break;
         }
     } while (!exitFlag);
 }
 
-bool comparePersonPtrAlpha(const Person *pLHS, const Person *pRHS)
+bool comparePersonPtrAlpha(const Person* pLHS, const Person* pRHS)
 {
     return pLHS->getName() < pRHS->getName();
 }
@@ -635,13 +645,13 @@ void MainMenu::addStudent()
 
 
     changedPeople = true;
-    Person *p = new Student(name, date, id, currentYear, yearClass);
+    Person* p = new Student(name, date, id, currentYear, yearClass);
     people.push_back(p);
 }
 
 
 //AUX
-Person *MainMenu::findPersonName(const string &name)//Alterar
+Person* MainMenu::findPersonName(const string &name)//Alterar
 {
     for (unsigned int i = 0; i < people.size(); i++)
     {
@@ -673,9 +683,9 @@ void MainMenu::displayThemes() const
     }
 }
 
-vector<Person *> MainMenu::projPreviousStudents(Theme &t)
+vector<Person*> MainMenu::projPreviousStudents(Theme &t)
 {
-    vector<Person *> prevStud;
+    vector<Person*> prevStud;
 
     for (unsigned int i = 0; i < projects.size(); i++)
     {
@@ -692,7 +702,7 @@ vector<Person *> MainMenu::projPreviousStudents(Theme &t)
 
 
 //Compactability Algorithm
-int MainMenu::allPercentage(const vector<Person *> &group) //PROTOTYPE
+int MainMenu::allPercentage(const vector<Person*> &group) //PROTOTYPE
 {
 
     int compatability;
@@ -704,7 +714,7 @@ int MainMenu::allPercentage(const vector<Person *> &group) //PROTOTYPE
     }
 }
 
-int MainMenu::PointsRun(Theme &theme, const vector<Person *> &group)
+int MainMenu::PointsRun(Theme &theme, const vector<Person*> &group)
 {
     // dificulty --
     // years since last use ++
@@ -720,32 +730,27 @@ int MainMenu::PointsRun(Theme &theme, const vector<Person *> &group)
     if (dificulty == 1 || dificulty == 2)
     {
         points += 15;
-    }
-    else
+    } else
     {
         if (dificulty == 3 || dificulty == 4)
         {
             points += 8;
-        }
-        else
+        } else
         {
             if (dificulty == 5 || dificulty == 6)
             {
                 points += 0;
-            }
-            else
+            } else
             {
                 if (dificulty == 7 || dificulty == 8)
                 {
                     points -= 8;
-                }
-                else
+                } else
                 {
                     if (dificulty == 9)
                     {
                         points -= 15;
-                    }
-                    else
+                    } else
                     {
                         if (dificulty == 10)
                         {
@@ -787,7 +792,7 @@ int MainMenu::PointsRun(Theme &theme, const vector<Person *> &group)
 
     // INDIVIDUAL STUDENT ADDER
 
-    vector<Person *> prevStudents = projPreviousStudents(theme);
+    vector<Person*> prevStudents = projPreviousStudents(theme);
     for (size_t i = 0; i < prevStudents.size(); i++) // error on class?
     {
         unsigned int focusStudent = prevStudents[i]->getId();
@@ -796,8 +801,7 @@ int MainMenu::PointsRun(Theme &theme, const vector<Person *> &group)
             if (group[i]->getId() == focusStudent) // have to overload == for students class if not doing with .getId
             {
                 points += 30;
-            }
-            else
+            } else
             {
                 points += 0;
             }
@@ -860,12 +864,10 @@ int MainMenu::PointsToPercentage(int points)
     if (points >= 100)
     {
         return 0;
-    }
-    else if (points <= 0)
+    } else if (points <= 0)
     {
         return 100;
-    }
-    else
+    } else
     {
         n = 100 - points;
         return n;
@@ -890,8 +892,8 @@ void MainMenu::checkIfMostRecent(const string &title, const unsigned int year)
 
 void MainMenu::compactabilityAlgorithm()
 {
-    vector<Person *> group;
-    Person * personPtr;
+    vector<Person*> group;
+    Person* personPtr;
     string name;
     cout << "Type 5 Student's names\n";
     for (int i = 0; i < 5; ++i)
@@ -899,8 +901,8 @@ void MainMenu::compactabilityAlgorithm()
         cout << "Student: " << i + 1 << endl;
         getline(cin, name);
         normalizeName(name);
-        personPtr =  findPersonName(name);
-        if(personPtr == NULL)
+        personPtr = findPersonName(name);
+        if (personPtr == NULL)
             throw InexistingStudent(name);
         group.push_back(personPtr);
     }
