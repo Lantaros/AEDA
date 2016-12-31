@@ -127,7 +127,7 @@ void Development::print() const
 RecentProject::RecentProject(Project* pointer): projectPtr(pointer)
 {}
 
-Project* RecentProject::getPointer()
+Project* RecentProject::getPointer() const
 {
     return projectPtr;
 }
@@ -155,4 +155,25 @@ bool RecentProject::operator==(const RecentProject &rRHS) const
     return this->projectPtr->getTitle() == rRHS.projectPtr->getTitle() &&
            this->projectPtr->getType() == rRHS.projectPtr->getType()
            && this->projectPtr->getDate() == rRHS.projectPtr->getDate();
+}
+
+//---------------------PRIORITY-QUEUE---------------------------------
+
+NonGradedProject::NonGradedProject(Project* pointer)
+{
+    NonGradedProject::projectPtr = pointer;
+}
+
+Project* NonGradedProject::getPointer() const
+{
+    return projectPtr;
+}
+
+bool NonGradedProject::operator<(const NonGradedProject &rRHS) const
+{
+    if (projectPtr->getDate() == rRHS.projectPtr->getDate())
+    {
+        return projectPtr->getTitle() < rRHS.projectPtr->getTitle();
+    } else
+        return projectPtr->getDate() < rRHS.projectPtr->getDate();
 }

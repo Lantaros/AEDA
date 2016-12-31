@@ -101,6 +101,8 @@ void MainMenu::loadProjects(string fileNames)
 {
     Project* project;
     string projectFileName, trash, line = "non-empty", name;
+    string grade;
+    bool nonGradedFlag;
     //All Projects
     string type, dateString, title, body;
     //Research
@@ -158,6 +160,9 @@ void MainMenu::loadProjects(string fileNames)
             project = new Development(title, dateString, body); //A year is always positive, we won't be loosing information
         }
 
+
+        nonGradedFlag = false;
+
         //Loads up group of Students
         while (getline(projectFstream, name, ';'))
         {
@@ -167,10 +172,14 @@ void MainMenu::loadProjects(string fileNames)
                 throw InexistingStudent(name);
             else
             {
-                string grade;
+
                 project->addStudent(student);//Adds a student to the group
                 getline(projectFstream, grade);
-                project->addGrade((unsigned int) stoi(grade));
+
+                if (grade.empty())
+                    nonGradedFlag = true;
+                else
+                    project->addGrade((unsigned int) stoi(grade));
             }
         }
 
@@ -182,10 +191,17 @@ void MainMenu::loadProjects(string fileNames)
         references = "";
         data = "";
 
-        if (Date().getYear() - project->getYear() <= BSTMAXTIME) //If this project is a recent one (completed at max BSTMAXTIME years), insert it in recentProjects (BST)
-            MainMenu::recentProjects.insert(RecentProject(project));
-        //else
-        //MainMenu::oldProjects.insert(project);
+        //Project Part2
+        if (nonGradedFlag)
+            MainMenu::nonGradedProjects.push(NonGradedProject(project));
+        else
+        {
+            if (Date().getYear() - project->getYear() <= BSTMAXTIME) //If this project is a recent one (completed at max BSTMAXTIME years), insert it in recentProjects (BST)
+                MainMenu::recentProjects.insert(RecentProject(project));
+            //else
+            //MainMenu::oldProjects.insert(project);
+
+        }
 
         MainMenu::projects.push_back(project);
 
@@ -348,6 +364,7 @@ void MainMenu::menu()
 {
     int choice;
     bool exitFlag = false;
+    //recentProjects.insert(RecentProject(nonGradedProjects.top().getPointer())); //When a project gets graded, goes to recentProjects
     do
     {
         choice = -1;

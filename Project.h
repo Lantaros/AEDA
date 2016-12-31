@@ -11,7 +11,6 @@ enum ProjectType
 
 class Project
 {
-    //friend class MainMenu; //Workaround
 public:
     Project(string &title, string &date, string &body, ProjectType type);
 
@@ -88,7 +87,7 @@ public:
 
     void setPointer(Project* pointer);
 
-    Project* getPointer();
+    Project* getPointer() const;
 
     bool operator<(const RecentProject &rRHS) const;
 
@@ -99,11 +98,18 @@ private:
 };
 
 /*----------------PRIORITY-QUEUE------------------------*/
-/*class NonGradedProject
+class NonGradedProject
 {
 public:
+    NonGradedProject(Project* pointer);
 
-};*/
+    Project* getPointer() const;
+
+    bool operator<(const NonGradedProject &rRHS) const;
+
+private:
+    Project* projectPtr;
+};
 
 /*---------------HASH--TABLE----------------------------*/
 struct ProjectHash

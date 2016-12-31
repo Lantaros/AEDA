@@ -133,7 +133,7 @@ public:
     FileNames fileNames;
     //Part2
     BST<RecentProject> recentProjects;
-    //priority_queue<NonGradedProject> nonGradedProjects;
+    priority_queue<NonGradedProject> nonGradedProjects;
     //unordered_set<Project*, ProjectHash, ProjectHash, ProjectHash> oldProjects;
 };
 
