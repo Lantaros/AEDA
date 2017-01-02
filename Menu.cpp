@@ -14,7 +14,7 @@ void MainMenu::loadPeopleFile(string fileName)
     Date bDay;
     unsigned int id, currentYear, yearClass;
 
-    ifstream file("C:\\Users\\Alias\\Desktop\\AEDA\\aedaP1-rui\\" + fileName + ".txt");//fileName + ".txt");
+    ifstream file(fileName + ".txt");//fileName + ".txt");
     //ifstream file("Students.txt");
     if (!file.is_open())
         throw FileNotFound(fileName);
@@ -48,7 +48,7 @@ void MainMenu::loadPeopleFile(string fileName)
 
 void MainMenu::savePeopleFile(const string fileName) const
 {
-    ofstream file("C:\\Users\\Alias\\Desktop\\AEDA\\aedaP1-rui\\" + fileName + ".txt");//fileName + ".txt");
+    ofstream file(fileName + ".txt");//fileName + ".txt");
     //ifstream file("Students.txt");
     if (!file.is_open())
         throw FileNotFound(fileName);
@@ -71,7 +71,7 @@ void MainMenu::loadThemesFile(string fileName)
     string type, score, title, difficulty, description;
 
 
-    ifstream file("C:\\Users\\Alias\\Desktop\\AEDA\\aedaP1-rui\\" + fileName + ".txt");//fileName + ".txt");
+    ifstream file(fileName + ".txt");//fileName + ".txt");
 
     if (!file.is_open())
         throw FileNotFound(fileName);
@@ -110,7 +110,7 @@ void MainMenu::loadProjects(string fileNames)
     string data;
 
 
-    ifstream filesName("C:\\Users\\Alias\\Desktop\\AEDA\\aedaP1-rui\\" + fileNames + ".txt");//fileName + ".txt");
+    ifstream filesName(fileNames + ".txt");//fileName + ".txt");
     if (!filesName.is_open())
         throw FileNotFound(fileNames);
 
@@ -118,7 +118,7 @@ void MainMenu::loadProjects(string fileNames)
     while (getline(filesName, projectFileName))
     {
         ifstream projectFstream;
-        projectFstream.open("C:\\Users\\Alias\\Desktop\\AEDA\\aedaP1-rui\\" + projectFileName + ".txt");
+        projectFstream.open(projectFileName + ".txt");
         if (!projectFstream.is_open())
             throw FileNotFound(projectFileName);
 
@@ -171,7 +171,9 @@ void MainMenu::loadProjects(string fileNames)
                 string grade;
                 project->addStudent(student);//Adds a student to the group
                 getline(projectFstream, grade);
-                project->addGrade((unsigned int) stoi(grade));
+
+                if (!grade.empty())
+                    project->addGrade((unsigned int) stoi(grade));
             }
         }
 
