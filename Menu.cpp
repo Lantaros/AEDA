@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include <unistd.h>
 
 unsigned int MainMenu::maxNameLength = 0;
 unsigned int MainMenu::maxTitleLength = 0;
@@ -13,7 +14,7 @@ void MainMenu::loadPeopleFile(string fileName)
     Date bDay;
     unsigned int id, currentYear, yearClass;
 
-    ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\" + fileName + ".txt");//fileName + ".txt");
+    ifstream file("C:\\Users\\Alias\\Desktop\\AEDA\\aedaP1-rui\\" + fileName + ".txt");//fileName + ".txt");
     //ifstream file("Students.txt");
     if (!file.is_open())
         throw FileNotFound(fileName);
@@ -47,7 +48,7 @@ void MainMenu::loadPeopleFile(string fileName)
 
 void MainMenu::savePeopleFile(const string fileName) const
 {
-    ofstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\" + fileName + ".txt");//fileName + ".txt");
+    ofstream file("C:\\Users\\Alias\\Desktop\\AEDA\\aedaP1-rui\\" + fileName + ".txt");//fileName + ".txt");
     //ifstream file("Students.txt");
     if (!file.is_open())
         throw FileNotFound(fileName);
@@ -70,7 +71,7 @@ void MainMenu::loadThemesFile(string fileName)
     string type, score, title, difficulty, description;
 
 
-    ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\" + fileName + ".txt");//fileName + ".txt");
+    ifstream file("C:\\Users\\Alias\\Desktop\\AEDA\\aedaP1-rui\\" + fileName + ".txt");//fileName + ".txt");
 
     if (!file.is_open())
         throw FileNotFound(fileName);
@@ -101,8 +102,6 @@ void MainMenu::loadProjects(string fileNames)
 {
     Project* project;
     string projectFileName, trash, line = "non-empty", name;
-    string grade;
-    bool nonGradedFlag;
     //All Projects
     string type, dateString, title, body;
     //Research
@@ -111,7 +110,7 @@ void MainMenu::loadProjects(string fileNames)
     string data;
 
 
-    ifstream filesName("C:\\Users\\ruile\\Desktop\\aedaP1\\" + fileNames + ".txt");//fileName + ".txt");
+    ifstream filesName("C:\\Users\\Alias\\Desktop\\AEDA\\aedaP1-rui\\" + fileNames + ".txt");//fileName + ".txt");
     if (!filesName.is_open())
         throw FileNotFound(fileNames);
 
@@ -119,7 +118,7 @@ void MainMenu::loadProjects(string fileNames)
     while (getline(filesName, projectFileName))
     {
         ifstream projectFstream;
-        projectFstream.open("C:\\Users\\ruile\\Desktop\\aedaP1\\" + projectFileName + ".txt");
+        projectFstream.open("C:\\Users\\Alias\\Desktop\\AEDA\\aedaP1-rui\\" + projectFileName + ".txt");
         if (!projectFstream.is_open())
             throw FileNotFound(projectFileName);
 
@@ -160,9 +159,6 @@ void MainMenu::loadProjects(string fileNames)
             project = new Development(title, dateString, body); //A year is always positive, we won't be loosing information
         }
 
-
-        nonGradedFlag = false;
-
         //Loads up group of Students
         while (getline(projectFstream, name, ';'))
         {
@@ -172,14 +168,10 @@ void MainMenu::loadProjects(string fileNames)
                 throw InexistingStudent(name);
             else
             {
-
+                string grade;
                 project->addStudent(student);//Adds a student to the group
                 getline(projectFstream, grade);
-
-                if (grade.empty())
-                    nonGradedFlag = true;
-                else
-                    project->addGrade((unsigned int) stoi(grade));
+                project->addGrade((unsigned int) stoi(grade));
             }
         }
 
@@ -191,17 +183,10 @@ void MainMenu::loadProjects(string fileNames)
         references = "";
         data = "";
 
-        //Project Part2
-        if (nonGradedFlag)
-            MainMenu::nonGradedProjects.push(NonGradedProject(project));
-        else
-        {
-            if (Date().getYear() - project->getYear() <= BSTMAXTIME) //If this project is a recent one (completed at max BSTMAXTIME years), insert it in recentProjects (BST)
-                MainMenu::recentProjects.insert(RecentProject(project));
-            //else
-            //MainMenu::oldProjects.insert(project);
-
-        }
+        if (Date().getYear() - project->getYear() <= BSTMAXTIME) //If this project is a recent one (completed at max BSTMAXTIME years), insert it in recentProjects (BST)
+            MainMenu::recentProjects.insert(RecentProject(project));
+        //else
+        //MainMenu::oldProjects.insert(project);
 
         MainMenu::projects.push_back(project);
 
@@ -341,7 +326,7 @@ void MainMenu::setUpAYears()
 
 void MainMenu::loadAsciiArt()
 {
-    ifstream file("C:\\Users\\ruile\\Desktop\\aedaP1\\AsciiArt.txt");
+    ifstream file("C:\\Users\\Alias\\Desktop\\AEDA\\aedaP1-rui\\AsciiArt.txt");
 
     if (!file.is_open())
         throw FileNotFound("AsciiArt");
@@ -364,18 +349,173 @@ void MainMenu::menu()
 {
     int choice;
     bool exitFlag = false;
-    //recentProjects.insert(RecentProject(nonGradedProjects.top().getPointer())); //When a project gets graded, goes to recentProjects
     do
     {
         choice = -1;
 
-        system("CLS");
-        cout << "Choose an Academic Year\n\n";
-        cout << "1. All Years\n";
-        cout << "2. Specific Year\n";
-        cout << "\n\n0. Exit\n";
+/*
+ *
+ *
+ *
+ *     cout << "Displays\n\n";
+        cout << "1. Display all Students\n";
+        cout << "2. Display all Projects\n";
+        cout << "3. Display all Themes\n";
+        cout << "4. Display recent projects of a specific theme";
 
-        cout << "Your choice: ";
+    cout <<   "    /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\ "<< "\n";
+        cout <<   "   /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\"<< "\n";
+        cout <<   "  ||                             All Years                         ||"<< "\n";
+        cout <<   "  ||                                                               ||"<< "\n";
+        cout <<   "  ||                        1. Displays                            ||"<< "\n";
+        cout <<   "  ||                        2. Manage Themes                       ||"<< "\n";
+        cout <<   "  ||                        3. Add student                         ||"<< "\n";
+        cout <<   "  ||                        4. Compatibility Algorithem            ||"<< "\n";
+        cout <<   "  ||                                                               ||"<< "\n";
+        cout <<   "  ||                                                               ||"<< "\n";
+        cout <<   "  ||                          0. Go back                           ||"<< "\n";
+        cout <<   "  ||                                                               ||"<< "\n";
+        cout <<   "  ||                                                               ||"<< "\n";
+        cout <<   "  ||                                                               ||"<< "\n";
+        cout <<   "  ||                                                               ||"<< "\n";
+        cout <<   "  ||                                                               ||"<< "\n";
+        cout <<   "  ||                                                               ||"<< "\n";
+        cout <<   "  ||                                                               ||"<< "\n";
+        cout <<   "   \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/"<< "\n";
+        cout <<   "    \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/"<< "\n";
+
+
+      cout <<   "    /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\ "<< "\n";
+        cout <<   "   /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\"<< "\n";
+        cout <<   "  ||                             Displays                          ||"<< "\n";
+        cout <<   "  ||                                                               ||"<< "\n";
+        cout <<   "  ||                1. Display all Students                        ||"<< "\n";
+        cout <<   "  ||                2. Display all Projects                        ||"<< "\n";
+        cout <<   "  ||                3. Display all Themes                          ||"<< "\n";
+        cout <<   "  ||                4. Display recent projects of a specific theme ||"<< "\n";
+        cout <<   "  ||                0. Go back                                     ||"<< "\n";
+        cout <<   "  ||                                                               ||"<< "\n";
+        cout <<   "   \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/"<< "\n";
+        cout <<   "    \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/"<< "\n";
+
+
+ cout <<   "    /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\ "<< \n;
+    cout <<   "   /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\"<< \n;
+    cout <<   "  ||                      Choose an Academic Year                  ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "  ||                        1. All Years                           ||"<< \n;
+    cout <<   "  ||                        2. Specific Year                       ||"<< \n;
+    cout <<   "  ||                        0. Exit                                ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "   \= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/"<< \n;
+    cout <<   "    \= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/"<< \n;
+
+
+
+    cout <<   "    /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\ "<< \n;
+    cout <<   "   /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\"<< \n;
+    cout <<   "  ||                      Choose an Academic Year                  ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "  ||                        1. All Years                           ||"<< \n;
+    cout <<   "  ||                        2. Specific Year                       ||"<< \n;
+    cout <<   "  ||                        0. Exit                                ||"<< \n;
+    cout <<   "  ||                                                               ||"<< \n;
+    cout <<   "   \= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/"<< \n;
+    cout <<   "    \= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/"<< \n;
+
+  cout <<   " _______  _                 _        _______ _________ _______  ______   _______  _______"<< "\n";
+ cout <<   "(  ____ \\( (    /||\\     /|( (    /|(  ____ \\\\__   __/(  ___  )(  __  \\ (  ___  )(  ____ \\"<< "\n";
+ cout <<   "| (    \\/|  \\  ( || )   ( ||  \\  ( || (    \\/   ) (   | (   ) || (  \\  )| (   ) || (    \\/"<< "\n";
+ cout <<   "| (__    |   \\ | || |   | ||   \\ | || |         | |   | (___) || |   ) || |   | || (_____"<< "\n";
+ cout <<   "|  __)   | (\\ \\) || |   | || (\\ \\) || |         | |   |  ___  || |   | || |   | |(_____  )"<< "\n";
+ cout <<   "| (      | | \\   || |   | || | \\   || |         | |   | (   ) || |   ) || |   | |      ) |"<< "\n";
+ cout <<   "| (____/\\| )  \\  || (___) || )  \\  || (____/\___) (___| )   ( || (__/  )| (___) |/\\____) |"<< "\n";
+ cout <<   "(_______/|/    )_)(_______)|/    )_)(_______/\\_______/|/     \\|(______/ (_______)\\_______)"<< "\n";
+
+ cout <<   "                                     ______   _______"<< "\n";
+ cout <<   "                                    (  __  \\ (  ____ \\"<< "\n";
+ cout <<   "                                    | (  \\  )| (    \\/"<< "\n";
+ cout <<   "                                    | |   ) || (__"<< "\n";
+ cout <<   "                                    | |   | ||  __)"<< "\n";
+ cout <<   "                                    | |   ) || ("<< "\n";
+ cout <<   "                                    | (__/  )| (____/\\"<< "\n";
+ cout <<   "                                    (______/ (_______/"<< "\n";
+
+ cout <<   "_________ _______  _______  ______   _______  _                 _______  _______ "<< "\n";
+ cout <<   "\\__   __/(  ____ )(  ___  )(  ___ \\ (  ___  )( \\      |\\     /|(  ___  )(  ____ \\"<< "\n";
+ cout <<   "   ) (   | (    )|| (   ) || (   ) )| (   ) || (      | )   ( || (   ) || (    \\/"<< "\n";
+ cout <<   "   | |   | (____)|| (___) || (__/ / | (___) || |      | (___) || |   | || (_____ "<< "\n";
+ cout <<   "   | |   |     __)|  ___  ||  __ (  |  ___  || |      |  ___  || |   | |(_____  )"<< "\n";
+ cout <<   "   | |   | (\\ (   | (   ) || (  \\ \\ | (   ) || |      | (   ) || |   | |      ) |"<< "\n";
+  cout <<   "  | |   | ) \\ \\__| )   ( || )___) )| )   ( || (____/\\| )   ( || (___) |/\\____) |"<< "\n";
+  cout <<   "  )_(   |/   \\__/|/     \\||/ \\___/ |/     \\|(_______/|/     \\|(_______)\\_______)"<< "\n";
+
+
+
+
+
+
+
+
+
+
+
+
+   */
+
+
+        cout << " _______  _                 _        _______ _________ _______  ______   _______  _______" << "\n";
+        cout << "(  ____ \\( (    /||\\     /|( (    /|(  ____ \\\\__   __/(  ___  )(  __  \\ (  ___  )(  ____ \\" << "\n";
+        cout << "| (    \\/|  \\  ( || )   ( ||  \\  ( || (    \\/   ) (   | (   ) || (  \\  )| (   ) || (    \\/" << "\n";
+        cout << "| (__    |   \\ | || |   | ||   \\ | || |         | |   | (___) || |   ) || |   | || (_____" << "\n";
+        cout << "|  __)   | (\\ \\) || |   | || (\\ \\) || |         | |   |  ___  || |   | || |   | |(_____  )" << "\n";
+        cout << "| (      | | \\   || |   | || | \\   || |         | |   | (   ) || |   ) || |   | |      ) |" << "\n";
+        cout << "| (____/\\| )  \\  || (___) || )  \\  || (____/\\___) (___| )   ( || (__/  )| (___) |/\\____) |" << "\n";
+        cout << "(_______/|/    )_)(_______)|/    )_)(_______/\\_______/|/     \\|(______/ (_______)\\_______)" << "\n";
+
+        cout << "                                     ______   _______" << "\n";
+        cout << "                                    (  __  \\ (  ____ \\" << "\n";
+        cout << "                                    | (  \\  )| (    \\/" << "\n";
+        cout << "                                    | |   ) || (__" << "\n";
+        cout << "                                    | |   | ||  __)" << "\n";
+        cout << "                                    | |   ) || (" << "\n";
+        cout << "                                    | (__/  )| (____/\\" << "\n";
+        cout << "                                    (______/ (_______/" << "\n";
+
+        cout << "_________ _______  _______  ______   _______  _                 _______  _______ " << "\n";
+        cout << "\\__   __/(  ____ )(  ___  )(  ___ \\ (  ___  )( \\      |\\     /|(  ___  )(  ____ \\" << "\n";
+        cout << "   ) (   | (    )|| (   ) || (   ) )| (   ) || (      | )   ( || (   ) || (    \\/" << "\n";
+        cout << "   | |   | (____)|| (___) || (__/ / | (___) || |      | (___) || |   | || (_____ " << "\n";
+        cout << "   | |   |     __)|  ___  ||  __ (  |  ___  || |      |  ___  || |   | |(_____  )" << "\n";
+        cout << "   | |   | (\\ (   | (   ) || (  \\ \\ | (   ) || |      | (   ) || |   | |      ) |" << "\n";
+        cout << "  | |   | ) \\ \\__| )   ( || )___) )| )   ( || (____/\\| )   ( || (___) |/\\____) |" << "\n";
+        cout << "  )_(   |/   \\__/|/     \\||/ \\___/ |/     \\|(_______/|/     \\|(_______)\\_______)" << "\n";
+
+        sleep(2);
+
+        system("CLS");
+        cout << "    /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\ " << "\n";
+        cout << "   /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\" << "\n";
+        cout << "  ||                      Choose an Academic Year                  ||" << "\n";
+        cout << "  ||                                                               ||" << "\n";
+        cout << "  ||                        1. All Years                           ||" << "\n";
+        cout << "  ||                        2. Specific Year                       ||" << "\n";
+        cout << "  ||                        0. Exit                                ||" << "\n";
+        cout << "  ||                                                               ||" << "\n";
+        cout << "   \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/" << "\n";
+        cout << "    \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/" << "\n";
+        cout << "\n";
+        cout << "           Your choice: ";
 
         readOpt(choice);
 
@@ -416,14 +556,21 @@ void MainMenu::allYears()
     {
         choice = -1;
         system("CLS");
-        cout << "All Years\n\n";
-        cout << "1. Displays\n";
-        cout << "2. Manage Themes\n";
-        cout << "3. Add Student\n";
-        cout << "4. Compatibility Algorithm\n";
-        cout << "\n\n0. Go Back\n";
 
-        cout << "Your choice: ";
+        cout << "    /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\ " << "\n";
+        cout << "   /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\" << "\n";
+        cout << "  ||                             All Years                         ||" << "\n";
+        cout << "  ||                                                               ||" << "\n";
+        cout << "  ||                        1. Displays                            ||" << "\n";
+        cout << "  ||                        2. Manage Themes                       ||" << "\n";
+        cout << "  ||                        3. Add student                         ||" << "\n";
+        cout << "  ||                        4. Compatibility Algorithem            ||" << "\n";
+        cout << "  ||                        0. Go back                             ||" << "\n";
+        cout << "  ||                                                               ||" << "\n";
+        cout << "   \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/" << "\n";
+        cout << "    \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/" << "\n";
+
+        cout << "           Your choice: ";
         readOpt(choice);
 
         switch (choice)
@@ -470,15 +617,20 @@ void MainMenu::generalDisplays()
     {
         choice = -1;
         system("CLS");
-        cout << "Displays\n\n";
-        cout << "1. Display all Students\n";
-        cout << "2. Display all Projects\n";
-        cout << "3. Display all Themes\n";
-        cout << "4. Display recent projects of a specific theme";
+        cout << "    /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\ " << "\n";
+        cout << "   /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\" << "\n";
+        cout << "  ||                             Displays                          ||" << "\n";
+        cout << "  ||                                                               ||" << "\n";
+        cout << "  ||                1. Display all Students                        ||" << "\n";
+        cout << "  ||                2. Display all Projects                        ||" << "\n";
+        cout << "  ||                3. Display all Themes                          ||" << "\n";
+        cout << "  ||                4. Display recent projects of a specific theme ||" << "\n";
+        cout << "  ||                0. Go back                                     ||" << "\n";
+        cout << "  ||                                                               ||" << "\n";
+        cout << "   \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/" << "\n";
+        cout << "    \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/" << "\n";
 
-        cout << "\n\n0. Go Back\n";
-
-        cout << "Your choice: ";
+        cout << "           Your choice: ";
         readOpt(choice);
 
         switch (choice)
