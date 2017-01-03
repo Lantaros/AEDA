@@ -152,7 +152,7 @@ bool RecentProject::operator<(const RecentProject &rRHS) const
         } else
             return projectPtr->getType() < rRHS.projectPtr->getType();
     } else
-        return projectPtr->getDate() < rRHS.projectPtr->getDate();
+        return projectPtr->getDate() > rRHS.projectPtr->getDate();
 }
 
 bool RecentProject::operator==(const RecentProject &rRHS) const
@@ -180,7 +180,7 @@ bool NonGradedProject::operator<(const NonGradedProject &rRHS) const
     {
         return projectPtr->getTitle() > rRHS.projectPtr->getTitle();
     } else
-        return projectPtr->getDate() > rRHS.projectPtr->getDate();
+        return projectPtr->getDate() < rRHS.projectPtr->getDate();
 }
 
 void evaluateProject(Project* project)

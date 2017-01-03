@@ -19,6 +19,10 @@ int main()
     mainMenu.loadFiles();
     mainMenu.setUpAYears();
 
+    /*  if(Date("13/02/2019") < Date("1/1/2014"))
+          cout << "TRUE";
+      else
+          cout <<"False";*/
 
     mainMenu.menu();
 

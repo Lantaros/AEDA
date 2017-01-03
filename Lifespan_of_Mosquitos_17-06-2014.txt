@@ -22,6 +22,6 @@ Boiled mosquito to 70C, dead in 2sec
 Freezed mosquito to -20C, dead in 1min and 45 sec
 Put mosquito under water, dead in 45sec
 DONE BY
-Hugo Neves;17
-Bernardo Ramos;14
-Francisco Silva;14
+Hugo Neves;
+Bernardo Ramos;
+Francisco Silva;

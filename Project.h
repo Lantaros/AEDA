@@ -121,9 +121,13 @@ struct ProjectHash
 {
     int operator()(const Project* pH) const
     {
+        string title = pH->getTitle();
+        unsigned int hashValue = 0;
 
-        return 1;
-        //return pH->getTitle().size();
+        for (unsigned int i = 0; i < title.size(); ++i)
+        {
+
+        }
     }
 
     bool operator()(const Project* pLHS, const Project* pRHS) const
