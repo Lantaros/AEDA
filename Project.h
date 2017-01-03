@@ -26,6 +26,9 @@ public:
     vector<Person*> &getGroup();
 
     vector<Person*> getGroupConst() const;
+
+    vector<unsigned int> getGrades();
+
     virtual void print() const = 0;
 
     //Add Members
@@ -110,6 +113,8 @@ public:
 private:
     Project* projectPtr;
 };
+
+void evaluateProject(Project* project);
 
 /*---------------HASH--TABLE----------------------------*/
 struct ProjectHash

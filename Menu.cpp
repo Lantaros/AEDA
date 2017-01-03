@@ -35,6 +35,9 @@ void MainMenu::loadPeopleFile(string fileName)
 
         bDay = Date(date);
         id = static_cast<unsigned int> (stoi(stringID));
+
+        normalizeName(name);
+
         if (name.size() > MainMenu::maxNameLength)
             MainMenu::maxNameLength = (unsigned int) name.size();
 
@@ -102,6 +105,7 @@ void MainMenu::loadProjects(string fileNames)
 {
     Project* project;
     string projectFileName, trash, line = "non-empty", name;
+    bool noGradeFlag;
     //All Projects
     string type, dateString, title, body;
     //Research
@@ -159,6 +163,7 @@ void MainMenu::loadProjects(string fileNames)
             project = new Development(title, dateString, body); //A year is always positive, we won't be loosing information
         }
 
+        noGradeFlag = true;
         //Loads up group of Students
         while (getline(projectFstream, name, ';'))
         {
@@ -173,7 +178,10 @@ void MainMenu::loadProjects(string fileNames)
                 getline(projectFstream, grade);
 
                 if (!grade.empty())
+                {
+                    noGradeFlag = false;
                     project->addGrade((unsigned int) stoi(grade));
+                }
             }
         }
 
@@ -185,8 +193,12 @@ void MainMenu::loadProjects(string fileNames)
         references = "";
         data = "";
 
-        if (Date().getYear() - project->getYear() <= BSTMAXTIME) //If this project is a recent one (completed at max BSTMAXTIME years), insert it in recentProjects (BST)
+        if (noGradeFlag)
+            nonGradedProjects.push(NonGradedProject(project));
+
+        else if (Date().getYear() - project->getYear() <= BSTMAXTIME) //If this project is a recent one (completed at max BSTMAXTIME years), insert it in recentProjects (BST)
             MainMenu::recentProjects.insert(RecentProject(project));
+
         //else
         //MainMenu::oldProjects.insert(project);
 
@@ -215,7 +227,7 @@ void MainMenu::loadFiles()
     }
     catch (InexistingStudent &inexStudent)
     {
-        cout << " The Student '" << inexStudent.name << "' does not exist:";
+        cout << " The Student '" << inexStudent.name << "' does not exist:\n";
         waitInput();
     }
 }
@@ -365,7 +377,7 @@ void MainMenu::menu()
         cout << "3. Display all Themes\n";
         cout << "4. Display recent projects of a specific theme";
 
-    cout <<   "    /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\ "<< "\n";
+        cout <<   "    /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\ "<< "\n";
         cout <<   "   /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =\\"<< "\n";
         cout <<   "  ||                             All Years                         ||"<< "\n";
         cout <<   "  ||                                                               ||"<< "\n";
@@ -627,6 +639,7 @@ void MainMenu::generalDisplays()
         cout << "  ||                2. Display all Projects                        ||" << "\n";
         cout << "  ||                3. Display all Themes                          ||" << "\n";
         cout << "  ||                4. Display recent projects of a specific theme ||" << "\n";
+        cout << "  ||                5. Display non-graded projects queue           ||" << "\n";
         cout << "  ||                0. Go back                                     ||" << "\n";
         cout << "  ||                                                               ||" << "\n";
         cout << "   \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/" << "\n";
@@ -649,7 +662,11 @@ void MainMenu::generalDisplays()
                 waitInput();
                 break;
             case 4:
-                //displayRecentProjectTheme();
+                displayRecentProjectTheme();
+                waitInput();
+                break;
+            case 5:
+                displayNonGradedQueue();
                 waitInput();
                 break;
             case 0:
@@ -687,6 +704,65 @@ void MainMenu::displayAllProjects() const
         system("CLS");
         projects[i]->print();
         waitInput();
+    }
+}
+
+void MainMenu::displayRecentProjectTheme() const
+{
+    string themeInput;
+
+    cout << "Please type the theme form which the projects you want to see\n";
+    getline(cin, themeInput);
+
+    cout << left << setw(MainMenu::maxTitleLength) << "Theme" << setw(10) << " " << "Date of Delivery\n\n";
+    BSTItrIn<RecentProject> it(recentProjects);
+
+    while (!it.isAtEnd())
+    {
+        if (it.retrieve().getPointer()->getTitle() == themeInput)
+        {
+            cout << left << setw(MainMenu::maxTitleLength) << it.retrieve().getPointer()->getTitle() << setw(10)
+                 << " " << it.retrieve().getPointer()->getDate().getDate() << endl;
+        }
+
+        it.advance();
+    }
+}
+
+void MainMenu::displayNonGradedQueue()
+{
+    priority_queue<NonGradedProject> aux = nonGradedProjects;
+    Project* project = nullptr;
+    int choice = -1;
+
+    if (nonGradedProjects.empty())
+    {
+        cout << "There are no projects to grade\n";
+        return;
+    }
+    cout << "Type" << " " << left << setw(MainMenu::maxTitleLength) << "Theme" << setw(10) << " " << "Date of Delivery\n\n";
+
+    while (!aux.empty())
+    {
+        project = aux.top().getPointer();
+
+        cout << project->getType() << left << setw(MainMenu::maxTitleLength) << project->getTitle() << setw(10)
+             << " " << project->getDate().getDate() << endl;
+
+        aux.pop();
+    }
+
+    cout << "Evaluate most recent project??\n\n";
+    cout << "1. Yes\n" << "2. No\n";
+
+    readOpt(choice);
+
+    if (choice == 1)
+    {
+        project = nonGradedProjects.top().getPointer();
+        evaluateProject(project);
+        recentProjects.insert(RecentProject(project));
+        nonGradedProjects.pop();
     }
 }
 
@@ -1086,6 +1162,10 @@ void MainMenu::shutDown()
     if (changedPeople)
         savePeopleFile(fileNames.peopleFile);
 }
+
+
+
+
 
 
 

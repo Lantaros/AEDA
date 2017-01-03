@@ -59,16 +59,14 @@ public:
 
     void displayAllStudents();
 
+    void displayRecentProjectTheme() const;
+
+    void displayNonGradedQueue();
+
     void displayAllProjects() const;
 
     //
     void displayThemes() const;
-
-    void manageThemes();
-
-    void addTheme();
-
-    void removeTheme();
 
     void addStudent();
 
@@ -83,23 +81,6 @@ public:
     void displayStudentProjects() const;
 
     void displayProjectsYear(const unsigned int year) const;
-
-    void themesOptions();
-    //TIER 2
-
-    void checkCompatibility();
-
-    //TIER 2
-    void top5Results();
-
-    void allResults();
-
-    //Prints
-    void printAsciiArt() const;
-
-    void viewStudents() const; //show all students on the people vector
-    void viewProjects() const; //show all projects on the projects vector
-
 
     //Compactability
     int allPercentage(const vector<Person*> &group);
@@ -133,7 +114,7 @@ public:
     FileNames fileNames;
     //Part2
     BST<RecentProject> recentProjects;
-    //priority_queue<NonGradedProject> nonGradedProjects;
+    priority_queue<NonGradedProject> nonGradedProjects;
     //unordered_set<Project*, ProjectHash, ProjectHash, ProjectHash> oldProjects;
 };
 

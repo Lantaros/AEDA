@@ -13,9 +13,9 @@ static MainMenu mainMenu;
  */
 int main()
 {
-    unsigned int choice = 0;
 
-    //mainMenu.loadAsciiArt();
+    /*string name = "Joaquim da Silva";
+    normalizeName(name);*/
     mainMenu.loadFiles();
     mainMenu.setUpAYears();
 

@@ -49,6 +49,11 @@ vector<Person*> Project::getGroupConst() const
     return group;
 }
 
+vector<unsigned int> Project::getGrades()
+{
+    return grades;
+}
+
 //Other methods
 void Project::addStudent(Person* s)
 {
@@ -173,7 +178,16 @@ bool NonGradedProject::operator<(const NonGradedProject &rRHS) const
 {
     if (projectPtr->getDate() == rRHS.projectPtr->getDate())
     {
-        return projectPtr->getTitle() < rRHS.projectPtr->getTitle();
+        return projectPtr->getTitle() > rRHS.projectPtr->getTitle();
     } else
-        return projectPtr->getDate() < rRHS.projectPtr->getDate();
+        return projectPtr->getDate() > rRHS.projectPtr->getDate();
+}
+
+void evaluateProject(Project* project)
+{
+    if (project == nullptr)
+        return;
+
+    while (project->getGrades().size() != project->getGroupConst().size())
+        project->addGrade(static_cast<unsigned int> (rand() % 21));
 }
