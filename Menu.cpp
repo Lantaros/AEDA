@@ -833,14 +833,18 @@ void MainMenu::addStudent()
     Date date;
     bool errorFlag;
 
-    cout << "Insert Name: ";
+    cout << "(press 0 to cancel)\nInsert Name: ";
     getline(cin, name);
     normalizeName(name);
+    if (name == "0")
+        return;
     do
     {
         errorFlag = false;
-        cout << "Insert Birthday (dd/mm/yyyy): ";
+        cout << "(press 0 to cancel)\nInsert Birthday (dd/mm/yyyy): ";
         getline(cin, bDay);
+        if (bDay == "0")
+            return;
         try
         {
             date = Date(bDay);
@@ -856,8 +860,10 @@ void MainMenu::addStudent()
     do
     {
         errorFlag = false;
-        cout << "Insert ID: ";
+        cout << "(press 0 to cancel)\nInsert ID: ";
         cin >> id;
+        if (id == 0)
+            return;
         //try if id number digits is smaller different than 8 and if the id already exists
         try
         {
@@ -1142,11 +1148,15 @@ void MainMenu::compactabilityAlgorithm()
     vector<Person*> group;
     Person* personPtr;
     string name;
-    cout << "Type 5 Student's names\n";
+    cout << "(type 0 to cancel and 1 to finish selection)\nType up to 5 Student's names\n";
     for (int i = 0; i < 5; ++i)
     {
         cout << "Student: " << i + 1 << endl;
         getline(cin, name);
+        if (name == "0")
+            return;
+        if (name == "1")
+            break;
         normalizeName(name);
         personPtr = findPersonName(name);
         if (personPtr == NULL)
