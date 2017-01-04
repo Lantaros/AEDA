@@ -185,9 +185,25 @@ bool NonGradedProject::operator<(const NonGradedProject &rRHS) const
 
 void evaluateProject(Project* project)
 {
+    int grade;
+    bool flagGrade = true;
     if (project == nullptr)
         return;
 
-    while (project->getGrades().size() != project->getGroupConst().size())
-        project->addGrade(static_cast<unsigned int> (rand() % 21));
+vector<Person*> group;
+    for (unsigned int i = 0 ; i <  project->getGroupConst().size() ; i++)
+    {
+        group = project->getGroupConst();
+        cout << "What grade would you like to give to " << group[i]->getName();
+        do {
+            flagGrade = true;
+            cin >> grade;
+            if (grade < 0 || grade > 20)
+            {
+                flagGrade = false;
+                cerr << "Invalid grade\n";
+            }
+        }while(!flagGrade);
+        project->addGrade(static_cast<unsigned int> (grade));
+    }
 }

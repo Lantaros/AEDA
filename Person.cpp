@@ -80,7 +80,7 @@ unsigned int Student::getCurrentYear() const
 
 void Student::print() const
 {
-    cout << left << setw(MainMenu::maxNameLength) << name <<"  " << birthDate.getDate() << "            " << id << "          "
+    cout << left << setw(MainMenu::maxNameLength) << name <<"  " << birthDate.getDate() << "           " << id << "          "
          << currentYear <<"\n";
 }
 

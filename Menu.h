@@ -43,6 +43,8 @@ public:
 
     //Save files
     void savePeopleFile(const string fileName) const;
+    void saveProjectsFile(const string fileName) const;
+    void saveThemesFile(const string fileName) const;
 
     //Displays
 
@@ -59,31 +61,41 @@ public:
 
     void displayAllStudents();
 
+    void displayAllStudentsD();
+
     void displayRecentProjectTheme() const;
 
+    void displayRecentProjectType() const;
+
     void displayNonGradedQueue();
+
+    unsigned int numberProjectsYear(unsigned int year);
 
     void displayAllProjects() const;
 
     //
     void displayThemes() const;
 
+    void displayThemesD() const;
+
     void addStudent();
+
+    void deleteStudent();
+
+    void deleteThemes();
 
     void compactabilityAlgorithm();
 
-    //SPECIFIC AYEAR
-    void specificYear();
     //TIER 1
     //TIER 2
 
     //TIER3
     void displayStudentProjects() const;
 
-    void displayProjectsYear(const unsigned int year) const;
+    void displayProjectsYear();
 
     //Compactability
-    int allPercentage(const vector<Person*> &group);
+    void allPercentage(const vector<Person*> &group);
 
     int PointsRun(Theme &theme, const vector<Person*> &group);
 
@@ -111,6 +123,7 @@ public:
 
     string asciiArt;
     bool changedPeople;
+    bool changedThemes;
     FileNames fileNames;
     //Part2
     BST<RecentProject> recentProjects;

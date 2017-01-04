@@ -1,4 +1,5 @@
 #include "Theme.h"
+#include "Menu.h"
 
 Theme::Theme(string type, string title, string description, unsigned int diff)
 {
@@ -37,8 +38,8 @@ unsigned int Theme::getLastYearUsed() const
 
 ostream &operator<<(ostream &out, const Theme &t)
 {
-    out << t.getType() << " " << t.getTitle() << setw(12);
-    out << t.getDifficulty();
+    out << t.getType() << "      " << left << setw(MainMenu::maxTitleLength) << t.getTitle();
+    out << "        " << t.getDifficulty();
 
     return out;
 }
