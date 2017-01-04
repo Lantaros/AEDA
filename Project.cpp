@@ -34,6 +34,18 @@ Date Project::getDate() const
     return date;
 }
 
+void Project::getType(string &typeString) const
+{
+    if (type == RESEARCH)
+        typeString = "Research";
+
+    else if (type == ANALYSIS)
+        typeString = "Analysis";
+
+    else if (type == DEVELOPMENT)
+        typeString = "Development";
+}
+
 ProjectType Project::getType() const
 {
     return type;
@@ -194,10 +206,11 @@ vector<Person*> group;
     for (unsigned int i = 0 ; i <  project->getGroupConst().size() ; i++)
     {
         group = project->getGroupConst();
-        cout << "What grade would you like to give to " << group[i]->getName();
+        cout << "What grade would you like to give to " << group[i]->getName() << "? ";
         do {
+            grade = -1; //Resets variable to invalid state
             flagGrade = true;
-            cin >> grade;
+            readOpt(grade);
             if (grade < 0 || grade > 20)
             {
                 flagGrade = false;

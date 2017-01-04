@@ -205,8 +205,8 @@ void MainMenu::loadProjects(string fileNames)
         else if (Date().getYear() - project->getYear() <= BSTMAXTIME) //If this project is a recent one (completed at max BSTMAXTIME years), insert it in recentProjects (BST)
             MainMenu::recentProjects.insert(RecentProject(project));
 
-        //else
-        //MainMenu::oldProjects.insert(project);
+        else
+            MainMenu::oldProjects.insert(project);
 
         MainMenu::projects.push_back(project);
 
@@ -491,6 +491,8 @@ void MainMenu::generalDisplays()
         cout << "  ||                5. Display recent projects of a specific theme ||" << "\n";
         cout << "  ||                6. Display recent projects of a specific type  ||" << "\n";
         cout << "  ||                7. Display non-graded projects queue           ||" << "\n";
+        cout << "  ||                8. Display old projects of a specific theme    ||" << "\n";
+        cout << "  ||                9. Display old projects of a specific type     ||" << "\n";
         cout << "  ||                0. Go back                                     ||" << "\n";
         cout << "  ||                                                               ||" << "\n";
         cout << "   \\= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =/" << "\n";
@@ -525,6 +527,14 @@ void MainMenu::generalDisplays()
                 break;
             case 7:
                 displayNonGradedQueue();
+                waitInput();
+                break;
+            case 8:
+                displayOldProjectTheme();
+                waitInput();
+                break;
+            case 9:
+                displayOldProjectType();
                 waitInput();
                 break;
             case 0:
@@ -579,6 +589,7 @@ void MainMenu::displayAllProjects() const
     }
 }
 
+/*-------------------BST-----------------------------*/
 void MainMenu::displayRecentProjectTheme() const
 {
     string themeInput;
@@ -641,10 +652,75 @@ void MainMenu::displayRecentProjectType() const
     }
 }
 
+/*-------------Hash Table----------------*/
+void MainMenu::displayOldProjectTheme() const
+{
+    string themeInput;
+    unordered_set<Project *, ProjectHash, ProjectHash>::const_iterator it;
+
+    cout << "Please type the theme form which the projects you want to see\n";
+    getline(cin, themeInput);
+
+    cout << left << setw(MainMenu::maxTitleLength) << "Theme" << setw(10) << " " << "Date of Delivery\n\n";
+
+    for (it = oldProjects.begin(); it != oldProjects.end(); it++)
+    {
+        if ((*it)->getTitle() == themeInput)
+        {
+            cout << left << setw(MainMenu::maxTitleLength) << (*it)->getTitle() << setw(10)
+                 << " " << (*it)->getDate().getDate() << endl;
+        }
+    }
+}
+
+void MainMenu::displayOldProjectType() const
+{
+    string typeInput;
+    ProjectType pType;
+    unordered_set<Project *, ProjectHash, ProjectHash>::const_iterator it;
+
+    cout << "Please insert the type form which the projects you want to see\n";
+    getline(cin, typeInput);
+
+    if (typeInput == "Research")
+    {
+        pType = RESEARCH;
+
+    }
+    else if (typeInput == "Analysis")
+    {
+
+        pType = ANALYSIS;
+    }
+    else if (typeInput == "Development")
+    {
+
+        pType = DEVELOPMENT;
+    }
+    else
+    {
+        cerr << "That Type does not exist\n";
+        return;
+    }
+    cout << left << setw(MainMenu::maxTitleLength) << "Type   " << "Title" << setw(10) << " " << "Date of Delivery\n\n";
+
+    for (it = oldProjects.begin(); it != oldProjects.end(); it++)
+    {
+        if ((*it)->getType() == pType)
+        {
+            cout << typeInput << "      " << left << setw(MainMenu::maxTitleLength) << (*it)->getTitle() << setw(10)
+                 << " " << (*it)->getDate().getDate() << endl;
+        }
+    }
+}
+
+
+/*----------Priority Queue---------*/
 void MainMenu::displayNonGradedQueue()
 {
     priority_queue<NonGradedProject> aux = nonGradedProjects;
     Project* project = nullptr;
+    string typeString;
     int choice = -1;
 
     if (nonGradedProjects.empty())
@@ -657,8 +733,9 @@ void MainMenu::displayNonGradedQueue()
     while (!aux.empty())
     {
         project = aux.top().getPointer();
+        project->getType(typeString); //"Convert" ProjectType enum to string
 
-        cout << project->getType() << "     "<< left << setw(MainMenu::maxTitleLength) << project->getTitle() << setw(10)
+        cout << typeString << "     " << left << setw(MainMenu::maxTitleLength) << project->getTitle() << setw(10)
              << " " << project->getDate().getDate() << endl;
 
         aux.pop();

@@ -43,7 +43,8 @@ public:
 
     //Save files
     void savePeopleFile(const string fileName) const;
-    void saveProjectsFile(const string fileName) const;
+
+    //void saveProjectsFile(const string fileName) const;
     void saveThemesFile(const string fileName) const;
 
     //Displays
@@ -63,10 +64,17 @@ public:
 
     void displayAllStudentsD();
 
+    //BST
     void displayRecentProjectTheme() const;
 
     void displayRecentProjectType() const;
 
+    //Hash Table
+    void displayOldProjectTheme() const;
+
+    void displayOldProjectType() const;
+
+    //Priority Queue
     void displayNonGradedQueue();
 
     unsigned int numberProjectsYear(unsigned int year);
@@ -128,7 +136,7 @@ public:
     //Part2
     BST<RecentProject> recentProjects;
     priority_queue<NonGradedProject> nonGradedProjects;
-    //unordered_set<Project*, ProjectHash, ProjectHash, ProjectHash> oldProjects;
+    unordered_set<Project *, ProjectHash, ProjectHash> oldProjects;
 };
 
 bool comparePersonPtrAlpha(const Person* pLHS, const Person* pRHS);

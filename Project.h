@@ -21,6 +21,8 @@ public:
     Date getDate() const;
     unsigned int getYear() const;
 
+    void getType(string &typeString) const;
+
     ProjectType getType() const;
 
     vector<Person*> &getGroup();
@@ -121,13 +123,28 @@ struct ProjectHash
 {
     int operator()(const Project* pH) const
     {
-        string title = pH->getTitle();
+        string title = pH->getTitle(), name;
         unsigned int hashValue = 0;
 
-        for (unsigned int i = 0; i < title.size(); ++i)
+        for (unsigned int i = 0; i < title.size(); ++i) //Theme
         {
-
+            hashValue += 37 * title[i];
         }
+
+        Date date = pH->getDate();// Date
+
+        hashValue += date.getDay() * date.getMonth() * date.getYear();
+
+        for (unsigned int i = 0; i < pH->getGroupConst().size(); i++) //Group members' name
+        {
+            name = pH->getGroupConst()[i]->getName();
+            for (unsigned int j = 0; j < name.size(); ++j)
+            {
+                hashValue += 37 * name[j];
+            }
+        }
+
+        return hashValue;
     }
 
     bool operator()(const Project* pLHS, const Project* pRHS) const
