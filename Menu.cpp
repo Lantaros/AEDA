@@ -69,12 +69,6 @@ void MainMenu::savePeopleFile(const string fileName) const
     file.close();
 }
 
-
-void MainMenu::saveThemesFile(const string filename) const
-{
-
-}
-
 void MainMenu::loadThemesFile(string fileName)
 {
     string type, score, title, difficulty, description;
@@ -102,6 +96,24 @@ void MainMenu::loadThemesFile(string fileName)
         Theme t(type, title, description, stoi(difficulty));
 
         themes.push_back(t);
+    }
+
+    file.close();
+}
+
+void MainMenu::saveThemesFile(const string fileName) const
+{
+    ofstream file(fileName + ".txt");//fileName + ".txt");
+
+    if (!file.is_open())
+        throw FileNotFound(fileName);
+
+
+    for (unsigned int i = 0; i < themes.size(); i++)
+    {
+        file << "\n";// 1st line is also a white one
+        file << themes[i].getType() << ";" << themes[i].getTitle() << ";"
+             << themes[i].getDifficulty() << ";" << themes[i].getDescription();
     }
 
     file.close();
@@ -399,6 +411,7 @@ void MainMenu::allYears()
                 break;
             case 2:
                 deleteThemes();
+                waitInput();
                 break;
             case 3:
                 addStudent();
@@ -912,12 +925,12 @@ void MainMenu::deleteStudent()
 
 void MainMenu::deleteThemes()
 {
-    unsigned int number;
+    int number = -1;
     displayThemesD();
     cout << "\n(press 0 to back\nChoose a Theme by it's number\n";
     while (1)
     {
-        cin >> number;
+        readOpt(number);
         if (number == 0)
             return;
         if ((number - 1) <= themes.size() && (number - 1) >= 0)
@@ -927,10 +940,9 @@ void MainMenu::deleteThemes()
     }
     cout << "Theme ";
     cout << themes[number - 1];
-    cout << "successfully removed";
+    cout << " successfully removed\n";
     changedThemes = true;
     themes.erase(themes.begin() + (number - 1));
-    sleep(3);
 }
 
 
