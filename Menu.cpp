@@ -1013,7 +1013,7 @@ vector<Person*> MainMenu::projPreviousStudents(Theme &t)
 //Compactability Algorithm
 void MainMenu::allPercentage(const vector<Person*> &group) //PROTOTYPE
 {
-    Project* project;
+    Project *project = nullptr;
     string theme;
     string body = "Project to develop";
     string ref = "References";
@@ -1051,9 +1051,12 @@ void MainMenu::allPercentage(const vector<Person*> &group) //PROTOTYPE
                 projects.push_back(project);
                 nonGradedProjects.push(NonGradedProject(project));
                 themeFlag = true;
+                cout << "Project successfully added\n";
+                break;
             }
         }
-        cerr << "That Theme does not exist\n\n";
+        if (project == nullptr)
+            cerr << "That Theme does not exist\n\n";
     }while (!themeFlag);
 }
 
